@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
-import { Package as PackageType, User, Route } from '@/lib/types'
+import { Package as PackageType, User, Route, Conversation } from '@/lib/types'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Plus, MapPin, Calendar, Package as PackageIcon, CurrencyDollar, SignOut, User as UserIcon } from '@phosphor-icons/react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Plus, MapPin, Calendar, Package as PackageIcon, CurrencyDollar, SignOut, User as UserIcon, ChatCircle, MagnifyingGlass } from '@phosphor-icons/react'
 import { NewPackageDialog } from './NewPackageDialog'
 import { PackageCard } from './PackageCard'
 import { RouteMap } from './RouteMap'
+import { MessagingSystem } from './MessagingSystem'
+import { AvailableRoutes } from './AvailableRoutes'
 
 interface SenderDashboardProps {
   user?: User
@@ -19,12 +22,19 @@ export function SenderDashboard({ user: propUser }: SenderDashboardProps) {
   const user = propUser || currentUser
   const [packages, setPackages] = useKV<PackageType[]>('packages', [])
   const [routes] = useKV<Route[]>('routes', [])
+  const [conversations] = useKV<Conversation[]>('conversations', [])
   const [showNewPackage, setShowNewPackage] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState<PackageType | null>(null)
+  const [showMessaging, setShowMessaging] = useState(false)
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'browse' | 'messages'>('dashboard')
 
   if (!user) {
     return null
   }
+
+  const unreadCount = (conversations || [])
+    .filter(conv => conv.participant1Id === user.id || conv.participant2Id === user.id)
+    .reduce((sum, conv) => sum + conv.unreadCount, 0)
 
   const userPackages = (packages || []).filter(pkg => pkg.senderId === user.id)
   const pendingPackages = userPackages.filter(pkg => pkg.status === 'pending')
@@ -61,6 +71,29 @@ export function SenderDashboard({ user: propUser }: SenderDashboardProps) {
             </div>
             
             <div className="flex items-center gap-4">
+              <Button 
+                variant={activeTab === 'browse' ? 'default' : 'outline'}
+                size="sm" 
+                onClick={() => setActiveTab('browse')}
+                className="gap-2"
+              >
+                <MagnifyingGlass size={18} />
+                <span className="hidden sm:inline">Trouver Transporteur</span>
+              </Button>
+              <Button 
+                variant={activeTab === 'messages' ? 'default' : 'outline'}
+                size="sm" 
+                onClick={() => setActiveTab('messages')}
+                className="gap-2 relative"
+              >
+                <ChatCircle size={18} />
+                <span className="hidden sm:inline">Messages</span>
+                {unreadCount > 0 && (
+                  <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 min-w-5 px-1.5 text-xs">
+                    {unreadCount}
+                  </Badge>
+                )}
+              </Button>
               <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-lg bg-muted">
                 <UserIcon size={20} className="text-muted-foreground" />
                 <div className="text-sm">
@@ -78,18 +111,59 @@ export function SenderDashboard({ user: propUser }: SenderDashboardProps) {
       </header>
 
       <main className="container max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Mes Envois</h2>
-            <p className="text-muted-foreground mt-1">
-              Gérez vos envois et suivez vos livraisons
-            </p>
+        {activeTab === 'messages' ? (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight">Messages</h2>
+                <p className="text-muted-foreground mt-1">
+                  Communiquez avec les transporteurs
+                </p>
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={() => setActiveTab('dashboard')}
+              >
+                Retour au tableau de bord
+              </Button>
+            </div>
+            <MessagingSystem currentUser={user} />
           </div>
-          <Button onClick={() => setShowNewPackage(true)} size="lg" className="gap-2 font-semibold bg-accent hover:bg-accent/90">
-            <Plus size={20} weight="bold" />
-            Nouvel Envoi
-          </Button>
-        </div>
+        ) : activeTab === 'browse' ? (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight">Trouver un Transporteur</h2>
+                <p className="text-muted-foreground mt-1">
+                  Parcourez les itinéraires disponibles et contactez les transporteurs
+                </p>
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={() => setActiveTab('dashboard')}
+              >
+                Retour au tableau de bord
+              </Button>
+            </div>
+            <AvailableRoutes 
+              currentUser={user} 
+              onConversationCreated={() => setActiveTab('messages')}
+            />
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight">Mes Envois</h2>
+                <p className="text-muted-foreground mt-1">
+                  Gérez vos envois et suivez vos livraisons
+                </p>
+              </div>
+              <Button onClick={() => setShowNewPackage(true)} size="lg" className="gap-2 font-semibold bg-accent hover:bg-accent/90">
+                <Plus size={20} weight="bold" />
+                Nouvel Envoi
+              </Button>
+            </div>
 
         <div className="grid gap-4 md:grid-cols-4 mb-8">
           <Card>
@@ -194,6 +268,8 @@ export function SenderDashboard({ user: propUser }: SenderDashboardProps) {
           )}
         </div>
       )}
+          </>
+        )}
 
       <NewPackageDialog
         open={showNewPackage}

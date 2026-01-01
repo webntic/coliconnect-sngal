@@ -48,6 +48,24 @@ Une application combinant un site vitrine avec des espaces utilisateurs authenti
 - **Progression**: Expéditeur sélectionne GP → Saisit poids exact → Système calcule coût basé sur prix/kg du transporteur → Validation
 - **Success criteria**: Les envois GP sont correctement catégorisés et les prix calculés automatiquement selon le tarif au kg du transporteur
 
+### Système de Messagerie entre Expéditeurs et Transporteurs
+- **Functionality**: Chat en temps réel permettant la communication directe et sécurisée entre expéditeurs et transporteurs pour discuter des détails des envois, négocier les prix, et coordonner les livraisons
+- **Purpose**: Faciliter la communication transparente, réduire les malentendus, et permettre aux utilisateurs de discuter des détails spécifiques de leurs transactions
+- **Trigger**: Clic sur "Contacter" depuis une carte d'itinéraire (pour expéditeurs) ou une carte de colis (pour transporteurs), ou clic sur "Messages" dans la navigation du tableau de bord
+- **Progression**: Navigation vers section Browse → Recherche d'itinéraires/colis → Clic "Contacter" → Création automatique de conversation → Saisie de message → Envoi → Réception et notification → Échange continu → Marquage comme lu automatiquement
+- **Success criteria**: Les utilisateurs peuvent initier des conversations facilement, voir toutes leurs discussions actives avec compteur de messages non lus, envoyer et recevoir des messages instantanément, voir l'historique complet des conversations avec horodatage, et recevoir des notifications visuelles pour les nouveaux messages. Les conversations sont automatiquement liées aux colis et itinéraires concernés pour un contexte clair.
+- **Fonctionnalités clés**:
+  - Liste des conversations avec aperçu du dernier message
+  - Badge de compteur de messages non lus sur bouton Messages
+  - Interface chat avec avatars et horodatage
+  - Lien contextuel vers le colis ou l'itinéraire associé
+  - Marquage automatique des messages comme lus lors de la consultation
+  - Recherche de transporteurs/expéditeurs disponibles depuis tableau de bord
+  - Section "Trouver Transporteur" pour expéditeurs avec recherche d'itinéraires
+  - Section "Trouver Colis" pour transporteurs avec recherche de demandes
+  - Bouton de contact direct sur chaque carte d'opportunité
+
+
 ## Essential Features (continued from original)
 
 ### Section Héro/Accueil

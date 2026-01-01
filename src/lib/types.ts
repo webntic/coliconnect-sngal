@@ -62,11 +62,32 @@ export interface Match {
 
 export interface Message {
   id: string
+  conversationId: string
   senderId: string
+  senderName: string
+  senderRole: UserRole
   receiverId: string
   content: string
   timestamp: string
   read: boolean
+  packageId?: string
+  routeId?: string
+}
+
+export interface Conversation {
+  id: string
+  participant1Id: string
+  participant1Name: string
+  participant1Role: UserRole
+  participant2Id: string
+  participant2Name: string
+  participant2Role: UserRole
+  lastMessage?: string
+  lastMessageTime?: string
+  unreadCount: number
+  packageId?: string
+  routeId?: string
+  createdAt: string
 }
 
 export interface Review {
