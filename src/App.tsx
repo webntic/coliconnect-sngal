@@ -11,6 +11,7 @@ import { Navigation } from '@/components/Navigation'
 import { AuthScreen } from '@/components/AuthScreen'
 import { SenderDashboard } from '@/components/SenderDashboard'
 import { TransporterDashboard } from '@/components/TransporterDashboard'
+import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { useAuth } from '@/hooks/use-auth'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -22,6 +23,7 @@ function App() {
     return (
       <>
         <AuthScreen onAuth={(user) => login(user)} />
+        <WhatsAppButton />
         <Toaster />
       </>
     )
@@ -35,6 +37,7 @@ function App() {
         ) : (
           <TransporterDashboard />
         )}
+        <WhatsAppButton />
         <Toaster />
       </>
     )
@@ -51,6 +54,7 @@ function App() {
       <WhyUs />
       <Contact />
       <Footer />
+      <WhatsAppButton />
       <Toaster />
     </div>
   )
