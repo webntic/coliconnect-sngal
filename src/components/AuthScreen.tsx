@@ -5,11 +5,13 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Package, Truck, Shield, Eye, EyeSlash, House, EnvelopeSimple } from '@phosphor-icons/react'
+import { Package, Truck, Shield, Eye, EyeSlash, House, EnvelopeSimple, Sparkle } from '@phosphor-icons/react'
 import { User, UserRole } from '@/lib/types'
 import { toast } from 'sonner'
 import { verifyAdminCredentials, verifyUserCredentials, registerUser, initializeAdminCredentials, validatePassword } from '@/lib/auth'
 import { useKV } from '@github/spark/hooks'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FloatingParticles } from '@/components/FloatingParticles'
 
 interface AuthScreenProps {
   onAuth: (user: User) => void
@@ -190,19 +192,47 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
 
   if (showAdminLogin) {
     return (
-      <div className="min-h-screen flex flex-col relative">
+      <div className="min-h-screen flex flex-col relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
+          <motion.img 
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1920&h=1080&fit=crop&q=80" 
             alt="Background"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          
+          <FloatingParticles />
+          
+          <motion.div
+            className="absolute inset-0"
+            animate={{
+              background: [
+                'radial-gradient(circle at 20% 30%, rgba(72, 121, 221, 0.15) 0%, transparent 50%)',
+                'radial-gradient(circle at 80% 70%, rgba(231, 150, 92, 0.15) 0%, transparent 50%)',
+                'radial-gradient(circle at 40% 80%, rgba(72, 121, 221, 0.15) 0%, transparent 50%)',
+              ],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
         </div>
 
-        <div className="relative z-10 w-full py-6">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative z-10 w-full py-6"
+        >
           <div className="container max-w-md mx-auto px-6">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={onBackToHome}
               className="group flex items-center gap-3 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-lg w-full"
             >
@@ -221,25 +251,89 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                 <p className="text-xs text-muted-foreground">Mondial Bagage Services</p>
               </div>
               <House size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
 
         <div className="flex-1 flex items-center justify-center p-6 relative z-10">
-          <Card className="w-full max-w-md shadow-lg">
-            <CardHeader className="space-y-2 text-center">
-              <div className="flex justify-center mb-2">
-                <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
-                  <Shield size={32} weight="bold" className="text-primary-foreground" />
-                </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="w-full max-w-md"
+          >
+          <Card className="w-full shadow-2xl border-2 relative overflow-hidden">
+            <motion.div
+              className="absolute inset-0 opacity-30"
+              animate={{
+                background: [
+                  'linear-gradient(45deg, transparent 30%, rgba(72, 121, 221, 0.1) 50%, transparent 70%)',
+                  'linear-gradient(90deg, transparent 30%, rgba(72, 121, 221, 0.1) 50%, transparent 70%)',
+                  'linear-gradient(135deg, transparent 30%, rgba(72, 121, 221, 0.1) 50%, transparent 70%)',
+                ],
+                backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+            <CardHeader className="space-y-2 text-center relative z-10">
+              <motion.div 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  delay: 0.4
+                }}
+                className="flex justify-center mb-2"
+              >
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center relative shadow-lg">
+                <Shield size={32} weight="bold" className="text-primary-foreground" />
+                <motion.div
+                  className="absolute inset-0 rounded-2xl"
+                  animate={{
+                    boxShadow: [
+                      '0 0 20px rgba(72, 121, 221, 0.5)',
+                      '0 0 40px rgba(72, 121, 221, 0.8)',
+                      '0 0 20px rgba(72, 121, 221, 0.5)',
+                    ],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                  }}
+                />
               </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
               <CardTitle className="text-3xl font-bold">Accès Administrateur</CardTitle>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
               <CardDescription className="text-base">
                 Connexion réservée aux administrateurs MBS Transport
               </CardDescription>
+              </motion.div>
             </CardHeader>
-            <CardContent>
-              <form onSubmit={handleAdminLogin} className="space-y-6">
+            <CardContent className="relative z-10">
+              <motion.form
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                onSubmit={handleAdminLogin} 
+                className="space-y-6"
+              >
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="adminUsername">Identifiant</Label>
@@ -287,15 +381,42 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
 
                 <Button 
                   type="submit" 
-                  className="w-full h-11 text-base font-semibold" 
+                  className="w-full h-11 text-base font-semibold bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300" 
                   size="lg"
                   disabled={loading}
                 >
-                  {loading ? 'Connexion...' : 'Se connecter'}
+                  <AnimatePresence mode="wait">
+                    {loading ? (
+                      <motion.span
+                        key="loading"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center gap-2"
+                      >
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                        />
+                        Connexion...
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="ready"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        Se connecter
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </Button>
 
                 <div className="pt-3 border-t">
                   <p className="text-xs text-center text-muted-foreground mb-2">Ou connexion rapide:</p>
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     type="button"
                     onClick={() => {
@@ -315,6 +436,7 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                     <Shield size={16} weight="fill" className="mr-2" />
                     Connexion Admin Automatique
                   </Button>
+                  </motion.div>
                 </div>
 
                 <button
@@ -329,28 +451,57 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                 >
                   ← Retour à la connexion normale
                 </button>
-              </form>
+              </motion.form>
             </CardContent>
           </Card>
+          </motion.div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img 
+        <motion.img 
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
           src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&h=1080&fit=crop&q=80" 
           alt="Background"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/60" />
+        
+        <FloatingParticles />
+        
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              'radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+            ],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        />
       </div>
 
-      <div className="relative z-10 w-full py-6">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 w-full py-6"
+      >
         <div className="container max-w-md mx-auto px-6">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={onBackToHome}
             className="group flex items-center gap-3 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-lg w-full"
           >
@@ -369,32 +520,108 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
               <p className="text-xs text-muted-foreground">Mondial Bagage Services</p>
             </div>
             <House size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
 
       <div className="flex-1 flex items-center justify-center p-6 relative z-10">
-        <Card className="w-full max-w-md shadow-lg">
-          <CardHeader className="space-y-2 text-center">
-            <div className="flex justify-center mb-2">
-              <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="w-full max-w-md"
+        >
+        <Card className="w-full shadow-2xl border-2 relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 opacity-20 pointer-events-none"
+            animate={{
+              background: [
+                'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+                'linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+                'linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+              ],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+          <CardHeader className="space-y-2 text-center relative z-10">
+            <motion.div 
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                delay: 0.4
+              }}
+              className="flex justify-center mb-2"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center relative shadow-lg">
                 <Package size={32} weight="bold" className="text-primary-foreground" />
+                <motion.div
+                  className="absolute inset-0 rounded-2xl"
+                  animate={{
+                    boxShadow: [
+                      '0 0 20px rgba(72, 121, 221, 0.5)',
+                      '0 0 40px rgba(231, 150, 92, 0.5)',
+                      '0 0 20px rgba(72, 121, 221, 0.5)',
+                    ],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                  }}
+                />
               </div>
-            </div>
-            <CardTitle className="text-3xl font-bold">MBS Transport</CardTitle>
-            <CardDescription className="text-base">
-              Connectez, expédiez et livrez des colis dans le monde entier
-            </CardDescription>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <CardTitle className="text-3xl font-bold">MBS Transport</CardTitle>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <CardDescription className="text-base">
+                Connectez, expédiez et livrez des colis dans le monde entier
+              </CardDescription>
+            </motion.div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative z-10">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
             <Tabs value={mode} onValueChange={(v) => setMode(v as 'login' | 'register')} className="mb-6">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Connexion</TabsTrigger>
-                <TabsTrigger value="register">Inscription</TabsTrigger>
+                <TabsTrigger value="login" className="relative">
+                  <span className="relative z-10">Connexion</span>
+                </TabsTrigger>
+                <TabsTrigger value="register" className="relative">
+                  <span className="relative z-10">Inscription</span>
+                </TabsTrigger>
               </TabsList>
             </Tabs>
+            </motion.div>
 
-            <form onSubmit={mode === 'login' ? handleUserLogin : handleUserRegister} className="space-y-6">
+            <AnimatePresence mode="wait">
+              <motion.form 
+                key={mode}
+                initial={{ opacity: 0, x: mode === 'login' ? -20 : 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: mode === 'login' ? 20 : -20 }}
+                transition={{ duration: 0.3 }}
+                onSubmit={mode === 'login' ? handleUserLogin : handleUserRegister} 
+                className="space-y-6"
+              >
               <div className="space-y-4">
                 {mode === 'register' && (
                   <>
@@ -494,11 +721,37 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
 
               <Button 
                 type="submit" 
-                className="w-full h-11 text-base font-semibold bg-accent hover:bg-accent/90" 
+                className="w-full h-11 text-base font-semibold bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 shadow-lg hover:shadow-xl transition-all duration-300" 
                 size="lg"
                 disabled={loading}
               >
-                {loading ? (mode === 'login' ? 'Connexion...' : 'Création...') : (mode === 'login' ? 'Se connecter' : 'Créer un compte')}
+                <AnimatePresence mode="wait">
+                  {loading ? (
+                    <motion.span
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center gap-2"
+                    >
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                      />
+                      {mode === 'login' ? 'Connexion...' : 'Création...'}
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="ready"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      {mode === 'login' ? 'Se connecter' : 'Créer un compte'}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </Button>
 
               <div className="text-center space-y-2">
@@ -518,15 +771,31 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                   En continuant, vous acceptez nos Conditions d'Utilisation
                 </p>
               </div>
-            </form>
+            </motion.form>
+            </AnimatePresence>
 
             <div className="mt-6 pt-6 border-t">
-              <div className="text-center mb-3">
-                <p className="text-sm font-semibold text-foreground mb-1">Accès Rapide Démo</p>
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="text-center mb-3"
+              >
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <Sparkle size={18} weight="fill" className="text-accent" />
+                  <p className="text-sm font-semibold text-foreground">Accès Rapide Démo</p>
+                  <Sparkle size={18} weight="fill" className="text-accent" />
+                </div>
                 <p className="text-xs text-muted-foreground">Testez avec un compte démo</p>
-              </div>
+              </motion.div>
               
-              <div className="grid grid-cols-3 gap-2">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+                className="grid grid-cols-3 gap-2"
+              >
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   type="button"
                   onClick={() => {
@@ -546,12 +815,14 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                   }}
                   variant="outline"
                   size="sm"
-                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
                 >
                   <Shield size={20} weight="fill" className="text-primary" />
                   <span className="text-xs font-semibold">Admin</span>
                 </Button>
+                </motion.div>
 
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   type="button"
                   onClick={() => {
@@ -571,12 +842,14 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                   }}
                   variant="outline"
                   size="sm"
-                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
                 >
                   <Package size={20} weight="fill" className="text-primary" />
                   <span className="text-xs font-semibold">Client</span>
                 </Button>
+                </motion.div>
 
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   type="button"
                   onClick={() => {
@@ -596,21 +869,28 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                   }}
                   variant="outline"
                   size="sm"
-                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
                 >
                   <Truck size={20} weight="fill" className="text-primary" />
                   <span className="text-xs font-semibold">Transp.</span>
                 </Button>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              <div className="mt-3 p-2 bg-muted/50 rounded-lg">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="mt-3 p-2 bg-muted/50 rounded-lg"
+              >
                 <p className="text-xs text-muted-foreground text-center font-mono">
                   admin@mbstransport.com • client@mbstransport.com • transporteur@mbstransport.com
                 </p>
-              </div>
+              </motion.div>
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </div>
 
       <Dialog open={showForgotPassword} onOpenChange={setShowForgotPassword}>
