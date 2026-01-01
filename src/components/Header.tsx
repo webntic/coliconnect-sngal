@@ -42,11 +42,13 @@ export function Header({ user, onLogout }: HeaderProps) {
               <div>
                 <p className="text-xs text-muted-foreground font-medium">Service Client</p>
                 <a 
-                  href="tel:+221730615115" 
+                  href="https://wa.me/221773068652" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm font-bold text-foreground hover:text-primary transition-colors flex items-center gap-1"
                 >
                   <Phone size={14} weight="bold" />
-                  +221 73 061 51 15
+                  +221 77 306 86 52
                 </a>
               </div>
             </div>
@@ -112,11 +114,13 @@ export function Header({ user, onLogout }: HeaderProps) {
                 <div>
                   <p className="text-xs text-muted-foreground font-medium">Service Client</p>
                   <a 
-                    href="tel:+221730615115" 
+                    href="https://wa.me/221773068652" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-sm font-bold text-foreground hover:text-primary transition-colors flex items-center gap-1"
                   >
                     <Phone size={14} weight="bold" />
-                    +221 73 061 51 15
+                    +221 77 306 86 52
                   </a>
                 </div>
               </div>
