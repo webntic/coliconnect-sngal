@@ -10,13 +10,17 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">MBS</span>
+              <div className="h-12 w-auto flex items-center bg-white rounded-lg px-2 py-1">
+                <img 
+                  src="https://i.postimg.cc/15Sf1d1n/mbs-logo.png" 
+                  alt="MBS Transport Logo" 
+                  className="h-full w-auto object-contain"
+                />
               </div>
-              <div>
-                <div className="text-lg font-bold">MBS Transport</div>
-                <div className="text-xs opacity-80">Mondial Bagage Services</div>
-              </div>
+            </div>
+            <div className="mb-3">
+              <div className="text-lg font-bold">MBS Transport</div>
+              <div className="text-xs opacity-80">Mondial Bagage Services</div>
             </div>
             <p className="text-sm opacity-90 leading-relaxed">
               Votre partenaire de confiance pour le transport international entre le Sénégal, la France et le monde entier.
