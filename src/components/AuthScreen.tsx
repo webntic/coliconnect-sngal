@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Package, Truck, Shield, Eye, EyeSlash, House } from '@phosphor-icons/react'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Package, Truck, Shield, Eye, EyeSlash, House, EnvelopeSimple } from '@phosphor-icons/react'
 import { User, UserRole } from '@/lib/types'
 import { toast } from 'sonner'
 import { verifyAdminCredentials, verifyUserCredentials, registerUser, initializeAdminCredentials, validatePassword } from '@/lib/auth'
@@ -29,10 +30,48 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
   const [loading, setLoading] = useState(false)
   const [users] = useKV<User[]>('registered-users', [])
   const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
+  const [resetEmail, setResetEmail] = useState('')
+  const [resetLoading, setResetLoading] = useState(false)
 
   useEffect(() => {
     initializeAdminCredentials()
   }, [])
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setResetLoading(true)
+
+    try {
+      if (!resetEmail) {
+        toast.error('Veuillez entrer votre adresse email')
+        setResetLoading(false)
+        return
+      }
+
+      const userExists = users?.some(u => u.email === resetEmail)
+      
+      if (!userExists) {
+        toast.error('Aucun compte associé à cet email')
+        setResetLoading(false)
+        return
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 1500))
+
+      toast.success('Un email de réinitialisation a été envoyé à ' + resetEmail, {
+        description: 'Veuillez vérifier votre boîte de réception',
+        duration: 5000
+      })
+      
+      setShowForgotPassword(false)
+      setResetEmail('')
+    } catch (error) {
+      toast.error('Erreur lors de l\'envoi de l\'email')
+    } finally {
+      setResetLoading(false)
+    }
+  }
 
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -414,7 +453,18 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Mot de passe</Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">Mot de passe</Label>
+                    {mode === 'login' && (
+                      <button
+                        type="button"
+                        onClick={() => setShowForgotPassword(true)}
+                        className="text-xs text-primary hover:text-primary/80 font-medium transition-colors"
+                      >
+                        Mot de passe oublié?
+                      </button>
+                    )}
+                  </div>
                   <div className="relative">
                     <Input
                       id="password"
@@ -562,6 +612,58 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
           </CardContent>
         </Card>
       </div>
+
+      <Dialog open={showForgotPassword} onOpenChange={setShowForgotPassword}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex justify-center mb-4">
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
+                <EnvelopeSimple size={28} weight="bold" className="text-primary" />
+              </div>
+            </div>
+            <DialogTitle className="text-center text-2xl">Mot de passe oublié?</DialogTitle>
+            <DialogDescription className="text-center">
+              Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleForgotPassword}>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="reset-email">Adresse Email</Label>
+                <Input
+                  id="reset-email"
+                  type="email"
+                  placeholder="amadou@example.com"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                />
+              </div>
+            </div>
+            <DialogFooter className="flex-col sm:flex-col gap-2">
+              <Button 
+                type="submit" 
+                className="w-full bg-primary hover:bg-primary/90"
+                disabled={resetLoading}
+              >
+                {resetLoading ? 'Envoi en cours...' : 'Envoyer le lien'}
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => {
+                  setShowForgotPassword(false)
+                  setResetEmail('')
+                }}
+                className="w-full"
+              >
+                Annuler
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
