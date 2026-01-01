@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import { 
   PaperPlaneRight, 
@@ -26,9 +26,14 @@ interface MessagingSystemProps {
 export function MessagingSystem({ currentUser, onClose }: MessagingSystemProps) {
   const [conversations, setConversations] = useKV<Conversation[]>('conversations', [])
   const [messages, setMessages] = useKV<Message[]>('messages', [])
+  const [users] = useKV<User[]>('users', [])
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null)
   const [messageText, setMessageText] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const getUserById = (userId: string) => {
+    return (users || []).find(u => u.id === userId)
+  }
 
   const userConversations = (conversations || []).filter(
     conv => conv.participant1Id === currentUser.id || conv.participant2Id === currentUser.id
@@ -174,6 +179,7 @@ export function MessagingSystem({ currentUser, onClose }: MessagingSystemProps) 
             ) : (
               userConversations.map((conv) => {
                 const other = getOtherParticipant(conv)
+                const otherUser = getUserById(other.id)
                 const isSelected = selectedConversation?.id === conv.id
                 
                 return (
@@ -187,6 +193,7 @@ export function MessagingSystem({ currentUser, onClose }: MessagingSystemProps) 
                   >
                     <div className="flex items-start gap-3">
                       <Avatar className="h-10 w-10 flex-shrink-0">
+                        <AvatarImage src={otherUser?.avatar} alt={other.name} />
                         <AvatarFallback className={cn(
                           other.role === 'transporter' 
                             ? 'bg-primary/10 text-primary' 
@@ -238,6 +245,7 @@ export function MessagingSystem({ currentUser, onClose }: MessagingSystemProps) 
             <CardHeader className="pb-3">
               <div className="flex items-center gap-3">
                 <Avatar className="h-10 w-10">
+                  <AvatarImage src={getUserById(getOtherParticipant(selectedConversation).id)?.avatar} alt={getOtherParticipant(selectedConversation).name} />
                   <AvatarFallback className={cn(
                     getOtherParticipant(selectedConversation).role === 'transporter'
                       ? 'bg-primary/10 text-primary'
@@ -284,6 +292,7 @@ export function MessagingSystem({ currentUser, onClose }: MessagingSystemProps) 
                 ) : (
                   selectedMessages.map((msg) => {
                     const isOwnMessage = msg.senderId === currentUser.id
+                    const messageSender = getUserById(msg.senderId)
                     return (
                       <div
                         key={msg.id}
@@ -294,6 +303,7 @@ export function MessagingSystem({ currentUser, onClose }: MessagingSystemProps) 
                       >
                         {!isOwnMessage && (
                           <Avatar className="h-8 w-8 flex-shrink-0">
+                            <AvatarImage src={messageSender?.avatar} alt={msg.senderName} />
                             <AvatarFallback className="text-xs bg-accent/50">
                               {msg.senderName.substring(0, 2).toUpperCase()}
                             </AvatarFallback>

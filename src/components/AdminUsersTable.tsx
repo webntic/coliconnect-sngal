@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Table,
   TableBody,
@@ -141,13 +142,16 @@ export function AdminUsersTable({ users, searchQuery }: AdminUsersTableProps) {
                   <TableRow key={user.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          {user.role === 'sender' ? (
-                            <UserCircle className="text-primary" size={24} />
-                          ) : (
-                            <Truck className="text-primary" size={24} />
-                          )}
-                        </div>
+                        <Avatar className="h-10 w-10 flex-shrink-0">
+                          <AvatarImage src={user.avatar} alt={user.name} />
+                          <AvatarFallback className="bg-primary/10 text-primary">
+                            {user.role === 'sender' ? (
+                              <UserCircle size={24} />
+                            ) : (
+                              <Truck size={24} />
+                            )}
+                          </AvatarFallback>
+                        </Avatar>
                         <div>
                           <p className="font-medium">{user.name}</p>
                           <p className="text-xs text-muted-foreground">ID: {user.id.slice(0, 8)}</p>
