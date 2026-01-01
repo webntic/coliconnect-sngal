@@ -25,14 +25,14 @@ export function RouteCard({ route }: RouteCardProps) {
                 <span>{route.transporterRating.toFixed(1)}</span>
                 {route.verified && (
                   <Badge variant="outline" className="ml-2 text-xs px-1.5 py-0 h-5">
-                    Verified
+                    Vérifié
                   </Badge>
                 )}
               </div>
             </div>
           </div>
           <Badge variant={isUpcoming ? "default" : "secondary"}>
-            {isUpcoming ? "Upcoming" : "Completed"}
+            {isUpcoming ? "À Venir" : "Complété"}
           </Badge>
         </div>
       </CardHeader>
@@ -47,11 +47,11 @@ export function RouteCard({ route }: RouteCardProps) {
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
             <Calendar size={16} />
-            <span>{new Date(route.departureDate).toLocaleDateString()}</span>
+            <span>{new Date(route.departureDate).toLocaleDateString('fr-FR')}</span>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-muted-foreground">{route.availableCapacity}</span>
-            <span className="font-bold text-accent">${route.pricePerKg}/kg</span>
+            <span className="font-bold text-accent">{route.pricePerKg.toLocaleString()} FCFA/kg</span>
           </div>
         </div>
       </CardContent>

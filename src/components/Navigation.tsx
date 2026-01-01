@@ -2,7 +2,11 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { List, X } from '@phosphor-icons/react'
 
-export function Navigation() {
+interface NavigationProps {
+  onNavigateToDashboard?: () => void
+}
+
+export function Navigation({ onNavigateToDashboard }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const scrollToSection = (id: string) => {
@@ -61,6 +65,11 @@ export function Navigation() {
             <Button onClick={() => scrollToSection('devis')} size="sm" className="bg-accent hover:bg-accent/90">
               Calculer un Devis
             </Button>
+            {onNavigateToDashboard && (
+              <Button onClick={onNavigateToDashboard} size="sm" variant="outline">
+                Espace Client
+              </Button>
+            )}
           </div>
 
           <button
@@ -106,6 +115,11 @@ export function Navigation() {
             <Button onClick={() => scrollToSection('devis')} className="w-full bg-accent hover:bg-accent/90">
               Calculer un Devis
             </Button>
+            {onNavigateToDashboard && (
+              <Button onClick={onNavigateToDashboard} variant="outline" className="w-full">
+                Espace Client
+              </Button>
+            )}
           </div>
         )}
       </div>

@@ -54,19 +54,19 @@ export function NewPackageDialog({ open, onClose, onSubmit }: NewPackageDialogPr
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Create New Package Request</DialogTitle>
+          <DialogTitle className="text-2xl">Créer une Nouvelle Demande d'Envoi</DialogTitle>
           <DialogDescription>
-            Provide details about your package and we'll match you with transporters
+            Fournissez les détails de votre colis et nous vous mettrons en relation avec des transporteurs
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6 pt-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="title">Package Title</Label>
+              <Label htmlFor="title">Titre du Colis</Label>
               <Input
                 id="title"
-                placeholder="Electronics, Documents, Clothing, etc."
+                placeholder="Électronique, Documents, Vêtements, etc."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
@@ -77,7 +77,7 @@ export function NewPackageDialog({ open, onClose, onSubmit }: NewPackageDialogPr
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
-                placeholder="Describe your package contents and any special handling requirements..."
+                placeholder="Décrivez le contenu de votre colis et les instructions de manipulation spéciales..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
@@ -86,22 +86,23 @@ export function NewPackageDialog({ open, onClose, onSubmit }: NewPackageDialogPr
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="size">Package Size</Label>
+              <Label htmlFor="size">Taille du Colis</Label>
               <Select value={size} onValueChange={(v) => setSize(v as PackageSize)}>
                 <SelectTrigger id="size">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="small">Small (&lt;5kg)</SelectItem>
-                  <SelectItem value="medium">Medium (5-15kg)</SelectItem>
-                  <SelectItem value="large">Large (15-30kg)</SelectItem>
-                  <SelectItem value="xlarge">Extra Large (&gt;30kg)</SelectItem>
+                  <SelectItem value="small">Petit (&lt;5kg)</SelectItem>
+                  <SelectItem value="medium">Moyen (5-15kg)</SelectItem>
+                  <SelectItem value="large">Grand (15-30kg)</SelectItem>
+                  <SelectItem value="xlarge">Très Grand (30-50kg)</SelectItem>
+                  <SelectItem value="gp">GP - Gros Poids (&gt;50kg)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="weight">Weight (kg)</Label>
+              <Label htmlFor="weight">Poids (kg)</Label>
               <Input
                 id="weight"
                 type="number"
@@ -114,10 +115,10 @@ export function NewPackageDialog({ open, onClose, onSubmit }: NewPackageDialogPr
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="origin">Pickup Location</Label>
+              <Label htmlFor="origin">Lieu d'Enlèvement</Label>
               <Input
                 id="origin"
-                placeholder="Dakar, Senegal"
+                placeholder="Dakar, Sénégal"
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
                 required
@@ -136,7 +137,7 @@ export function NewPackageDialog({ open, onClose, onSubmit }: NewPackageDialogPr
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="pickupDate">Pickup Date</Label>
+              <Label htmlFor="pickupDate">Date d'Enlèvement</Label>
               <Input
                 id="pickupDate"
                 type="date"
@@ -147,7 +148,7 @@ export function NewPackageDialog({ open, onClose, onSubmit }: NewPackageDialogPr
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="deliveryDeadline">Delivery Deadline</Label>
+              <Label htmlFor="deliveryDeadline">Date Limite de Livraison</Label>
               <Input
                 id="deliveryDeadline"
                 type="date"
@@ -158,28 +159,28 @@ export function NewPackageDialog({ open, onClose, onSubmit }: NewPackageDialogPr
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="price">Proposed Price (USD)</Label>
+              <Label htmlFor="price">Prix Proposé (FCFA)</Label>
               <Input
                 id="price"
                 type="number"
-                step="0.01"
-                placeholder="50.00"
+                step="100"
+                placeholder="50000"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
               />
               <p className="text-xs text-muted-foreground">
-                Platform fee (15%) will be added at checkout
+                Frais de plateforme (10%) ajoutés lors du paiement
               </p>
             </div>
           </div>
 
           <div className="flex gap-3 pt-4">
             <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-              Cancel
+              Annuler
             </Button>
-            <Button type="submit" className="flex-1 font-semibold">
-              Create Package Request
+            <Button type="submit" className="flex-1 font-semibold bg-accent hover:bg-accent/90">
+              Créer la Demande
             </Button>
           </div>
         </form>

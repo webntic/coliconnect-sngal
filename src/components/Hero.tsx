@@ -2,11 +2,23 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
-export function Hero() {
+interface HeroProps {
+  onGetStarted?: () => void
+}
+
+export function Hero({ onGetStarted }: HeroProps) {
   const scrollToContact = () => {
     const element = document.getElementById('contact')
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  const handleGetStarted = () => {
+    if (onGetStarted) {
+      onGetStarted()
+    } else {
+      scrollToContact()
     }
   }
 
@@ -50,7 +62,7 @@ export function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <Button
-              onClick={scrollToContact}
+              onClick={handleGetStarted}
               size="lg"
               className="bg-accent hover:bg-accent/90 text-white px-8 py-6 text-lg font-semibold transition-all hover:scale-105"
             >

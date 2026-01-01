@@ -8,18 +8,19 @@ interface PackageCardProps {
 }
 
 const statusConfig = {
-  pending: { label: 'Awaiting Match', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
-  matched: { label: 'Matched', color: 'bg-blue-100 text-blue-800 border-blue-200' },
-  in_transit: { label: 'In Transit', color: 'bg-purple-100 text-purple-800 border-purple-200' },
-  delivered: { label: 'Delivered', color: 'bg-green-100 text-green-800 border-green-200' },
-  cancelled: { label: 'Cancelled', color: 'bg-gray-100 text-gray-800 border-gray-200' }
+  pending: { label: 'En Attente', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+  matched: { label: 'Assigné', color: 'bg-blue-100 text-blue-800 border-blue-200' },
+  in_transit: { label: 'En Transit', color: 'bg-purple-100 text-purple-800 border-purple-200' },
+  delivered: { label: 'Livré', color: 'bg-green-100 text-green-800 border-green-200' },
+  cancelled: { label: 'Annulé', color: 'bg-gray-100 text-gray-800 border-gray-200' }
 }
 
 const sizeLabels = {
-  small: 'Small (<5kg)',
-  medium: 'Medium (5-15kg)',
-  large: 'Large (15-30kg)',
-  xlarge: 'Extra Large (>30kg)'
+  small: 'Petit (<5kg)',
+  medium: 'Moyen (5-15kg)',
+  large: 'Grand (15-30kg)',
+  xlarge: 'Très Grand (30-50kg)',
+  gp: 'GP - Gros Poids (>50kg)'
 }
 
 export function PackageCard({ package: pkg }: PackageCardProps) {
@@ -58,7 +59,7 @@ export function PackageCard({ package: pkg }: PackageCardProps) {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-muted-foreground">{sizeLabels[pkg.size]}</span>
-            <span className="font-bold text-primary">${pkg.price}</span>
+            <span className="font-bold text-primary">{pkg.price.toLocaleString()} FCFA</span>
           </div>
         </div>
       </CardContent>

@@ -1,16 +1,47 @@
 # Planning Guide
 
-Un site vitrine professionnel pour MBS Transport (Mondial Bagage Services), entreprise de fret et de transport de colis offrant des services maritimes, aériens et express entre le Sénégal, la France et l'international.
+Une plateforme innovante pour MBS Transport (Mondial Bagage Services) qui connecte des particuliers expéditeurs avec des transporteurs pour expédier des colis entre le Sénégal, la France et l'international. La plateforme combine un site vitrine professionnel avec des tableaux de bord utilisateurs complets pour la gestion des envois et des itinéraires.
 
 **Experience Qualities**:
 1. **Professionnel** - Le site doit inspirer confiance et crédibilité avec une présentation claire des services, des coordonnées accessibles et un design soigné
 2. **Accueillant** - L'interface doit être chaleureuse et invitante pour refléter l'esprit du service client de qualité
-3. **Informatif** - Les visiteurs doivent rapidement comprendre les services offerts, les tarifs et comment contacter l'entreprise
+3. **Intuitif** - Les tableaux de bord doivent permettre aux utilisateurs de gérer facilement leurs envois et itinéraires sans friction
 
-**Complexity Level**: Content Showcase (information-focused)
-Un site vitrine présentant les services de l'entreprise, les coordonnées de contact, les bureaux à Dakar et en France, avec une mise en page claire et professionnelle.
+**Complexity Level**: Light Application (multiple features with basic state)
+Une application combinant un site vitrine avec des espaces utilisateurs authentifiés pour expéditeurs et transporteurs, incluant la gestion complète des envois, itinéraires, et options tarifaires spécialisées comme le GP (Gros Poids).
 
 ## Essential Features
+
+### Authentification et Gestion d'Utilisateurs
+- **Functionality**: Système d'inscription et connexion permettant aux utilisateurs de choisir leur rôle (expéditeur ou transporteur)
+- **Purpose**: Sécuriser l'accès aux tableaux de bord et personnaliser l'expérience utilisateur
+- **Trigger**: Clic sur "Espace Client" dans la navigation ou "Commencer" sur la page d'accueil
+- **Progression**: Sélection du rôle → Saisie des informations (nom, email, téléphone) → Validation → Redirection vers tableau de bord approprié
+- **Success criteria**: L'utilisateur accède à son espace personnalisé avec données persistantes entre sessions
+
+
+### Tableau de Bord Expéditeur
+- **Functionality**: Interface complète pour les expéditeurs permettant de créer, gérer et suivre leurs envois de colis
+- **Purpose**: Centraliser toute la gestion des envois en un seul endroit avec visibilité complète
+- **Trigger**: Connexion en tant qu'expéditeur
+- **Progression**: Vue d'ensemble (statistiques) → Création nouvel envoi → Saisie détails (titre, description, taille incluant GP, poids, origine/destination, dates, prix) → Suivi des envois (en attente, en transit, livrés)
+- **Success criteria**: Les expéditeurs peuvent créer des demandes d'envoi avec option GP (Gros Poids >50kg), voir leurs statistiques et suivre l'état de tous leurs colis
+
+### Tableau de Bord Transporteur
+- **Functionality**: Interface dédiée pour les transporteurs leur permettant d'ajouter leurs itinéraires et définir leurs tarifs incluant le prix au kg pour GP
+- **Purpose**: Permettre aux transporteurs de monétiser leurs trajets en transportant des colis
+- **Trigger**: Connexion en tant que transporteur
+- **Progression**: Vue d'ensemble (statistiques, revenus) → Ajout itinéraire → Saisie détails (origine, destination, dates, type véhicule, capacité, prix/kg pour GP) → Gestion itinéraires (à venir, passés)
+- **Success criteria**: Les transporteurs peuvent créer des itinéraires avec tarification GP personnalisée, voir leurs revenus estimés et gérer tous leurs trajets
+
+### Option GP (Gros Poids) avec Tarification au Kg
+- **Functionality**: Catégorie spéciale pour les envois de plus de 50kg avec tarification au kg définie par le transporteur
+- **Purpose**: Permettre le transport de gros volumes avec une tarification flexible et transparente
+- **Trigger**: Sélection de "GP - Gros Poids (>50kg)" lors de la création d'envoi ou définition du prix/kg lors de la création d'itinéraire
+- **Progression**: Expéditeur sélectionne GP → Saisit poids exact → Système calcule coût basé sur prix/kg du transporteur → Validation
+- **Success criteria**: Les envois GP sont correctement catégorisés et les prix calculés automatiquement selon le tarif au kg du transporteur
+
+## Essential Features (continued from original)
 
 ### Section Héro/Accueil
 - **Functionality**: Grande section d'accueil avec le nom de l'entreprise, slogan et visuels attractifs

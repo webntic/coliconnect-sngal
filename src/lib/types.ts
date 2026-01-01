@@ -1,6 +1,6 @@
 export type UserRole = 'sender' | 'transporter'
 
-export type PackageSize = 'small' | 'medium' | 'large' | 'xlarge'
+export type PackageSize = 'small' | 'medium' | 'large' | 'xlarge' | 'gp'
 
 export type PackageStatus = 'pending' | 'matched' | 'in_transit' | 'delivered' | 'cancelled'
 

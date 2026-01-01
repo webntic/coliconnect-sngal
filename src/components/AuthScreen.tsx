@@ -44,35 +44,35 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
               <Package size={32} weight="bold" className="text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-3xl font-bold">ShipConnect</CardTitle>
+          <CardTitle className="text-3xl font-bold">MBS Transport</CardTitle>
           <CardDescription className="text-base">
-            Connect, ship, and deliver packages worldwide
+            Connectez, expédiez et livrez des colis dans le monde entier
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label className="text-sm font-medium">I want to</Label>
+                <Label className="text-sm font-medium">Je souhaite</Label>
                 <Tabs value={selectedRole} onValueChange={(v) => setSelectedRole(v as UserRole)} className="w-full">
                   <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="sender" className="flex items-center gap-2">
                       <Package size={18} />
-                      <span>Ship Packages</span>
+                      <span>Envoyer Colis</span>
                     </TabsTrigger>
                     <TabsTrigger value="transporter" className="flex items-center gap-2">
                       <Truck size={18} />
-                      <span>Transport</span>
+                      <span>Transporter</span>
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">Nom Complet</Label>
                 <Input
                   id="name"
-                  placeholder="John Doe"
+                  placeholder="Amadou Diallo"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -84,7 +84,7 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="amadou@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -92,7 +92,7 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone">Numéro de Téléphone</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -104,12 +104,12 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
               </div>
             </div>
 
-            <Button type="submit" className="w-full h-11 text-base font-semibold" size="lg">
-              Get Started
+            <Button type="submit" className="w-full h-11 text-base font-semibold bg-accent hover:bg-accent/90" size="lg">
+              Commencer
             </Button>
 
             <p className="text-xs text-center text-muted-foreground">
-              By continuing, you agree to our Terms of Service and Privacy Policy
+              En continuant, vous acceptez nos Conditions d'Utilisation et notre Politique de Confidentialité
             </p>
           </form>
         </CardContent>
