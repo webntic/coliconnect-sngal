@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Route, User } from '@/lib/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { BookingDialog } from '@/components/BookingDialog'
 import { 
   MapPin, 
   Calendar, 
@@ -24,6 +26,8 @@ interface DeparturesScheduleProps {
 export function DeparturesSchedule({ standalone = true }: DeparturesScheduleProps) {
   const [routes] = useKV<Route[]>('routes', [])
   const [users] = useKV<User[]>('users', [])
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null)
+  const [bookingDialogOpen, setBookingDialogOpen] = useState(false)
 
   const verifiedRoutes = (routes || [])
     .filter(route => {
@@ -34,6 +38,11 @@ export function DeparturesSchedule({ standalone = true }: DeparturesScheduleProp
 
   const getTransporter = (transporterId: string) => {
     return users?.find(u => u.id === transporterId)
+  }
+
+  const handleBooking = (route: Route) => {
+    setSelectedRoute(route)
+    setBookingDialogOpen(true)
   }
 
   if (verifiedRoutes.length === 0) {
@@ -173,7 +182,11 @@ export function DeparturesSchedule({ standalone = true }: DeparturesScheduleProp
                     </Badge>
                   </div>
                   
-                  <Button variant="default" size="sm">
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={() => handleBooking(route)}
+                  >
                     Réserver ce trajet
                   </Button>
                 </div>
@@ -182,6 +195,15 @@ export function DeparturesSchedule({ standalone = true }: DeparturesScheduleProp
           )
         })}
       </div>
+
+      {selectedRoute && (
+        <BookingDialog
+          open={bookingDialogOpen}
+          onOpenChange={setBookingDialogOpen}
+          route={selectedRoute}
+          transporter={getTransporter(selectedRoute.transporterId)!}
+        />
+      )}
     </>
   )
   
