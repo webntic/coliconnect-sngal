@@ -100,3 +100,15 @@ export interface Review {
   transactionId: string
   createdAt: string
 }
+
+export interface AdminCredentials {
+  username: string
+  password: string
+}
+
+export interface UserCredentials {
+  email: string
+  password: string
+  userId: string
+  role: UserRole
+}

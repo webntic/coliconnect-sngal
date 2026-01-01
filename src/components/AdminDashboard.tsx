@@ -31,6 +31,7 @@ import { AdminRoutesTable } from './AdminRoutesTable'
 import { AdminStats } from './AdminStats'
 import { AdminMessagesMonitor } from './AdminMessagesMonitor'
 import { AdminReviewsMonitor } from './AdminReviewsMonitor'
+import { AdminCredentialsInfo } from './AdminCredentialsInfo'
 
 export function AdminDashboard() {
   const { logout } = useAuth()
@@ -154,66 +155,74 @@ export function AdminDashboard() {
           <TabsContent value="overview" className="space-y-6">
             <AdminStats stats={stats} />
             
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <PackageIcon size={20} />
-                    Colis Récents
-                  </CardTitle>
-                  <CardDescription>
-                    Les 5 derniers colis créés
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {packages?.slice(-5).reverse().map(pkg => (
-                    <div key={pkg.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{pkg.title}</p>
-                        <p className="text-xs text-muted-foreground">{pkg.origin} → {pkg.destination}</p>
-                      </div>
-                      <Badge variant={
-                        pkg.status === 'delivered' ? 'default' :
-                        pkg.status === 'in_transit' ? 'secondary' :
-                        'outline'
-                      }>
-                        {pkg.status}
-                      </Badge>
-                    </div>
-                  ))}
-                  {!packages?.length && (
-                    <p className="text-sm text-muted-foreground text-center py-4">Aucun colis</p>
-                  )}
-                </CardContent>
-              </Card>
+            <div className="grid gap-6 lg:grid-cols-3">
+              <div className="lg:col-span-2 space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <PackageIcon size={20} />
+                        Colis Récents
+                      </CardTitle>
+                      <CardDescription>
+                        Les 5 derniers colis créés
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {packages?.slice(-5).reverse().map(pkg => (
+                        <div key={pkg.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">{pkg.title}</p>
+                            <p className="text-xs text-muted-foreground">{pkg.origin} → {pkg.destination}</p>
+                          </div>
+                          <Badge variant={
+                            pkg.status === 'delivered' ? 'default' :
+                            pkg.status === 'in_transit' ? 'secondary' :
+                            'outline'
+                          }>
+                            {pkg.status}
+                          </Badge>
+                        </div>
+                      ))}
+                      {!packages?.length && (
+                        <p className="text-sm text-muted-foreground text-center py-4">Aucun colis</p>
+                      )}
+                    </CardContent>
+                  </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MapPin size={20} />
-                    Itinéraires Récents
-                  </CardTitle>
-                  <CardDescription>
-                    Les 5 derniers itinéraires créés
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {routes?.slice(-5).reverse().map(route => (
-                    <div key={route.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{route.transporterName}</p>
-                        <p className="text-xs text-muted-foreground">{route.origin} → {route.destination}</p>
-                      </div>
-                      <Badge variant={route.verified ? 'default' : 'outline'}>
-                        {route.verified ? 'Vérifié' : 'En attente'}
-                      </Badge>
-                    </div>
-                  ))}
-                  {!routes?.length && (
-                    <p className="text-sm text-muted-foreground text-center py-4">Aucun itinéraire</p>
-                  )}
-                </CardContent>
-              </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <MapPin size={20} />
+                        Itinéraires Récents
+                      </CardTitle>
+                      <CardDescription>
+                        Les 5 derniers itinéraires créés
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {routes?.slice(-5).reverse().map(route => (
+                        <div key={route.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">{route.transporterName}</p>
+                            <p className="text-xs text-muted-foreground">{route.origin} → {route.destination}</p>
+                          </div>
+                          <Badge variant={route.verified ? 'default' : 'outline'}>
+                            {route.verified ? 'Vérifié' : 'En attente'}
+                          </Badge>
+                        </div>
+                      ))}
+                      {!routes?.length && (
+                        <p className="text-sm text-muted-foreground text-center py-4">Aucun itinéraire</p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+              
+              <div>
+                <AdminCredentialsInfo />
+              </div>
             </div>
 
             <Card>

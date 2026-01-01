@@ -5,11 +5,11 @@ export function useAuth() {
   const [currentUser, setCurrentUser] = useKV<User | null>('current-user', null)
 
   const login = (user: User) => {
-    setCurrentUser(user)
+    setCurrentUser(() => user)
   }
 
   const logout = () => {
-    setCurrentUser(null)
+    setCurrentUser(() => null)
   }
 
   const updateUser = (updates: Partial<User>) => {
