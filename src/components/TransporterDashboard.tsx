@@ -7,12 +7,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Plus, MapPin, Calendar, Truck, CurrencyDollar, SignOut, User as UserIcon, ChatCircle, MagnifyingGlass, Airplane } from '@phosphor-icons/react'
 import { NewRouteDialog } from './NewRouteDialog'
+import { EditRouteDialog } from './EditRouteDialog'
 import { RouteCard } from './RouteCard'
 import { RouteMap } from './RouteMap'
 import { MessagingSystem } from './MessagingSystem'
 import { AvailablePackages } from './AvailablePackages'
 import { TransporterProfile } from './TransporterProfile'
 import { DeparturesSchedule } from './DeparturesSchedule'
+import { toast } from 'sonner'
 
 interface TransporterDashboardProps {
   user?: User
@@ -26,7 +28,9 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
   const [conversations] = useKV<Conversation[]>('conversations', [])
   const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
   const [showNewRoute, setShowNewRoute] = useState(false)
+  const [showEditRoute, setShowEditRoute] = useState(false)
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null)
+  const [editingRoute, setEditingRoute] = useState<Route | null>(null)
   const [showMessaging, setShowMessaging] = useState(false)
   const [activeTab, setActiveTab] = useState<'dashboard' | 'browse' | 'departures' | 'messages' | 'profile'>('dashboard')
   const [showLanding, setShowLanding] = useState(false)
@@ -56,6 +60,23 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
     
     setRoutes((current) => [...(current || []), routeToAdd])
     setShowNewRoute(false)
+    toast.success('Itinéraire ajouté avec succès')
+  }
+
+  const handleEditRoute = (updatedRoute: Route) => {
+    setRoutes((current) => 
+      (current || []).map(route => 
+        route.id === updatedRoute.id ? updatedRoute : route
+      )
+    )
+    setShowEditRoute(false)
+    setEditingRoute(null)
+    toast.success('Itinéraire modifié avec succès')
+  }
+
+  const openEditDialog = (route: Route) => {
+    setEditingRoute(route)
+    setShowEditRoute(true)
   }
 
   if (showLanding) {
@@ -297,7 +318,7 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
               <h3 className="text-lg font-semibold">Itinéraires à Venir</h3>
               <div className="grid gap-4 md:grid-cols-2">
                 {upcomingRoutes.map(route => (
-                  <RouteCard key={route.id} route={route} />
+                  <RouteCard key={route.id} route={route} onEdit={openEditDialog} />
                 ))}
               </div>
             </div>
@@ -322,6 +343,16 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
         open={showNewRoute}
         onClose={() => setShowNewRoute(false)}
         onSubmit={handleAddRoute}
+      />
+      
+      <EditRouteDialog
+        open={showEditRoute}
+        onClose={() => {
+          setShowEditRoute(false)
+          setEditingRoute(null)
+        }}
+        onSubmit={handleEditRoute}
+        route={editingRoute}
       />
       </main>
     </div>

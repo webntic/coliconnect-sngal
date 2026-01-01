@@ -1,13 +1,15 @@
 import { Route } from '@/lib/types'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { MapPin, Calendar, Truck, ArrowRight, Star } from '@phosphor-icons/react'
+import { Button } from '@/components/ui/button'
+import { MapPin, Calendar, Truck, ArrowRight, Star, PencilSimple } from '@phosphor-icons/react'
 
 interface RouteCardProps {
   route: Route
+  onEdit?: (route: Route) => void
 }
 
-export function RouteCard({ route }: RouteCardProps) {
+export function RouteCard({ route, onEdit }: RouteCardProps) {
   const isUpcoming = new Date(route.departureDate) >= new Date()
 
   return (
@@ -51,9 +53,23 @@ export function RouteCard({ route }: RouteCardProps) {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-muted-foreground">{route.availableCapacity}</span>
-            <span className="font-bold text-accent">{route.pricePerKg.toLocaleString()} FCFA/kg</span>
+            <span className="font-bold text-accent">{route.pricePerKg.toLocaleString()}€/kg</span>
           </div>
         </div>
+
+        {onEdit && isUpcoming && (
+          <div className="pt-2 border-t">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => onEdit(route)}
+              className="w-full gap-2"
+            >
+              <PencilSimple size={16} />
+              Modifier l'itinéraire
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   )

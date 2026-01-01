@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -6,13 +6,14 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Route } from '@/lib/types'
 
-interface NewRouteDialogProps {
+interface EditRouteDialogProps {
   open: boolean
   onClose: () => void
-  onSubmit: (route: Omit<Route, 'id' | 'transporterId' | 'transporterName' | 'transporterRating' | 'verified' | 'createdAt'>) => void
+  onSubmit: (route: Route) => void
+  route: Route | null
 }
 
-export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps) {
+export function EditRouteDialog({ open, onClose, onSubmit, route }: EditRouteDialogProps) {
   const [origin, setOrigin] = useState('')
   const [destination, setDestination] = useState('')
   const [departureDate, setDepartureDate] = useState('')
@@ -21,10 +22,25 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
   const [availableCapacity, setAvailableCapacity] = useState('')
   const [pricePerKg, setPricePerKg] = useState('')
 
+  useEffect(() => {
+    if (route) {
+      setOrigin(route.origin)
+      setDestination(route.destination)
+      setDepartureDate(route.departureDate.split('T')[0])
+      setArrivalDate(route.arrivalDate.split('T')[0])
+      setVehicleType(route.vehicleType)
+      setAvailableCapacity(route.availableCapacity)
+      setPricePerKg(route.pricePerKg.toString())
+    }
+  }, [route])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (!route) return
+
     onSubmit({
+      ...route,
       origin,
       destination,
       departureDate,
@@ -34,31 +50,25 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
       pricePerKg: parseFloat(pricePerKg)
     })
 
-    setOrigin('')
-    setDestination('')
-    setDepartureDate('')
-    setArrivalDate('')
-    setVehicleType('Car')
-    setAvailableCapacity('')
-    setPricePerKg('')
+    onClose()
   }
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Ajouter un Nouvel Itinéraire</DialogTitle>
+          <DialogTitle className="text-2xl">Modifier l'Itinéraire</DialogTitle>
           <DialogDescription>
-            Partagez vos plans de voyage et connectez-vous avec des expéditeurs de colis
+            Mettez à jour les informations de votre itinéraire
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6 pt-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="origin">Origine</Label>
+              <Label htmlFor="edit-origin">Origine</Label>
               <Input
-                id="origin"
+                id="edit-origin"
                 placeholder="Dakar, Sénégal"
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
@@ -67,9 +77,9 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="destination">Destination</Label>
+              <Label htmlFor="edit-destination">Destination</Label>
               <Input
-                id="destination"
+                id="edit-destination"
                 placeholder="Paris, France"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
@@ -78,9 +88,9 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="departureDate">Date de Départ</Label>
+              <Label htmlFor="edit-departureDate">Date de Départ</Label>
               <Input
-                id="departureDate"
+                id="edit-departureDate"
                 type="date"
                 value={departureDate}
                 onChange={(e) => setDepartureDate(e.target.value)}
@@ -89,9 +99,9 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="arrivalDate">Date d'Arrivée Estimée</Label>
+              <Label htmlFor="edit-arrivalDate">Date d'Arrivée Estimée</Label>
               <Input
-                id="arrivalDate"
+                id="edit-arrivalDate"
                 type="date"
                 value={arrivalDate}
                 onChange={(e) => setArrivalDate(e.target.value)}
@@ -100,9 +110,9 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="vehicleType">Type de Véhicule</Label>
+              <Label htmlFor="edit-vehicleType">Type de Véhicule</Label>
               <Select value={vehicleType} onValueChange={setVehicleType}>
-                <SelectTrigger id="vehicleType">
+                <SelectTrigger id="edit-vehicleType">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -117,9 +127,9 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="availableCapacity">Capacité Disponible</Label>
+              <Label htmlFor="edit-availableCapacity">Capacité Disponible</Label>
               <Input
-                id="availableCapacity"
+                id="edit-availableCapacity"
                 placeholder="Jusqu'à 20kg"
                 value={availableCapacity}
                 onChange={(e) => setAvailableCapacity(e.target.value)}
@@ -128,9 +138,9 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="pricePerKg">Prix par Kg (€)</Label>
+              <Label htmlFor="edit-pricePerKg">Prix par Kg (€)</Label>
               <Input
-                id="pricePerKg"
+                id="edit-pricePerKg"
                 type="number"
                 step="0.5"
                 placeholder="5"
@@ -149,7 +159,7 @@ export function NewRouteDialog({ open, onClose, onSubmit }: NewRouteDialogProps)
               Annuler
             </Button>
             <Button type="submit" className="flex-1 font-semibold bg-accent hover:bg-accent/90">
-              Ajouter l'Itinéraire
+              Enregistrer les Modifications
             </Button>
           </div>
         </form>
