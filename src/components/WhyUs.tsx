@@ -6,22 +6,22 @@ const advantages = [
   {
     icon: Shield,
     title: 'Sécurité Garantie',
-    description: 'Tous vos colis sont assurés et suivis du départ à l\'arrivée pour une tranquillité totale.',
+    description: 'Chaque colis est inspecté et étiqueté pour un suivi rigoureux.',
+  },
+  {
+    icon: CurrencyDollar,
+    title: 'Tarifs Transparents',
+    description: 'Pas de frais cachés. Vous payez au poids ou au volume selon une grille claire.',
   },
   {
     icon: Clock,
     title: 'Rapidité',
-    description: 'Des délais de livraison optimisés avec nos solutions express et nos routes directes.',
+    description: 'Nous respectons nos délais de livraison pour que vos activités ne s\'arrêtent jamais.',
   },
   {
-    icon: CurrencyDollar,
-    title: 'Tarifs Compétitifs',
-    description: 'Les meilleurs prix du marché sans compromis sur la qualité du service.',
-  },
-  {
-    icon: Headset,
-    title: 'Support 24/7',
-    description: 'Notre équipe est disponible à tout moment pour vous accompagner et vous conseiller.',
+    icon: CheckCircle,
+    title: 'Expertise Locale',
+    description: 'Basés à Dakar (HLM Grand Médine), nous maîtrisons parfaitement le terrain et les formalités douanières.',
   },
   {
     icon: TrendUp,
@@ -29,9 +29,9 @@ const advantages = [
     description: 'Suivez votre colis à chaque étape grâce à notre système de tracking avancé.',
   },
   {
-    icon: CheckCircle,
-    title: 'Fiabilité Prouvée',
-    description: '15 ans d\'expérience et des milliers de clients satisfaits en Afrique et en Europe.',
+    icon: Headset,
+    title: 'Support Client Dévoué',
+    description: 'Notre équipe est disponible à tout moment pour vous accompagner et vous conseiller.',
   },
 ]
 
