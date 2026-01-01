@@ -38,9 +38,13 @@ import {
   ShieldCheck,
   UserSwitch,
   Lock,
-  LockOpen
+  LockOpen,
+  Crown
 } from '@phosphor-icons/react'
 import { toast } from 'sonner'
+import { usePermissions } from '@/hooks/use-permissions'
+import { Permission } from '@/lib/permissions'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 
 interface UserManagementProps {
   searchQuery: string
@@ -48,7 +52,8 @@ interface UserManagementProps {
 
 export function UserManagement({ searchQuery }: UserManagementProps) {
   const [users, setUsers] = useKV<User[]>('users', [])
-  const [roleFilter, setRoleFilter] = useState<'all' | 'sender' | 'transporter' | 'admin'>('all')
+  const { hasPermission, canManageUser, getEditableRoles, isSuperAdmin } = usePermissions()
+  const [roleFilter, setRoleFilter] = useState<'all' | 'sender' | 'transporter' | 'admin' | 'superadmin'>('all')
   const [verifiedFilter, setVerifiedFilter] = useState<'all' | 'verified' | 'unverified'>('all')
   const [sortBy, setSortBy] = useState<'name' | 'created' | 'rating' | 'transactions'>('created')
   
@@ -149,6 +154,13 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
   const handleChangeRole = () => {
     if (!selectedUser) return
 
+    if (!canManageUser(newRole)) {
+      toast.error('Permission refusée', {
+        description: 'Vous n\'avez pas la permission de changer ce rôle.'
+      })
+      return
+    }
+
     setUsers((currentUsers) =>
       (currentUsers || []).map(user =>
         user.id === selectedUser.id
@@ -158,10 +170,7 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
     )
 
     toast.success('Rôle modifié', {
-      description: `${selectedUser.name} est maintenant ${
-        newRole === 'admin' ? 'Administrateur' : 
-        newRole === 'sender' ? 'Expéditeur' : 'Transporteur'
-      }.`
+      description: `${selectedUser.name} est maintenant ${getRoleLabel(newRole)}.`
     })
     setIsRoleDialogOpen(false)
     setSelectedUser(null)
@@ -169,6 +178,20 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
 
   const handleDeleteUser = () => {
     if (!selectedUser) return
+
+    if (!hasPermission(Permission.DELETE_USERS)) {
+      toast.error('Permission refusée', {
+        description: 'Vous n\'avez pas la permission de supprimer des utilisateurs.'
+      })
+      return
+    }
+
+    if (!canManageUser(selectedUser.role)) {
+      toast.error('Permission refusée', {
+        description: 'Vous ne pouvez pas supprimer cet utilisateur.'
+      })
+      return
+    }
 
     setUsers((currentUsers) =>
       (currentUsers || []).filter(user => user.id !== selectedUser.id)
@@ -202,6 +225,8 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
 
   const getRoleIcon = (role: UserRole) => {
     switch (role) {
+      case 'superadmin':
+        return <Crown className="text-yellow-600" size={24} weight="fill" />
       case 'admin':
         return <ShieldCheck className="text-purple-600" size={24} weight="fill" />
       case 'transporter':
@@ -214,6 +239,8 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
 
   const getRoleLabel = (role: UserRole) => {
     switch (role) {
+      case 'superadmin':
+        return 'Super Administrateur'
       case 'admin':
         return 'Administrateur'
       case 'transporter':
@@ -226,6 +253,8 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
 
   const getRoleBadgeVariant = (role: UserRole) => {
     switch (role) {
+      case 'superadmin':
+        return 'default'
       case 'admin':
         return 'destructive'
       case 'transporter':
@@ -234,6 +263,31 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
       default:
         return 'secondary'
     }
+  }
+
+  const canEditUser = (user: User) => {
+    if (!hasPermission(Permission.EDIT_USERS)) return false
+    return canManageUser(user.role)
+  }
+
+  const canDeleteUser = (user: User) => {
+    if (!hasPermission(Permission.DELETE_USERS)) return false
+    return canManageUser(user.role)
+  }
+
+  const canChangeRole = (user: User) => {
+    if (!hasPermission(Permission.CHANGE_USER_ROLES)) return false
+    return canManageUser(user.role)
+  }
+
+  if (!hasPermission(Permission.VIEW_USERS)) {
+    return (
+      <Alert>
+        <AlertDescription>
+          Vous n'avez pas la permission de voir les utilisateurs.
+        </AlertDescription>
+      </Alert>
+    )
   }
 
   return (
@@ -262,6 +316,7 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
                 <SelectItem value="sender">Expéditeurs</SelectItem>
                 <SelectItem value="transporter">Transporteurs</SelectItem>
                 <SelectItem value="admin">Administrateurs</SelectItem>
+                {isSuperAdmin && <SelectItem value="superadmin">Super Administrateurs</SelectItem>}
               </SelectContent>
             </Select>
 
@@ -387,31 +442,37 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center justify-end gap-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => openRoleDialog(user)}
-                            title="Changer le rôle"
-                          >
-                            <UserSwitch size={18} />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => openEditDialog(user)}
-                            title="Modifier l'utilisateur"
-                          >
-                            <PencilSimple size={18} />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => openDeleteDialog(user)}
-                            title="Supprimer l'utilisateur"
-                            className="text-destructive hover:text-destructive"
-                          >
-                            <Trash size={18} />
-                          </Button>
+                          {canChangeRole(user) && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => openRoleDialog(user)}
+                              title="Changer le rôle"
+                            >
+                              <UserSwitch size={18} />
+                            </Button>
+                          )}
+                          {canEditUser(user) && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => openEditDialog(user)}
+                              title="Modifier l'utilisateur"
+                            >
+                              <PencilSimple size={18} />
+                            </Button>
+                          )}
+                          {canDeleteUser(user) && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => openDeleteDialog(user)}
+                              title="Supprimer l'utilisateur"
+                              className="text-destructive hover:text-destructive"
+                            >
+                              <Trash size={18} />
+                            </Button>
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -524,26 +585,25 @@ export function UserManagement({ searchQuery }: UserManagementProps) {
                   <SelectValue placeholder="Sélectionner un rôle" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="sender">
-                    <div className="flex items-center gap-2">
-                      <UserCircle size={18} />
-                      <span>Expéditeur</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="transporter">
-                    <div className="flex items-center gap-2">
-                      <Truck size={18} />
-                      <span>Transporteur</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="admin">
-                    <div className="flex items-center gap-2">
-                      <ShieldCheck size={18} />
-                      <span>Administrateur</span>
-                    </div>
-                  </SelectItem>
+                  {getEditableRoles().map(role => (
+                    <SelectItem key={role} value={role}>
+                      <div className="flex items-center gap-2">
+                        {role === 'admin' ? (
+                          <ShieldCheck size={18} />
+                        ) : role === 'transporter' ? (
+                          <Truck size={18} />
+                        ) : (
+                          <UserCircle size={18} />
+                        )}
+                        <span>{getRoleLabel(role)}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
+              {getEditableRoles().length === 0 && (
+                <p className="text-sm text-muted-foreground">Aucun rôle disponible pour modification</p>
+              )}
             </div>
 
             <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">

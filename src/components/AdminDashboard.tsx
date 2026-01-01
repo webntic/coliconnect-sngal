@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Package as PackageType, User, Route, Conversation, Message, Review } from '@/lib/types'
 import { useAuth } from '@/hooks/use-auth'
+import { usePermissions } from '@/hooks/use-permissions'
+import { Permission } from '@/lib/permissions'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -36,9 +38,13 @@ import { AdminReviewsMonitor } from './AdminReviewsMonitor'
 import { AdminCredentialsInfo } from './AdminCredentialsInfo'
 import { LogoManager } from './LogoManager'
 import { AdminTravelersMonitor } from './AdminTravelersMonitor'
+import { PermissionGate } from './PermissionGate'
+import { PermissionsDisplay } from './PermissionsDisplay'
+import { RoleBadge } from './RoleBadge'
 
 export function AdminDashboard() {
   const { logout } = useAuth()
+  const { hasPermission } = usePermissions()
   const [users] = useKV<User[]>('users', [])
   const [packages] = useKV<PackageType[]>('packages', [])
   const [routes] = useKV<Route[]>('routes', [])
@@ -114,6 +120,7 @@ export function AdminDashboard() {
                 className="h-12 w-auto object-contain"
               />
             </button>
+            <RoleBadge />
           </div>
 
           <div className="flex items-center gap-4">
@@ -138,38 +145,54 @@ export function AdminDashboard() {
       <div className="max-w-[1600px] mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="space-y-6">
           <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:inline-grid">
-            <TabsTrigger value="overview" className="gap-2">
-              <ChartBar size={18} />
-              <span className="hidden sm:inline">Vue d'ensemble</span>
-            </TabsTrigger>
-            <TabsTrigger value="users" className="gap-2">
-              <Users size={18} />
-              <span className="hidden sm:inline">Utilisateurs</span>
-            </TabsTrigger>
-            <TabsTrigger value="packages" className="gap-2">
-              <PackageIcon size={18} />
-              <span className="hidden sm:inline">Colis</span>
-            </TabsTrigger>
-            <TabsTrigger value="routes" className="gap-2">
-              <MapPin size={18} />
-              <span className="hidden sm:inline">Itinéraires</span>
-            </TabsTrigger>
-            <TabsTrigger value="travelers" className="gap-2">
-              <Airplane size={18} />
-              <span className="hidden sm:inline">Voyageurs</span>
-            </TabsTrigger>
-            <TabsTrigger value="messages" className="gap-2">
-              <ChatCircle size={18} />
-              <span className="hidden sm:inline">Messages</span>
-            </TabsTrigger>
-            <TabsTrigger value="reviews" className="gap-2">
-              <Star size={18} />
-              <span className="hidden sm:inline">Avis</span>
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="gap-2">
-              <Gear size={18} />
-              <span className="hidden sm:inline">Paramètres</span>
-            </TabsTrigger>
+            {hasPermission(Permission.VIEW_STATISTICS) && (
+              <TabsTrigger value="overview" className="gap-2">
+                <ChartBar size={18} />
+                <span className="hidden sm:inline">Vue d'ensemble</span>
+              </TabsTrigger>
+            )}
+            {hasPermission(Permission.VIEW_USERS) && (
+              <TabsTrigger value="users" className="gap-2">
+                <Users size={18} />
+                <span className="hidden sm:inline">Utilisateurs</span>
+              </TabsTrigger>
+            )}
+            {hasPermission(Permission.VIEW_PACKAGES) && (
+              <TabsTrigger value="packages" className="gap-2">
+                <PackageIcon size={18} />
+                <span className="hidden sm:inline">Colis</span>
+              </TabsTrigger>
+            )}
+            {hasPermission(Permission.VIEW_ROUTES) && (
+              <TabsTrigger value="routes" className="gap-2">
+                <MapPin size={18} />
+                <span className="hidden sm:inline">Itinéraires</span>
+              </TabsTrigger>
+            )}
+            {hasPermission(Permission.VIEW_TRAVELERS) && (
+              <TabsTrigger value="travelers" className="gap-2">
+                <Airplane size={18} />
+                <span className="hidden sm:inline">Voyageurs</span>
+              </TabsTrigger>
+            )}
+            {hasPermission(Permission.VIEW_MESSAGES) && (
+              <TabsTrigger value="messages" className="gap-2">
+                <ChatCircle size={18} />
+                <span className="hidden sm:inline">Messages</span>
+              </TabsTrigger>
+            )}
+            {hasPermission(Permission.VIEW_REVIEWS) && (
+              <TabsTrigger value="reviews" className="gap-2">
+                <Star size={18} />
+                <span className="hidden sm:inline">Avis</span>
+              </TabsTrigger>
+            )}
+            {hasPermission(Permission.MANAGE_SETTINGS) && (
+              <TabsTrigger value="settings" className="gap-2">
+                <Gear size={18} />
+                <span className="hidden sm:inline">Paramètres</span>
+              </TabsTrigger>
+            )}
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -291,42 +314,57 @@ export function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="users">
-            <UserManagement searchQuery={searchQuery} />
+            <PermissionGate permission={Permission.VIEW_USERS}>
+              <UserManagement searchQuery={searchQuery} />
+            </PermissionGate>
           </TabsContent>
 
           <TabsContent value="packages">
-            <AdminPackagesTable packages={packages || []} users={users || []} searchQuery={searchQuery} />
+            <PermissionGate permission={Permission.VIEW_PACKAGES}>
+              <AdminPackagesTable packages={packages || []} users={users || []} searchQuery={searchQuery} />
+            </PermissionGate>
           </TabsContent>
 
           <TabsContent value="routes">
-            <AdminRoutesTable routes={routes || []} users={users || []} searchQuery={searchQuery} />
+            <PermissionGate permission={Permission.VIEW_ROUTES}>
+              <AdminRoutesTable routes={routes || []} users={users || []} searchQuery={searchQuery} />
+            </PermissionGate>
           </TabsContent>
 
           <TabsContent value="travelers">
-            <AdminTravelersMonitor />
+            <PermissionGate permission={Permission.VIEW_TRAVELERS}>
+              <AdminTravelersMonitor />
+            </PermissionGate>
           </TabsContent>
 
           <TabsContent value="messages">
-            <AdminMessagesMonitor 
-              conversations={conversations || []} 
-              messages={messages || []}
-              users={users || []}
-              searchQuery={searchQuery}
-            />
+            <PermissionGate permission={Permission.VIEW_MESSAGES}>
+              <AdminMessagesMonitor 
+                conversations={conversations || []} 
+                messages={messages || []}
+                users={users || []}
+                searchQuery={searchQuery}
+              />
+            </PermissionGate>
           </TabsContent>
 
           <TabsContent value="reviews">
-            <AdminReviewsMonitor 
-              reviews={reviews || []}
-              users={users || []}
-              searchQuery={searchQuery}
-            />
+            <PermissionGate permission={Permission.VIEW_REVIEWS}>
+              <AdminReviewsMonitor 
+                reviews={reviews || []}
+                users={users || []}
+                searchQuery={searchQuery}
+              />
+            </PermissionGate>
           </TabsContent>
 
           <TabsContent value="settings">
-            <div className="max-w-2xl mx-auto">
-              <LogoManager />
-            </div>
+            <PermissionGate permission={Permission.MANAGE_SETTINGS}>
+              <div className="max-w-4xl mx-auto space-y-6">
+                <PermissionsDisplay />
+                <LogoManager />
+              </div>
+            </PermissionGate>
           </TabsContent>
         </Tabs>
       </div>

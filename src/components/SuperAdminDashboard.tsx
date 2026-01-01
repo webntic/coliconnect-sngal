@@ -12,6 +12,7 @@ import { SuperAdminDataManager } from '@/components/SuperAdminDataManager'
 import { SuperAdminStats } from '@/components/SuperAdminStats'
 import { SuperAdminActivityLog } from '@/components/SuperAdminActivityLog'
 import { SuperAdminSettings } from '@/components/SuperAdminSettings'
+import { RoleBadge } from '@/components/RoleBadge'
 
 export function SuperAdminDashboard() {
   const { logout } = useAuth()
@@ -25,12 +26,15 @@ export function SuperAdminDashboard() {
           <div className="h-24 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <img src={logoUrl} alt="MBS Transport" className="h-16 w-auto" />
-              <div>
+              <div className="space-y-1">
                 <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
                   <ShieldCheck className="text-destructive" weight="fill" size={28} />
                   Super Administrateur
                 </h1>
-                <p className="text-sm text-muted-foreground">Gestion complète de la plateforme</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-muted-foreground">Gestion complète de la plateforme</p>
+                  <RoleBadge size="sm" />
+                </div>
               </div>
             </div>
             <Button onClick={logout} variant="outline" className="gap-2">
