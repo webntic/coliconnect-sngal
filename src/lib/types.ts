@@ -1,0 +1,81 @@
+export type UserRole = 'sender' | 'transporter'
+
+export type PackageSize = 'small' | 'medium' | 'large' | 'xlarge'
+
+export type PackageStatus = 'pending' | 'matched' | 'in_transit' | 'delivered' | 'cancelled'
+
+export interface User {
+  id: string
+  name: string
+  email: string
+  phone: string
+  role: UserRole
+  avatar?: string
+  rating: number
+  totalTransactions: number
+  verified: boolean
+  createdAt: string
+}
+
+export interface Package {
+  id: string
+  senderId: string
+  senderName: string
+  title: string
+  description: string
+  size: PackageSize
+  weight: number
+  origin: string
+  destination: string
+  pickupDate: string
+  deliveryDeadline: string
+  price: number
+  status: PackageStatus
+  transporterId?: string
+  createdAt: string
+}
+
+export interface Route {
+  id: string
+  transporterId: string
+  transporterName: string
+  transporterRating: number
+  origin: string
+  destination: string
+  departureDate: string
+  arrivalDate: string
+  vehicleType: string
+  availableCapacity: string
+  pricePerKg: number
+  verified: boolean
+  createdAt: string
+}
+
+export interface Match {
+  id: string
+  packageId: string
+  routeId: string
+  compatibilityScore: number
+  status: 'pending' | 'accepted' | 'rejected'
+  createdAt: string
+}
+
+export interface Message {
+  id: string
+  senderId: string
+  receiverId: string
+  content: string
+  timestamp: string
+  read: boolean
+}
+
+export interface Review {
+  id: string
+  reviewerId: string
+  reviewerName: string
+  revieweeId: string
+  rating: number
+  comment: string
+  transactionId: string
+  createdAt: string
+}
