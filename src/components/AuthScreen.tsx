@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Package, Truck, Shield, Eye, EyeSlash, House, EnvelopeSimple, Sparkle } from '@phosphor-icons/react'
+import { Package, Truck, Shield, Eye, EyeSlash, House, EnvelopeSimple } from '@phosphor-icons/react'
 import { User, UserRole } from '@/lib/types'
 import { toast } from 'sonner'
 import { verifyAdminCredentials, verifyUserCredentials, registerUser, initializeAdminCredentials, validatePassword } from '@/lib/auth'
@@ -708,109 +708,6 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                       </p>
                     </div>
                   </motion.form>
-
-                  <div className="mt-6 pt-6 border-t">
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.9 }}
-                      className="text-center mb-3"
-                    >
-                      <div className="flex items-center justify-center gap-2 mb-1">
-                        <Sparkle size={16} weight="fill" className="text-accent" />
-                        <p className="text-sm font-semibold text-foreground">Accès Rapide Démo</p>
-                      </div>
-                      <p className="text-xs text-muted-foreground">Testez avec un compte démo</p>
-                    </motion.div>
-                    
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1 }}
-                      className="grid grid-cols-3 gap-2"
-                    >
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button
-                        type="button"
-                        onClick={() => {
-                          const adminUser: User = {
-                            id: 'admin-demo',
-                            name: 'Administrateur MBS',
-                            email: 'admin@mbstransport.com',
-                            phone: '+221 77 306 15 15',
-                            role: 'admin',
-                            rating: 5.0,
-                            totalTransactions: 0,
-                            verified: true,
-                            createdAt: new Date().toISOString()
-                          }
-                          toast.success('Connexion Admin')
-                          onAuth(adminUser)
-                        }}
-                        variant="outline"
-                        size="sm"
-                        className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
-                      >
-                        <Shield size={20} weight="fill" className="text-primary" />
-                        <span className="text-xs font-semibold">Admin</span>
-                      </Button>
-                      </motion.div>
-
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button
-                        type="button"
-                        onClick={() => {
-                          const senderUser: User = {
-                            id: 'sender-demo',
-                            name: 'Amadou Diallo',
-                            email: 'client@mbstransport.com',
-                            phone: '+221 77 123 45 67',
-                            role: 'sender',
-                            rating: 4.8,
-                            totalTransactions: 12,
-                            verified: true,
-                            createdAt: new Date().toISOString()
-                          }
-                          toast.success('Connexion Client')
-                          onAuth(senderUser)
-                        }}
-                        variant="outline"
-                        size="sm"
-                        className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
-                      >
-                        <Package size={20} weight="fill" className="text-primary" />
-                        <span className="text-xs font-semibold">Client</span>
-                      </Button>
-                      </motion.div>
-
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button
-                        type="button"
-                        onClick={() => {
-                          const transporterUser: User = {
-                            id: 'transporter-demo',
-                            name: 'Moussa Sarr',
-                            email: 'transporteur@mbstransport.com',
-                            phone: '+221 77 987 65 43',
-                            role: 'transporter',
-                            rating: 4.9,
-                            totalTransactions: 45,
-                            verified: true,
-                            createdAt: new Date().toISOString()
-                          }
-                          toast.success('Connexion Transporteur')
-                          onAuth(transporterUser)
-                        }}
-                        variant="outline"
-                        size="sm"
-                        className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
-                      >
-                        <Truck size={20} weight="fill" className="text-primary" />
-                        <span className="text-xs font-semibold">Transp.</span>
-                      </Button>
-                      </motion.div>
-                    </motion.div>
-                  </div>
                 </CardContent>
               </Card>
             </motion.div>
