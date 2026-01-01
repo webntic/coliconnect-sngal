@@ -5,13 +5,14 @@ import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Plus, MapPin, Calendar, Truck, CurrencyDollar, SignOut, User as UserIcon, ChatCircle, MagnifyingGlass } from '@phosphor-icons/react'
+import { Plus, MapPin, Calendar, Truck, CurrencyDollar, SignOut, User as UserIcon, ChatCircle, MagnifyingGlass, Airplane } from '@phosphor-icons/react'
 import { NewRouteDialog } from './NewRouteDialog'
 import { RouteCard } from './RouteCard'
 import { RouteMap } from './RouteMap'
 import { MessagingSystem } from './MessagingSystem'
 import { AvailablePackages } from './AvailablePackages'
 import { TransporterProfile } from './TransporterProfile'
+import { DeparturesSchedule } from './DeparturesSchedule'
 
 interface TransporterDashboardProps {
   user?: User
@@ -23,10 +24,12 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
   const [routes, setRoutes] = useKV<Route[]>('routes', [])
   const [packages] = useKV<PackageType[]>('packages', [])
   const [conversations] = useKV<Conversation[]>('conversations', [])
+  const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
   const [showNewRoute, setShowNewRoute] = useState(false)
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null)
   const [showMessaging, setShowMessaging] = useState(false)
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'browse' | 'messages' | 'profile'>('dashboard')
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'browse' | 'departures' | 'messages' | 'profile'>('dashboard')
+  const [showLanding, setShowLanding] = useState(false)
 
   if (!user) {
     return null
@@ -55,22 +58,37 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
     setShowNewRoute(false)
   }
 
+  if (showLanding) {
+    window.location.href = '/'
+    return null
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur-sm">
         <div className="container max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-xl font-bold text-primary-foreground">MBS</span>
-              </div>
-              <div>
-                <div className="text-lg font-bold text-foreground">Tableau de Bord Transporteur</div>
-                <div className="text-xs text-muted-foreground">Mondial Bagage Services</div>
-              </div>
-            </div>
+            <button 
+              onClick={() => setShowLanding(true)}
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
+            >
+              <img 
+                src={logoUrl} 
+                alt="MBS Transport" 
+                className="h-12 w-auto object-contain"
+              />
+            </button>
             
             <div className="flex items-center gap-4">
+              <Button 
+                variant={activeTab === 'departures' ? 'default' : 'outline'}
+                size="sm" 
+                onClick={() => setActiveTab('departures')}
+                className="gap-2"
+              >
+                <Airplane size={18} />
+                <span className="hidden sm:inline">Nos Départs</span>
+              </Button>
               <Button 
                 variant={activeTab === 'browse' ? 'default' : 'outline'}
                 size="sm" 
@@ -113,7 +131,25 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
       </header>
 
       <main className="container max-w-7xl mx-auto px-6 py-8">
-        {activeTab === 'profile' ? (
+        {activeTab === 'departures' ? (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight">Nos Départs</h2>
+                <p className="text-muted-foreground mt-1">
+                  Planning des vols et itinéraires validés
+                </p>
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={() => setActiveTab('dashboard')}
+              >
+                Retour au tableau de bord
+              </Button>
+            </div>
+            <DeparturesSchedule standalone={false} />
+          </div>
+        ) : activeTab === 'profile' ? (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>

@@ -14,6 +14,7 @@ import { SenderDashboard } from '@/components/SenderDashboard'
 import { TransporterDashboard } from '@/components/TransporterDashboard'
 import { AdminDashboard } from '@/components/AdminDashboard'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
+import { DeparturesSchedule } from '@/components/DeparturesSchedule'
 import { useAuth } from '@/hooks/use-auth'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -60,6 +61,9 @@ function App() {
       <PricingInfo />
       <About />
       <WhyUs />
+      <div id="nos-departs" className="py-20 bg-gradient-to-b from-background via-muted/20 to-background">
+        <DeparturesSchedule standalone={true} />
+      </div>
       <Contact />
       <Footer />
       <WhatsAppButton />

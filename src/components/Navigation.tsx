@@ -81,6 +81,13 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
             <button
+              onClick={() => scrollToSection('nos-departs')}
+              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
+            >
+              Nos Départs
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
+            </button>
+            <button
               onClick={() => scrollToSection('contact')}
               className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
             >
@@ -143,6 +150,12 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
             >
               Voyageur Plus
+            </button>
+            <button
+              onClick={() => scrollToSection('nos-departs')}
+              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
+            >
+              Nos Départs
             </button>
             <button
               onClick={() => scrollToSection('contact')}

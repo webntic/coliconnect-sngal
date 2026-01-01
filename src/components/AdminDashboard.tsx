@@ -45,8 +45,10 @@ export function AdminDashboard() {
   const [conversations] = useKV<Conversation[]>('conversations', [])
   const [messages] = useKV<Message[]>('messages', [])
   const [reviews] = useKV<Review[]>('reviews', [])
+  const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
   const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'packages' | 'routes' | 'travelers' | 'messages' | 'reviews' | 'settings'>('overview')
   const [searchQuery, setSearchQuery] = useState('')
+  const [showLanding, setShowLanding] = useState(false)
 
   const stats = useMemo(() => {
     const totalUsers = users?.length || 0
@@ -92,20 +94,26 @@ export function AdminDashboard() {
     }
   }, [users, packages, routes, conversations, messages, reviews])
 
+  if (showLanding) {
+    window.location.href = '/'
+    return null
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b bg-card backdrop-blur-sm">
         <div className="max-w-[1600px] mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                <ChartBar className="text-primary-foreground" size={24} weight="bold" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Admin Dashboard</h1>
-                <p className="text-xs text-muted-foreground">MBS Transport</p>
-              </div>
-            </div>
+            <button 
+              onClick={() => setShowLanding(true)}
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
+            >
+              <img 
+                src={logoUrl} 
+                alt="MBS Transport" 
+                className="h-12 w-auto object-contain"
+              />
+            </button>
           </div>
 
           <div className="flex items-center gap-4">
