@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -7,13 +7,17 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { User, UserCredentials } from '@/lib/types'
 import { registerUser } from '@/lib/auth'
-import { Plus, Trash, Key } from '@phosphor-icons/react'
+import { Plus, Trash, Key, PencilSimple } from '@phosphor-icons/react'
 import { toast } from 'sonner'
+import { ActivityLogEntry } from '@/components/SuperAdminActivityLog'
+import { Badge } from '@/components/ui/badge'
 
 export function SuperAdminAdminsManager() {
   const [users] = useKV<User[]>('users', [])
   const [credentials, setCredentials] = useKV<UserCredentials[]>('user-credentials', [])
+  const [activityLog, setActivityLog] = useKV<ActivityLogEntry[]>('activity-log', [])
   const [isCreateOpen, setIsCreateOpen] = useState(false)
+  const [editingAdmin, setEditingAdmin] = useState<User | null>(null)
   const [newAdmin, setNewAdmin] = useState({
     name: '',
     email: '',
@@ -22,6 +26,18 @@ export function SuperAdminAdminsManager() {
   })
 
   const admins = (users || []).filter(u => u.role === 'admin')
+
+  const logActivity = (action: ActivityLogEntry['action'], actor: string, target?: string, details?: string) => {
+    const newLog: ActivityLogEntry = {
+      id: `log-${Date.now()}-${Math.random()}`,
+      timestamp: new Date().toISOString(),
+      action,
+      actor,
+      target,
+      details
+    }
+    setActivityLog((current) => [...(current || []), newLog])
+  }
 
   const handleCreateAdmin = async () => {
     if (!newAdmin.name || !newAdmin.email || !newAdmin.phone || !newAdmin.password) {
@@ -47,12 +63,27 @@ export function SuperAdminAdminsManager() {
 
     await registerUser(newAdmin.email, newAdmin.password, adminUser.id, 'admin' as any)
 
+    logActivity('user_created', 'Super Admin', newAdmin.email, `Administrateur ${newAdmin.name} créé`)
+
     setNewAdmin({ name: '', email: '', phone: '', password: '' })
     setIsCreateOpen(false)
     toast.success('Administrateur créé avec succès')
   }
 
-  const handleDeleteAdmin = async (adminId: string, email: string) => {
+  const handleUpdateAdmin = async () => {
+    if (!editingAdmin) return
+
+    const allUsers = await window.spark.kv.get<User[]>('users') || []
+    const updatedUsers = allUsers.map(u => u.id === editingAdmin.id ? editingAdmin : u)
+    await window.spark.kv.set('users', updatedUsers)
+
+    logActivity('user_created', 'Super Admin', editingAdmin.email, `Administrateur ${editingAdmin.name} modifié`)
+
+    setEditingAdmin(null)
+    toast.success('Administrateur modifié avec succès')
+  }
+
+  const handleDeleteAdmin = async (adminId: string, email: string, name: string) => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cet administrateur ?')) {
       return
     }
@@ -63,10 +94,12 @@ export function SuperAdminAdminsManager() {
 
     setCredentials((current) => (current || []).filter(c => c.email !== email.toLowerCase()))
 
+    logActivity('user_deleted', 'Super Admin', email, `Administrateur ${name} supprimé`)
+
     toast.success('Administrateur supprimé')
   }
 
-  const handleResetPassword = async (adminId: string, email: string) => {
+  const handleResetPassword = async (adminId: string, email: string, name: string) => {
     const newPassword = prompt('Nouveau mot de passe pour cet administrateur :')
     
     if (!newPassword) return
@@ -77,6 +110,9 @@ export function SuperAdminAdminsManager() {
     }
 
     await registerUser(email, newPassword, adminId, 'admin' as any)
+    
+    logActivity('password_reset', 'Super Admin', email, `Mot de passe réinitialisé pour ${name}`)
+    
     toast.success('Mot de passe réinitialisé avec succès')
   }
 
@@ -152,6 +188,54 @@ export function SuperAdminAdminsManager() {
         </Dialog>
       </div>
 
+      <Dialog open={!!editingAdmin} onOpenChange={(open) => !open && setEditingAdmin(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Modifier l'Administrateur</DialogTitle>
+            <DialogDescription>
+              Modifier les informations de l'administrateur
+            </DialogDescription>
+          </DialogHeader>
+          {editingAdmin && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="edit-name">Nom complet</Label>
+                <Input
+                  id="edit-name"
+                  value={editingAdmin.name}
+                  onChange={(e) => setEditingAdmin({ ...editingAdmin, name: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-email">Email</Label>
+                <Input
+                  id="edit-email"
+                  type="email"
+                  value={editingAdmin.email}
+                  onChange={(e) => setEditingAdmin({ ...editingAdmin, email: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-phone">Téléphone</Label>
+                <Input
+                  id="edit-phone"
+                  value={editingAdmin.phone}
+                  onChange={(e) => setEditingAdmin({ ...editingAdmin, phone: e.target.value })}
+                />
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingAdmin(null)}>
+              Annuler
+            </Button>
+            <Button onClick={handleUpdateAdmin}>
+              Enregistrer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <div className="border rounded-lg">
         <Table>
           <TableHeader>
@@ -159,6 +243,7 @@ export function SuperAdminAdminsManager() {
               <TableHead>Nom</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Téléphone</TableHead>
+              <TableHead>Statut</TableHead>
               <TableHead>Date de création</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -166,7 +251,7 @@ export function SuperAdminAdminsManager() {
           <TableBody>
             {admins.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground">
+                <TableCell colSpan={6} className="text-center text-muted-foreground">
                   Aucun administrateur
                 </TableCell>
               </TableRow>
@@ -176,22 +261,38 @@ export function SuperAdminAdminsManager() {
                   <TableCell className="font-medium">{admin.name}</TableCell>
                   <TableCell>{admin.email}</TableCell>
                   <TableCell>{admin.phone}</TableCell>
+                  <TableCell>
+                    {admin.verified ? (
+                      <Badge variant="default">Actif</Badge>
+                    ) : (
+                      <Badge variant="outline">Inactif</Badge>
+                    )}
+                  </TableCell>
                   <TableCell>{new Date(admin.createdAt).toLocaleDateString('fr-FR')}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => handleResetPassword(admin.id, admin.email)}
+                        onClick={() => setEditingAdmin(admin)}
+                        className="gap-2"
+                      >
+                        <PencilSimple size={16} />
+                        Modifier
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleResetPassword(admin.id, admin.email, admin.name)}
                         className="gap-2"
                       >
                         <Key size={16} />
-                        Réinitialiser
+                        MDP
                       </Button>
                       <Button
                         size="sm"
                         variant="destructive"
-                        onClick={() => handleDeleteAdmin(admin.id, admin.email)}
+                        onClick={() => handleDeleteAdmin(admin.id, admin.email, admin.name)}
                         className="gap-2"
                       >
                         <Trash size={16} />

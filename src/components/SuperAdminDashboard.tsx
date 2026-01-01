@@ -4,15 +4,18 @@ import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { SignOut, Users, ShieldCheck, Trash, UserPlus } from '@phosphor-icons/react'
+import { SignOut, Users, ShieldCheck, Trash, UserPlus, ChartBar, PulseIcon, GearSix } from '@phosphor-icons/react'
 import { SuperAdminUsersManager } from '@/components/SuperAdminUsersManager'
 import { SuperAdminAdminsManager } from '@/components/SuperAdminAdminsManager'
 import { SuperAdminTransportersManager } from '@/components/SuperAdminTransportersManager'
 import { SuperAdminDataManager } from '@/components/SuperAdminDataManager'
+import { SuperAdminStats } from '@/components/SuperAdminStats'
+import { SuperAdminActivityLog } from '@/components/SuperAdminActivityLog'
+import { SuperAdminSettings } from '@/components/SuperAdminSettings'
 
 export function SuperAdminDashboard() {
   const { logout } = useAuth()
-  const [activeTab, setActiveTab] = useState('admins')
+  const [activeTab, setActiveTab] = useState('stats')
   const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
 
   return (
@@ -40,10 +43,14 @@ export function SuperAdminDashboard() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-grid">
+            <TabsTrigger value="stats" className="gap-2">
+              <ChartBar size={18} />
+              Statistiques
+            </TabsTrigger>
             <TabsTrigger value="admins" className="gap-2">
               <ShieldCheck size={18} />
-              Administrateurs
+              Admins
             </TabsTrigger>
             <TabsTrigger value="transporters" className="gap-2">
               <UserPlus size={18} />
@@ -53,11 +60,23 @@ export function SuperAdminDashboard() {
               <Users size={18} />
               Utilisateurs
             </TabsTrigger>
+            <TabsTrigger value="activity" className="gap-2">
+              <PulseIcon size={18} />
+              Activités
+            </TabsTrigger>
             <TabsTrigger value="data" className="gap-2">
               <Trash size={18} />
               Données
             </TabsTrigger>
+            <TabsTrigger value="settings" className="gap-2">
+              <GearSix size={18} />
+              Paramètres
+            </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="stats" className="space-y-6">
+            <SuperAdminStats />
+          </TabsContent>
 
           <TabsContent value="admins" className="space-y-6">
             <Card>
@@ -101,6 +120,20 @@ export function SuperAdminDashboard() {
             </Card>
           </TabsContent>
 
+          <TabsContent value="activity" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Journal d'Activités</CardTitle>
+                <CardDescription>
+                  Suivre toutes les actions importantes sur la plateforme
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <SuperAdminActivityLog />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="data" className="space-y-6">
             <Card>
               <CardHeader>
@@ -113,6 +146,10 @@ export function SuperAdminDashboard() {
                 <SuperAdminDataManager />
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="settings" className="space-y-6">
+            <SuperAdminSettings />
           </TabsContent>
         </Tabs>
       </main>
