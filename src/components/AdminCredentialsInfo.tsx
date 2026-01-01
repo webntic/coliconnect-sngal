@@ -21,7 +21,7 @@ export function AdminCredentialsInfo() {
               <User size={20} className="text-primary mt-0.5" weight="fill" />
               <div className="flex-1">
                 <p className="text-sm font-medium text-muted-foreground">Identifiant</p>
-                <p className="text-base font-mono font-semibold">admin@mbstransport</p>
+                <p className="text-base font-mono font-semibold">admin@mbstransport.com</p>
               </div>
             </div>
 

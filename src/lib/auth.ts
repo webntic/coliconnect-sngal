@@ -8,7 +8,7 @@ declare const spark: {
 }
 
 const DEFAULT_ADMIN: AdminCredentials = {
-  username: 'admin@mbstransport',
+  username: 'admin@mbstransport.com',
   password: 'MBS2024Admin!'
 }
 
