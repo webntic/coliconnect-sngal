@@ -429,28 +429,44 @@ export function QuoteCalculator() {
                 </p>
               </Card>
             ) : (
-              <Card className="p-8 h-full flex flex-col items-center justify-center text-center bg-muted/30">
-                <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mb-6">
-                  <Calculator size={48} className="text-primary" weight="duotone" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-3">
-                  Prêt à calculer ?
-                </h3>
-                <p className="text-muted-foreground max-w-md">
-                  Remplissez les informations de votre envoi sur la gauche pour obtenir instantanément votre devis personnalisé
-                </p>
-
-                <div className="mt-8 grid grid-cols-2 gap-4 w-full max-w-md">
-                  <div className="p-4 bg-background rounded-lg border">
-                    <div className="text-2xl font-bold text-primary mb-1">≈30s</div>
-                    <div className="text-sm text-muted-foreground">Calcul instantané</div>
+              <div className="space-y-6">
+                <div className="relative h-64 rounded-2xl overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1200&h=600&fit=crop&q=80" 
+                    alt="Fast shipping"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                    <div className="text-white">
+                      <h4 className="text-2xl font-bold mb-2">Livraison Rapide et Sûre</h4>
+                      <p className="text-white/90">Partout dans le monde</p>
+                    </div>
                   </div>
-                  <div className="p-4 bg-background rounded-lg border">
-                    <div className="text-2xl font-bold text-primary mb-1">100%</div>
-                    <div className="text-sm text-muted-foreground">Transparent</div>
+                </div>
+
+                <Card className="p-8 h-full flex flex-col items-center justify-center text-center bg-muted/30">
+                  <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                    <Calculator size={48} className="text-primary" weight="duotone" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground mb-3">
+                    Prêt à calculer ?
+                  </h3>
+                  <p className="text-muted-foreground max-w-md">
+                    Remplissez les informations de votre envoi sur la gauche pour obtenir instantanément votre devis personnalisé
+                  </p>
+
+                  <div className="mt-8 grid grid-cols-2 gap-4 w-full max-w-md">
+                    <div className="p-4 bg-background rounded-lg border">
+                      <div className="text-2xl font-bold text-primary mb-1">≈30s</div>
+                      <div className="text-sm text-muted-foreground">Calcul instantané</div>
+                    </div>
+                    <div className="p-4 bg-background rounded-lg border">
+                      <div className="text-2xl font-bold text-primary mb-1">100%</div>
+                      <div className="text-sm text-muted-foreground">Transparent</div>
                   </div>
                 </div>
               </Card>
+            </div>
             )}
           </motion.div>
         </div>

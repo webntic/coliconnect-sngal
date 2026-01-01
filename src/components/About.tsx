@@ -27,6 +27,38 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
+            className="space-y-6"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative h-64 rounded-2xl overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=800&fit=crop&q=80" 
+                  alt="Warehouse logistics"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="relative h-64 rounded-2xl overflow-hidden mt-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=600&h=800&fit=crop&q=80" 
+                  alt="Cargo ship"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="relative h-48 rounded-2xl overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=1200&h=600&fit=crop&q=80" 
+                alt="Global logistics"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
             <h3 className="text-3xl font-bold text-foreground mb-6">
               Mondial Bagage Services

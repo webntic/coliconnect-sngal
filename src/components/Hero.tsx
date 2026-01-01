@@ -14,29 +14,25 @@ const services = [
     title: 'Fret Maritime',
     description: 'Transport de marchandises par voie maritime entre le Sénégal et le monde entier',
     icon: Anchor,
-    gradient: 'linear-gradient(135deg, oklch(0.45 0.18 240) 0%, oklch(0.55 0.15 240) 100%)',
-    pattern: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 40%)'
+    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&h=1080&fit=crop&q=80'
   },
   {
     title: 'Fret Aérien',
     description: 'Expédition rapide et sécurisée par avion pour vos colis urgents',
     icon: Airplane,
-    gradient: 'linear-gradient(135deg, oklch(0.50 0.15 200) 0%, oklch(0.60 0.12 220) 100%)',
-    pattern: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(255,255,255,0.08) 0%, transparent 40%)'
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&h=1080&fit=crop&q=80'
   },
   {
     title: 'Envoi Express DHL',
     description: 'Service express international avec DHL pour une livraison ultra-rapide',
     icon: Lightning,
-    gradient: 'linear-gradient(135deg, oklch(0.65 0.20 45) 0%, oklch(0.75 0.18 55) 100%)',
-    pattern: 'radial-gradient(circle at 50% 20%, rgba(255,255,255,0.15) 0%, transparent 45%), radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0%, transparent 35%)'
+    image: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1920&h=1080&fit=crop&q=80'
   },
   {
     title: 'Transport Sous-Région',
     description: 'Livraison dans toute la sous-région du Sénégal et pays limitrophes',
     icon: TruckTrailer,
-    gradient: 'linear-gradient(135deg, oklch(0.48 0.16 160) 0%, oklch(0.58 0.14 180) 100%)',
-    pattern: 'radial-gradient(circle at 60% 40%, rgba(255,255,255,0.12) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(255,255,255,0.1) 0%, transparent 40%)'
+    image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&h=1080&fit=crop&q=80'
   }
 ]
 
@@ -86,23 +82,14 @@ export function Hero({ onGetStarted }: HeroProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
           className="absolute inset-0"
-          style={{
-            background: services[currentSlide].gradient,
-          }}
         >
-          <div 
-            className="absolute inset-0 opacity-30"
-            style={{
-              background: services[currentSlide].pattern
-            }}
+          <img 
+            src={services[currentSlide].image}
+            alt={services[currentSlide].title}
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, white 2px, white 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, white 2px, white 4px)',
-              backgroundSize: '60px 60px'
-            }} />
-          </div>
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
         </motion.div>
       </AnimatePresence>
 

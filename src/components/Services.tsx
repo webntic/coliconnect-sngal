@@ -8,24 +8,28 @@ const services = [
     title: 'Fret Maritime',
     description: 'Transport de marchandises par voie maritime entre le Sénégal et l\'Europe. Idéal pour les envois volumineux et économiques.',
     features: ['Containers 20 & 40 pieds', 'Groupage', 'Suivi en temps réel', 'Assurance incluse'],
+    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&h=500&fit=crop&q=80'
   },
   {
     icon: Airplane,
     title: 'Fret Aérien',
     description: 'Expédition rapide par avion pour vos colis urgents. Livraison express entre Dakar et Paris sous 48-72h.',
     features: ['Livraison rapide', 'Priorité douane', 'Sécurisé', 'Tracking GPS'],
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=500&fit=crop&q=80'
   },
   {
     icon: Lightning,
     title: 'Envoi Express DHL',
     description: 'Service de messagerie internationale premium via DHL. Pour vos documents et colis prioritaires.',
     features: ['Mondial', '24-48h', 'Porte à porte', 'Garantie'],
+    image: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=800&h=500&fit=crop&q=80'
   },
   {
     icon: MapTrifold,
     title: 'Transport Sous-Région',
     description: 'Livraison dans toute la sous-région ouest-africaine. Sénégal, Mali, Guinée, Gambie et plus.',
     features: ['CEDEAO', 'Réseau étendu', 'Prix compétitifs', 'Fiabilité'],
+    image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&h=500&fit=crop&q=80'
   },
 ]
 
@@ -59,31 +63,38 @@ export function Services() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="p-8 h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/20">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon size={28} className="text-primary" weight="duotone" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-foreground mb-2">
-                        {service.title}
-                      </h3>
+                <Card className="overflow-hidden h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/20">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-4 left-4 w-12 h-12 rounded-xl bg-white/90 flex items-center justify-center">
+                      <Icon size={24} className="text-primary" weight="duotone" />
                     </div>
                   </div>
                   
-                  <p className="text-muted-foreground leading-relaxed mb-6">
-                    {service.description}
-                  </p>
+                  <div className="p-8">
+                    <h3 className="text-2xl font-bold text-foreground mb-3">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-muted-foreground leading-relaxed mb-6">
+                      {service.description}
+                    </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    {service.features.map((feature) => (
-                      <span
-                        key={feature}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent/10 text-accent border border-accent/20"
-                      >
-                        {feature}
-                      </span>
-                    ))}
+                    <div className="flex flex-wrap gap-2">
+                      {service.features.map((feature) => (
+                        <span
+                          key={feature}
+                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent/10 text-accent border border-accent/20"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </Card>
               </motion.div>

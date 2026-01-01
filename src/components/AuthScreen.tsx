@@ -149,8 +149,16 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
 
   if (showAdminLogin) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <Card className="w-full max-w-md shadow-lg">
+      <div className="min-h-screen flex items-center justify-center p-6 relative">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1920&h=1080&fit=crop&q=80" 
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+        </div>
+        <Card className="w-full max-w-md shadow-lg relative z-10">
           <CardHeader className="space-y-2 text-center">
             <div className="flex justify-center mb-2">
               <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
@@ -261,8 +269,16 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-      <Card className="w-full max-w-md shadow-lg">
+    <div className="min-h-screen flex items-center justify-center p-6 relative">
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&h=1080&fit=crop&q=80" 
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/60" />
+      </div>
+      <Card className="w-full max-w-md shadow-lg relative z-10">
         <CardHeader className="space-y-2 text-center">
           <div className="flex justify-center mb-2">
             <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
