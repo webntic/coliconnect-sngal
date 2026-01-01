@@ -23,7 +23,8 @@ import {
   Clock,
   Warning,
   UserCircle,
-  Truck
+  Truck,
+  Gear
 } from '@phosphor-icons/react'
 import { UserManagement } from './UserManagement'
 import { AdminPackagesTable } from './AdminPackagesTable'
@@ -32,6 +33,7 @@ import { AdminStats } from './AdminStats'
 import { AdminMessagesMonitor } from './AdminMessagesMonitor'
 import { AdminReviewsMonitor } from './AdminReviewsMonitor'
 import { AdminCredentialsInfo } from './AdminCredentialsInfo'
+import { LogoManager } from './LogoManager'
 
 export function AdminDashboard() {
   const { logout } = useAuth()
@@ -41,7 +43,7 @@ export function AdminDashboard() {
   const [conversations] = useKV<Conversation[]>('conversations', [])
   const [messages] = useKV<Message[]>('messages', [])
   const [reviews] = useKV<Review[]>('reviews', [])
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'packages' | 'routes' | 'messages' | 'reviews'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'packages' | 'routes' | 'messages' | 'reviews' | 'settings'>('overview')
   const [searchQuery, setSearchQuery] = useState('')
 
   const stats = useMemo(() => {
@@ -125,7 +127,7 @@ export function AdminDashboard() {
 
       <div className="max-w-[1600px] mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-grid">
             <TabsTrigger value="overview" className="gap-2">
               <ChartBar size={18} />
               <span className="hidden sm:inline">Vue d'ensemble</span>
@@ -149,6 +151,10 @@ export function AdminDashboard() {
             <TabsTrigger value="reviews" className="gap-2">
               <Star size={18} />
               <span className="hidden sm:inline">Avis</span>
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="gap-2">
+              <Gear size={18} />
+              <span className="hidden sm:inline">Paramètres</span>
             </TabsTrigger>
           </TabsList>
 
@@ -297,6 +303,12 @@ export function AdminDashboard() {
               users={users || []}
               searchQuery={searchQuery}
             />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <div className="max-w-2xl mx-auto">
+              <LogoManager />
+            </div>
           </TabsContent>
         </Tabs>
       </div>

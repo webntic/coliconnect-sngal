@@ -1,8 +1,10 @@
+import { useKV } from '@github/spark/hooks'
 import { Separator } from '@/components/ui/separator'
 import { Phone, Envelope, MapPin, FacebookLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
+  const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
 
   return (
     <footer className="bg-primary text-primary-foreground">
@@ -12,9 +14,12 @@ export function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="h-12 w-auto flex items-center bg-white rounded-lg px-2 py-1">
                 <img 
-                  src="https://i.postimg.cc/15Sf1d1n/mbs-logo.png" 
+                  src={logoUrl} 
                   alt="MBS Transport Logo" 
                   className="h-full w-auto object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png'
+                  }}
                 />
               </div>
             </div>

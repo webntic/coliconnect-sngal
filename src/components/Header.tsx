@@ -1,4 +1,5 @@
 import { User } from '@/lib/types'
+import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Package, Truck, ChatCircle, Bell, SignOut } from '@phosphor-icons/react'
@@ -9,6 +10,8 @@ interface HeaderProps {
 }
 
 export function Header({ user, onLogout }: HeaderProps) {
+  const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
+  
   const initials = user.name
     .split(' ')
     .map(n => n[0])
@@ -22,9 +25,12 @@ export function Header({ user, onLogout }: HeaderProps) {
         <div className="flex items-center gap-3">
           <div className="h-20 w-auto flex items-center">
             <img 
-              src="https://i.postimg.cc/15Sf1d1n/mbs-logo.png" 
+              src={logoUrl} 
               alt="MBS Transport Logo" 
               className="h-full w-auto object-contain"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png'
+              }}
             />
           </div>
           <div>

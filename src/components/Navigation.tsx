@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
 import { List, X } from '@phosphor-icons/react'
 
@@ -8,6 +9,7 @@ interface NavigationProps {
 
 export function Navigation({ onNavigateToDashboard }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -24,9 +26,12 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
           <div className="flex items-center gap-3">
             <div className="h-20 w-auto flex items-center">
               <img 
-                src="https://i.postimg.cc/15Sf1d1n/mbs-logo.png" 
+                src={logoUrl} 
                 alt="MBS Transport Logo" 
                 className="h-full w-auto object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png'
+                }}
               />
             </div>
             <div className="hidden sm:block">
