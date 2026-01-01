@@ -15,11 +15,15 @@ interface TransporterDashboardProps {
 
 export function TransporterDashboard({ user: propUser }: TransporterDashboardProps) {
   const { currentUser, logout } = useAuth()
-  const user = propUser || currentUser!
+  const user = propUser || currentUser
   const [routes, setRoutes] = useKV<Route[]>('routes', [])
   const [packages] = useKV<PackageType[]>('packages', [])
   const [showNewRoute, setShowNewRoute] = useState(false)
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null)
+
+  if (!user) {
+    return null
+  }
 
   const userRoutes = (routes || []).filter(route => route.transporterId === user.id)
   const upcomingRoutes = userRoutes.filter(route => new Date(route.departureDate) >= new Date())

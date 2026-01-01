@@ -16,11 +16,15 @@ interface SenderDashboardProps {
 
 export function SenderDashboard({ user: propUser }: SenderDashboardProps) {
   const { currentUser, logout } = useAuth()
-  const user = propUser || currentUser!
+  const user = propUser || currentUser
   const [packages, setPackages] = useKV<PackageType[]>('packages', [])
   const [routes] = useKV<Route[]>('routes', [])
   const [showNewPackage, setShowNewPackage] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState<PackageType | null>(null)
+
+  if (!user) {
+    return null
+  }
 
   const userPackages = (packages || []).filter(pkg => pkg.senderId === user.id)
   const pendingPackages = userPackages.filter(pkg => pkg.status === 'pending')
