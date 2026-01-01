@@ -25,7 +25,7 @@ import {
   UserCircle,
   Truck
 } from '@phosphor-icons/react'
-import { AdminUsersTable } from './AdminUsersTable'
+import { UserManagement } from './UserManagement'
 import { AdminPackagesTable } from './AdminPackagesTable'
 import { AdminRoutesTable } from './AdminRoutesTable'
 import { AdminStats } from './AdminStats'
@@ -271,7 +271,7 @@ export function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="users">
-            <AdminUsersTable users={users || []} searchQuery={searchQuery} />
+            <UserManagement searchQuery={searchQuery} />
           </TabsContent>
 
           <TabsContent value="packages">
