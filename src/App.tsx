@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Hero } from '@/components/Hero'
 import { Services } from '@/components/Services'
 import { TransportGP } from '@/components/TransportGP'
+import { VoyageurPlus } from '@/components/VoyageurPlus'
 import { PricingInfo } from '@/components/PricingInfo'
 import { About } from '@/components/About'
 import { WhyUs } from '@/components/WhyUs'
@@ -55,6 +56,7 @@ function App() {
       <Hero onGetStarted={() => setShowLanding(false)} />
       <Services />
       <TransportGP />
+      <VoyageurPlus />
       <PricingInfo />
       <About />
       <WhyUs />

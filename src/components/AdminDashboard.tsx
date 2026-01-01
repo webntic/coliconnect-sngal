@@ -24,7 +24,8 @@ import {
   Warning,
   UserCircle,
   Truck,
-  Gear
+  Gear,
+  Airplane
 } from '@phosphor-icons/react'
 import { UserManagement } from './UserManagement'
 import { AdminPackagesTable } from './AdminPackagesTable'
@@ -34,6 +35,7 @@ import { AdminMessagesMonitor } from './AdminMessagesMonitor'
 import { AdminReviewsMonitor } from './AdminReviewsMonitor'
 import { AdminCredentialsInfo } from './AdminCredentialsInfo'
 import { LogoManager } from './LogoManager'
+import { AdminTravelersMonitor } from './AdminTravelersMonitor'
 
 export function AdminDashboard() {
   const { logout } = useAuth()
@@ -43,7 +45,7 @@ export function AdminDashboard() {
   const [conversations] = useKV<Conversation[]>('conversations', [])
   const [messages] = useKV<Message[]>('messages', [])
   const [reviews] = useKV<Review[]>('reviews', [])
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'packages' | 'routes' | 'messages' | 'reviews' | 'settings'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'packages' | 'routes' | 'travelers' | 'messages' | 'reviews' | 'settings'>('overview')
   const [searchQuery, setSearchQuery] = useState('')
 
   const stats = useMemo(() => {
@@ -127,7 +129,7 @@ export function AdminDashboard() {
 
       <div className="max-w-[1600px] mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:inline-grid">
             <TabsTrigger value="overview" className="gap-2">
               <ChartBar size={18} />
               <span className="hidden sm:inline">Vue d'ensemble</span>
@@ -143,6 +145,10 @@ export function AdminDashboard() {
             <TabsTrigger value="routes" className="gap-2">
               <MapPin size={18} />
               <span className="hidden sm:inline">Itinéraires</span>
+            </TabsTrigger>
+            <TabsTrigger value="travelers" className="gap-2">
+              <Airplane size={18} />
+              <span className="hidden sm:inline">Voyageurs</span>
             </TabsTrigger>
             <TabsTrigger value="messages" className="gap-2">
               <ChatCircle size={18} />
@@ -286,6 +292,10 @@ export function AdminDashboard() {
 
           <TabsContent value="routes">
             <AdminRoutesTable routes={routes || []} users={users || []} searchQuery={searchQuery} />
+          </TabsContent>
+
+          <TabsContent value="travelers">
+            <AdminTravelersMonitor />
           </TabsContent>
 
           <TabsContent value="messages">
