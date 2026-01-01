@@ -21,18 +21,25 @@ Une application combinant un site vitrine avec des espaces utilisateurs authenti
 
 
 ### Tableau de Bord Expéditeur
-- **Functionality**: Interface complète pour les expéditeurs permettant de créer, gérer et suivre leurs envois de colis
-- **Purpose**: Centraliser toute la gestion des envois en un seul endroit avec visibilité complète
+- **Functionality**: Interface complète pour les expéditeurs permettant de créer, gérer et suivre leurs envois de colis avec visualisation géographique des itinéraires
+- **Purpose**: Centraliser toute la gestion des envois en un seul endroit avec visibilité complète et carte interactive
 - **Trigger**: Connexion en tant qu'expéditeur
-- **Progression**: Vue d'ensemble (statistiques) → Création nouvel envoi → Saisie détails (titre, description, taille incluant GP, poids, origine/destination, dates, prix) → Suivi des envois (en attente, en transit, livrés)
-- **Success criteria**: Les expéditeurs peuvent créer des demandes d'envoi avec option GP (Gros Poids >50kg), voir leurs statistiques et suivre l'état de tous leurs colis
+- **Progression**: Vue d'ensemble (statistiques) → Visualisation carte interactive des envois et routes disponibles → Création nouvel envoi → Saisie détails (titre, description, taille incluant GP, poids, origine/destination, dates, prix) → Suivi des envois (en attente, en transit, livrés)
+- **Success criteria**: Les expéditeurs peuvent créer des demandes d'envoi avec option GP (Gros Poids >50kg), voir leurs statistiques, visualiser géographiquement leurs envois et les itinéraires disponibles, et suivre l'état de tous leurs colis
 
 ### Tableau de Bord Transporteur
-- **Functionality**: Interface dédiée pour les transporteurs leur permettant d'ajouter leurs itinéraires et définir leurs tarifs incluant le prix au kg pour GP
-- **Purpose**: Permettre aux transporteurs de monétiser leurs trajets en transportant des colis
+- **Functionality**: Interface dédiée pour les transporteurs leur permettant d'ajouter leurs itinéraires, définir leurs tarifs incluant le prix au kg pour GP, et visualiser la demande sur une carte
+- **Purpose**: Permettre aux transporteurs de monétiser leurs trajets en transportant des colis et de voir les opportunités géographiquement
 - **Trigger**: Connexion en tant que transporteur
-- **Progression**: Vue d'ensemble (statistiques, revenus) → Ajout itinéraire → Saisie détails (origine, destination, dates, type véhicule, capacité, prix/kg pour GP) → Gestion itinéraires (à venir, passés)
-- **Success criteria**: Les transporteurs peuvent créer des itinéraires avec tarification GP personnalisée, voir leurs revenus estimés et gérer tous leurs trajets
+- **Progression**: Vue d'ensemble (statistiques, revenus) → Visualisation carte interactive de leurs itinéraires et demandes d'envoi → Ajout itinéraire → Saisie détails (origine, destination, dates, type véhicule, capacité, prix/kg pour GP) → Gestion itinéraires (à venir, passés)
+- **Success criteria**: Les transporteurs peuvent créer des itinéraires avec tarification GP personnalisée, voir leurs revenus estimés, visualiser géographiquement leurs routes et les demandes correspondantes, et gérer tous leurs trajets
+
+### Carte Interactive des Itinéraires
+- **Functionality**: Visualisation géographique interactive affichant tous les itinéraires de transporteurs et demandes d'envoi sur une carte stylisée avec animations
+- **Purpose**: Permettre aux utilisateurs de comprendre rapidement la géographie des routes disponibles et identifier des opportunités de correspondance
+- **Trigger**: Affichage automatique sur les tableaux de bord expéditeur et transporteur
+- **Progression**: Chargement de la carte → Animation progressive des itinéraires (lignes bleues pour transporteurs, lignes orange pointillées pour envois) → Survol pour mettre en évidence → Clic pour sélectionner et voir détails
+- **Success criteria**: Les utilisateurs peuvent visualiser instantanément tous les itinéraires actifs, identifier les villes desservies, voir les correspondances potentielles entre envois et routes, et interagir avec la carte pour obtenir plus d'informations. La carte couvre le Sénégal, l'Afrique de l'Ouest, l'Europe et l'Amérique du Nord avec plus de 40 villes référencées.
 
 ### Option GP (Gros Poids) avec Tarification au Kg
 - **Functionality**: Catégorie spéciale pour les envois de plus de 50kg avec tarification au kg définie par le transporteur
@@ -160,7 +167,7 @@ La typographie doit projeter **l'élégance professionnelle avec une touche cont
 
 ## Animations
 
-Les animations doivent **enrichir l'expérience sans la ralentir**, avec des mouvements doux et élégants. Utilisez des transitions subtiles lors du scroll (apparition en fade-in des sections), des effets de survol sur les cartes de services (légère élévation), et des micro-interactions sur les boutons (scale subtil). Gardez les timings rapides (250-350ms) avec des easings naturels qui évoquent la fluidité et le professionnalisme. Les animations doivent évoquer le mouvement et le voyage.
+Les animations doivent **enrichir l'expérience sans la ralentir**, avec des mouvements doux et élégants. Utilisez des transitions subtiles lors du scroll (apparition en fade-in des sections), des effets de survol sur les cartes de services (légère élévation), et des micro-interactions sur les boutons (scale subtil). Gardez les timings rapides (250-350ms) avec des easings naturels qui évoquent la fluidité et le professionnalisme. Les animations doivent évoquer le mouvement et le voyage. **La carte interactive utilise des animations de tracé de lignes (pathLength) avec framer-motion pour dessiner progressivement les itinéraires, créant un effet de voyage visuel**. Les marqueurs de villes apparaissent avec des animations de scale coordonnées.
 
 ## Component Selection
 
@@ -171,6 +178,7 @@ Les animations doivent **enrichir l'expérience sans la ralentir**, avec des mou
   - `Separator` pour diviser les sections de manière élégante
   - `Form` + `Input` + `Label` pour le formulaire de contact avec validation
   - `Textarea` pour les messages dans le formulaire de contact
+  - **`RouteMap`** composant personnalisé SVG avec carte interactive affichant itinéraires et envois
   
 - **Customizations**:
   - Hero section personnalisée avec gradient et animation subtile
@@ -178,6 +186,7 @@ Les animations doivent **enrichir l'expérience sans la ralentir**, avec des mou
   - Section de contact avec cartes d'information stylisées
   - Footer complet avec toutes les coordonnées et liens importants
   - Section "Pourquoi nous choisir" avec icônes et descriptions
+  - **Carte interactive SVG** avec représentation stylisée des continents (Afrique, Europe, Amérique), courbes de Bézier pour les itinéraires, marqueurs de villes animés, et légende explicative. Couvre 40+ villes incluant Dakar, Paris, capitales de la sous-région et grandes villes internationales
   
 - **States**:
   - Buttons: Hover avec scale subtil (1.02) et changement de luminosité, active avec depth

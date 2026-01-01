@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
-import { Route, User } from '@/lib/types'
+import { Route, User, Package as PackageType } from '@/lib/types'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Plus, MapPin, Calendar, Truck, CurrencyDollar, SignOut, User as UserIcon } from '@phosphor-icons/react'
 import { NewRouteDialog } from './NewRouteDialog'
 import { RouteCard } from './RouteCard'
+import { RouteMap } from './RouteMap'
 
 interface TransporterDashboardProps {
   user?: User
@@ -16,7 +17,9 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
   const { currentUser, logout } = useAuth()
   const user = propUser || currentUser!
   const [routes, setRoutes] = useKV<Route[]>('routes', [])
+  const [packages] = useKV<PackageType[]>('packages', [])
   const [showNewRoute, setShowNewRoute] = useState(false)
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null)
 
   const userRoutes = (routes || []).filter(route => route.transporterId === user.id)
   const upcomingRoutes = userRoutes.filter(route => new Date(route.departureDate) >= new Date())
@@ -123,6 +126,15 @@ export function TransporterDashboard({ user: propUser }: TransporterDashboardPro
             <div className="text-2xl font-bold text-accent">{(pastRoutes.length * 45000).toLocaleString()} FCFA</div>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="mb-8">
+        <RouteMap
+          routes={userRoutes}
+          packages={packages || []}
+          selectedRoute={selectedRoute}
+          onRouteSelect={setSelectedRoute}
+        />
       </div>
 
       {userRoutes.length === 0 ? (

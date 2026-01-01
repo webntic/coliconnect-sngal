@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
-import { Package as PackageType, User } from '@/lib/types'
+import { Package as PackageType, User, Route } from '@/lib/types'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Plus, MapPin, Calendar, Package as PackageIcon, CurrencyDollar, SignOut, User as UserIcon } from '@phosphor-icons/react'
 import { NewPackageDialog } from './NewPackageDialog'
 import { PackageCard } from './PackageCard'
+import { RouteMap } from './RouteMap'
 
 interface SenderDashboardProps {
   user?: User
@@ -17,7 +18,9 @@ export function SenderDashboard({ user: propUser }: SenderDashboardProps) {
   const { currentUser, logout } = useAuth()
   const user = propUser || currentUser!
   const [packages, setPackages] = useKV<PackageType[]>('packages', [])
+  const [routes] = useKV<Route[]>('routes', [])
   const [showNewPackage, setShowNewPackage] = useState(false)
+  const [selectedPackage, setSelectedPackage] = useState<PackageType | null>(null)
 
   const userPackages = (packages || []).filter(pkg => pkg.senderId === user.id)
   const pendingPackages = userPackages.filter(pkg => pkg.status === 'pending')
@@ -124,6 +127,15 @@ export function SenderDashboard({ user: propUser }: SenderDashboardProps) {
               <div className="text-2xl font-bold text-green-600">{completedPackages.length}</div>
             </CardContent>
           </Card>
+        </div>
+
+        <div className="mb-8">
+          <RouteMap
+            routes={routes || []}
+            packages={userPackages}
+            selectedPackage={selectedPackage}
+            onPackageSelect={setSelectedPackage}
+          />
         </div>
 
         {userPackages.length === 0 ? (
