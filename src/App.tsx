@@ -13,6 +13,7 @@ import { AuthScreen } from '@/components/AuthScreen'
 import { SenderDashboard } from '@/components/SenderDashboard'
 import { TransporterDashboard } from '@/components/TransporterDashboard'
 import { AdminDashboard } from '@/components/AdminDashboard'
+import { SuperAdminDashboard } from '@/components/SuperAdminDashboard'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { DeparturesSchedule } from '@/components/DeparturesSchedule'
 import { useAuth } from '@/hooks/use-auth'
@@ -65,7 +66,9 @@ function App() {
   if (isAuthenticated && currentUser) {
     return (
       <>
-        {currentUser.role === 'admin' ? (
+        {currentUser.role === 'superadmin' ? (
+          <SuperAdminDashboard />
+        ) : currentUser.role === 'admin' ? (
           <AdminDashboard />
         ) : currentUser.role === 'sender' ? (
           <SenderDashboard />

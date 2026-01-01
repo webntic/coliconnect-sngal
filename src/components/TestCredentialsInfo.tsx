@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Shield, Package, Truck, Info } from '@phosphor-icons/react'
+import { Shield, Package, Truck, Info, ShieldCheck } from '@phosphor-icons/react'
 
 export function TestCredentialsInfo() {
   return (
@@ -15,6 +15,19 @@ export function TestCredentialsInfo() {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-3">
+          <div className="flex items-start gap-3 p-3 bg-destructive/10 rounded-lg border-2 border-destructive/30">
+            <div className="w-10 h-10 rounded-lg bg-destructive/20 flex items-center justify-center flex-shrink-0">
+              <ShieldCheck size={20} weight="fill" className="text-destructive" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-semibold text-sm mb-1 text-destructive">Super Administrateur</div>
+              <div className="text-xs font-mono text-muted-foreground space-y-0.5">
+                <div>📧 superadmin@mbstransport.com</div>
+                <div>🔑 SuperMBS2024!</div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex items-start gap-3 p-3 bg-background rounded-lg border">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
               <Shield size={20} weight="fill" className="text-primary" />

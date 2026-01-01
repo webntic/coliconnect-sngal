@@ -1,4 +1,4 @@
-export type UserRole = 'sender' | 'transporter' | 'admin'
+export type UserRole = 'sender' | 'transporter' | 'admin' | 'superadmin'
 
 export type PackageSize = 'small' | 'medium' | 'large' | 'xlarge' | 'gp'
 

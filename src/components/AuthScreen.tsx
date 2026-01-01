@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Package, Truck, Shield, Eye, EyeSlash, House, EnvelopeSimple } from '@phosphor-icons/react'
 import { User, UserRole } from '@/lib/types'
 import { toast } from 'sonner'
-import { verifyAdminCredentials, verifyUserCredentials, registerUser, initializeAdminCredentials, validatePassword } from '@/lib/auth'
+import { verifyAdminCredentials, verifySuperAdminCredentials, verifyUserCredentials, registerUser, initializeAdminCredentials, validatePassword } from '@/lib/auth'
 import { useKV } from '@github/spark/hooks'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FloatingParticles } from '@/components/FloatingParticles'
@@ -80,9 +80,30 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
     setLoading(true)
 
     try {
-      const isValid = await verifyAdminCredentials(adminUsername, adminPassword)
+      const isSuperAdmin = await verifySuperAdminCredentials(adminUsername, adminPassword)
       
-      if (!isValid) {
+      if (isSuperAdmin) {
+        const superAdminUser: User = {
+          id: 'superadmin-' + Date.now().toString(),
+          name: 'Super Administrateur MBS',
+          email: adminUsername,
+          phone: '+221 77 306 15 15',
+          role: 'superadmin',
+          rating: 5.0,
+          totalTransactions: 0,
+          verified: true,
+          createdAt: new Date().toISOString()
+        }
+
+        toast.success('Connexion super administrateur réussie')
+        onAuth(superAdminUser)
+        setLoading(false)
+        return
+      }
+
+      const isAdmin = await verifyAdminCredentials(adminUsername, adminPassword)
+      
+      if (!isAdmin) {
         toast.error('Identifiant ou mot de passe administrateur incorrect')
         setLoading(false)
         return

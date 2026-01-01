@@ -12,11 +12,22 @@ const DEFAULT_ADMIN: AdminCredentials = {
   password: 'MBS2024Admin!'
 }
 
+const DEFAULT_SUPERADMIN: AdminCredentials = {
+  username: 'superadmin@mbstransport.com',
+  password: 'SuperMBS2024!'
+}
+
 export async function initializeAdminCredentials(): Promise<void> {
   const storedAdmin = await spark.kv.get<AdminCredentials>('admin-credentials')
   
   if (!storedAdmin) {
     await spark.kv.set('admin-credentials', DEFAULT_ADMIN)
+  }
+
+  const storedSuperAdmin = await spark.kv.get<AdminCredentials>('superadmin-credentials')
+  
+  if (!storedSuperAdmin) {
+    await spark.kv.set('superadmin-credentials', DEFAULT_SUPERADMIN)
   }
 }
 
@@ -28,6 +39,16 @@ export async function verifyAdminCredentials(username: string, password: string)
   if (!storedAdmin) return false
   
   return storedAdmin.username === username && storedAdmin.password === password
+}
+
+export async function verifySuperAdminCredentials(username: string, password: string): Promise<boolean> {
+  await initializeAdminCredentials()
+  
+  const storedSuperAdmin = await spark.kv.get<AdminCredentials>('superadmin-credentials')
+  
+  if (!storedSuperAdmin) return false
+  
+  return storedSuperAdmin.username === username && storedSuperAdmin.password === password
 }
 
 export async function updateAdminCredentials(newUsername: string, newPassword: string): Promise<void> {
