@@ -26,6 +26,35 @@ Un site vitrine présentant les services de l'entreprise, les coordonnées de co
 - **Progression**: Vue d'ensemble → Cartes détaillées (Fret Maritime, Fret Aérien, Envoi Express DHL, Transport Sous-Région)
 - **Success criteria**: Les visiteurs comprennent la gamme complète des services
 
+### Système de Devis en Ligne avec Calcul Automatique
+- **Functionality**: Calculateur interactif permettant aux utilisateurs d'obtenir instantanément une estimation précise du coût de leur envoi avec sauvegarde des devis
+- **Purpose**: Offrir transparence tarifaire et permettre aux clients de budgétiser leurs envois avant de contacter l'entreprise
+- **Trigger**: Navigation vers section "Devis" ou clic sur "Calculer un Devis"
+- **Progression**: Sélection du service → Saisie destination → Entrée poids/dimensions → Options (assurance) → Calcul instantané → Affichage détaillé du devis → Sauvegarde optionnelle → Action de confirmation
+- **Success criteria**: L'utilisateur obtient un devis détaillé en moins de 30 secondes avec décomposition complète des coûts et peut sauvegarder jusqu'à 5 devis pour comparaison
+- **Tarification**:
+  - Fret Maritime: Base 5000 FCFA + 800 FCFA/kg (15-30 jours)
+  - Fret Aérien: Base 15000 FCFA + 2500 FCFA/kg (2-5 jours)
+  - Express DHL: Base 25000 FCFA + 4000 FCFA/kg (24-48h)
+  - Transport Sous-Région: Base 8000 FCFA + 1200 FCFA/kg (3-7 jours)
+- **Calculs avancés**:
+  - Poids volumétrique: (L × l × H) / 5000, facturé au poids le plus élevé
+  - Assurance: 2% de la valeur déclarée (minimum 2000 FCFA)
+  - Frais de douane: 5% du tarif de base (sauf express)
+  - Manutention: 500 FCFA (<10kg), 1500 FCFA (10-30kg), 3000 FCFA (>30kg)
+  - Multiplicateurs de destination pour tarifs variables
+- **Sauvegarde des Devis**:
+  - Utilise useKV pour persistance locale des devis
+  - Affichage de l'historique des 5 derniers devis
+  - Possibilité de ré-afficher un devis sauvegardé en un clic
+
+### Section Informations Tarifaires et FAQ
+- **Functionality**: Guide complet avec conseils d'optimisation, comparaison des services et réponses aux questions fréquentes
+- **Purpose**: Éduquer les utilisateurs sur la tarification et les aider à faire des choix éclairés
+- **Trigger**: Scroll après la section de calcul de devis
+- **Progression**: Lecture des conseils → Comparaison des services → Consultation des FAQ → Compréhension approfondie
+- **Success criteria**: Les utilisateurs comprennent comment optimiser leurs envois et ont toutes les réponses à leurs questions
+
 ### Section À Propos
 - **Functionality**: Présentation de l'entreprise, sa mission et ses valeurs
 - **Purpose**: Établir la crédibilité et l'histoire de MBS Transport

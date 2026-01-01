@@ -41,6 +41,12 @@ export function Navigation() {
               Services
             </button>
             <button
+              onClick={() => scrollToSection('devis')}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Devis en Ligne
+            </button>
+            <button
               onClick={() => scrollToSection('a-propos')}
               className="text-sm font-medium text-foreground hover:text-primary transition-colors"
             >
@@ -52,8 +58,8 @@ export function Navigation() {
             >
               Contact
             </button>
-            <Button onClick={() => scrollToSection('contact')} size="sm">
-              Nous Contacter
+            <Button onClick={() => scrollToSection('devis')} size="sm" className="bg-accent hover:bg-accent/90">
+              Calculer un Devis
             </Button>
           </div>
 
@@ -80,6 +86,12 @@ export function Navigation() {
               Services
             </button>
             <button
+              onClick={() => scrollToSection('devis')}
+              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Devis en Ligne
+            </button>
+            <button
               onClick={() => scrollToSection('a-propos')}
               className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors"
             >
@@ -91,8 +103,8 @@ export function Navigation() {
             >
               Contact
             </button>
-            <Button onClick={() => scrollToSection('contact')} className="w-full">
-              Nous Contacter
+            <Button onClick={() => scrollToSection('devis')} className="w-full bg-accent hover:bg-accent/90">
+              Calculer un Devis
             </Button>
           </div>
         )}
