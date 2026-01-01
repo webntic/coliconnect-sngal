@@ -18,13 +18,17 @@ export function Header({ user, onLogout }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-      <div className="container flex h-16 items-center justify-between px-6">
+      <div className="container flex h-[100px] items-center justify-between px-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-            <Package size={22} weight="bold" className="text-primary-foreground" />
+          <div className="h-20 w-auto flex items-center">
+            <img 
+              src="https://i.postimg.cc/15Sf1d1n/mbs-logo.png" 
+              alt="MBS Transport Logo" 
+              className="h-full w-auto object-contain"
+            />
           </div>
           <div>
-            <h1 className="text-lg font-bold tracking-tight">ShipConnect</h1>
+            <h1 className="text-lg font-bold tracking-tight">MBS Transport</h1>
             <p className="text-xs text-muted-foreground capitalize">{user.role} Dashboard</p>
           </div>
         </div>

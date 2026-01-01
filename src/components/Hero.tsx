@@ -25,7 +25,7 @@ export function Hero({ onGetStarted }: HeroProps) {
   return (
     <section
       id="accueil"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[100px]"
       style={{
         background: 'linear-gradient(135deg, oklch(0.42 0.15 240) 0%, oklch(0.52 0.12 240) 50%, oklch(0.72 0.19 50) 100%)',
       }}
