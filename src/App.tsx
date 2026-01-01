@@ -1,30 +1,22 @@
-import { useAuth } from '@/hooks/use-auth'
-import { AuthScreen } from '@/components/AuthScreen'
-import { Header } from '@/components/Header'
-import { SenderDashboard } from '@/components/SenderDashboard'
-import { TransporterDashboard } from '@/components/TransporterDashboard'
+import { Hero } from '@/components/Hero'
+import { Services } from '@/components/Services'
+import { About } from '@/components/About'
+import { WhyUs } from '@/components/WhyUs'
+import { Contact } from '@/components/Contact'
+import { Footer } from '@/components/Footer'
+import { Navigation } from '@/components/Navigation'
 import { Toaster } from '@/components/ui/sonner'
 
 function App() {
-  const { currentUser, isAuthenticated, login, logout } = useAuth()
-
-  if (!isAuthenticated || !currentUser) {
-    return (
-      <>
-        <AuthScreen onAuth={login} />
-        <Toaster />
-      </>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-background">
-      <Header user={currentUser} onLogout={logout} />
-      {currentUser.role === 'sender' ? (
-        <SenderDashboard user={currentUser} />
-      ) : (
-        <TransporterDashboard user={currentUser} />
-      )}
+      <Navigation />
+      <Hero />
+      <Services />
+      <About />
+      <WhyUs />
+      <Contact />
+      <Footer />
       <Toaster />
     </div>
   )
