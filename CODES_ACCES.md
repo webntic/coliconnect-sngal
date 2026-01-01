@@ -30,6 +30,29 @@ Téléphone: +221 78 234 56 78
 Rôle: Transporter (onglet avec icône Truck)
 ```
 
+### 3. Compte Administrateur 🔐
+**Rôle**: Superviser et gérer la plateforme
+**Accès**: Tableau de bord administrateur complet
+
+**Pour accéder au compte administrateur:**
+```
+Code d'accès: MBS2024ADMIN
+Nom Complet: Admin MBS
+Email: admin@mbs-transport.sn
+Téléphone: +221 77 306 15 15
+Rôle: Cliquer sur "Accès administrateur" puis entrer le code
+```
+
+**Fonctionnalités du tableau de bord administrateur:**
+- ✅ Vue d'ensemble avec statistiques complètes
+- ✅ Gestion des utilisateurs (expéditeurs et transporteurs)
+- ✅ Surveillance de tous les colis (statuts, prix, détails)
+- ✅ Gestion des itinéraires (vérification, tarifs)
+- ✅ Moniteur de messages entre utilisateurs
+- ✅ Système d'évaluation et avis
+- ✅ Filtres avancés et recherche globale
+- ✅ Statistiques de revenus et transactions
+
 ## 🎯 Comment Accéder aux Tableaux de Bord
 
 ### Étape 1: Accéder à la Page de Connexion
@@ -39,7 +62,9 @@ Rôle: Transporter (onglet avec icône Truck)
 
 ### Étape 2: Créer votre Compte
 1. Sélectionnez votre rôle (Envoyer Colis ou Transporter)
+   - Pour l'accès admin: cliquez sur **"Accès administrateur"**
 2. Remplissez le formulaire avec vos informations:
+   - Code administrateur (si admin): **MBS2024ADMIN**
    - Nom Complet
    - Email (format valide requis)
    - Numéro de Téléphone
@@ -61,6 +86,14 @@ Rôle: Transporter (onglet avec icône Truck)
   - Définition de tarifs GP (prix au kg)
   - Système de messagerie
 
+- **Administrateur**: Vous serez redirigé vers le tableau de bord administrateur avec:
+  - Vue d'ensemble globale avec KPIs
+  - Gestion complète des utilisateurs
+  - Surveillance des colis et itinéraires
+  - Moniteur de communications
+  - Système de reviews
+  - Filtres et recherche avancée
+
 ## 🔄 Persistance des Données
 
 Les comptes créés sont sauvegardés localement dans votre navigateur grâce au système `useKV` de Spark. Cela signifie que:
@@ -70,6 +103,15 @@ Les comptes créés sont sauvegardés localement dans votre navigateur grâce au
 - ⚠️ Effacer le cache du navigateur supprimera vos données
 
 ## 🧪 Comptes de Test Recommandés
+
+### Compte Administrateur (Accès Complet)
+```
+Code: MBS2024ADMIN
+Nom: Admin MBS Transport
+Email: admin@mbs-transport.sn
+Téléphone: +221 77 306 15 15
+Rôle: Accès administrateur (cliquer sur le lien puis entrer le code)
+```
 
 ### Compte Admin Expéditeur
 ```

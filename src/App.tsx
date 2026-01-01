@@ -11,6 +11,7 @@ import { Navigation } from '@/components/Navigation'
 import { AuthScreen } from '@/components/AuthScreen'
 import { SenderDashboard } from '@/components/SenderDashboard'
 import { TransporterDashboard } from '@/components/TransporterDashboard'
+import { AdminDashboard } from '@/components/AdminDashboard'
 import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { useAuth } from '@/hooks/use-auth'
 import { Toaster } from '@/components/ui/sonner'
@@ -32,7 +33,9 @@ function App() {
   if (isAuthenticated && currentUser) {
     return (
       <>
-        {currentUser.role === 'sender' ? (
+        {currentUser.role === 'admin' ? (
+          <AdminDashboard />
+        ) : currentUser.role === 'sender' ? (
           <SenderDashboard />
         ) : (
           <TransporterDashboard />

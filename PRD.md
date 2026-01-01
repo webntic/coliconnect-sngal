@@ -13,12 +13,28 @@ Une application combinant un site vitrine avec des espaces utilisateurs authenti
 ## Essential Features
 
 ### Authentification et Gestion d'Utilisateurs
-- **Functionality**: Système d'inscription et connexion permettant aux utilisateurs de choisir leur rôle (expéditeur ou transporteur)
-- **Purpose**: Sécuriser l'accès aux tableaux de bord et personnaliser l'expérience utilisateur
+- **Functionality**: Système d'inscription et connexion permettant aux utilisateurs de choisir leur rôle (expéditeur, transporteur ou administrateur)
+- **Purpose**: Sécuriser l'accès aux tableaux de bord et personnaliser l'expérience utilisateur selon le rôle
 - **Trigger**: Clic sur "Espace Client" dans la navigation ou "Commencer" sur la page d'accueil
-- **Progression**: Sélection du rôle → Saisie des informations (nom, email, téléphone) → Validation → Redirection vers tableau de bord approprié
-- **Success criteria**: L'utilisateur accède à son espace personnalisé avec données persistantes entre sessions
+- **Progression**: Sélection du rôle → Saisie des informations (nom, email, téléphone) → Pour admin: saisie du code d'accès (MBS2024ADMIN) → Validation → Redirection vers tableau de bord approprié
+- **Success criteria**: L'utilisateur accède à son espace personnalisé avec données persistantes entre sessions, avec accès complet selon son rôle
 
+### Tableau de Bord Administrateur
+- **Functionality**: Interface de supervision complète permettant aux administrateurs de surveiller et gérer tous les aspects de la plateforme: utilisateurs, colis, itinéraires, messages et avis
+- **Purpose**: Fournir une vue d'ensemble globale de l'activité de la plateforme avec des outils de gestion, de surveillance et d'analyse pour assurer le bon fonctionnement du service
+- **Trigger**: Connexion avec le code administrateur (MBS2024ADMIN)
+- **Progression**: Authentification admin → Vue d'ensemble avec KPIs globaux → Navigation par onglets (Utilisateurs/Colis/Itinéraires/Messages/Avis) → Utilisation de filtres et recherche → Analyse des données → Export ou actions de gestion
+- **Success criteria**: Les administrateurs peuvent surveiller l'ensemble de l'activité, identifier rapidement les problèmes, analyser les tendances, et prendre des décisions basées sur des données complètes et à jour
+- **Fonctionnalités clés**:
+  - **Vue d'ensemble**: Dashboard avec statistiques clés (utilisateurs, colis, itinéraires, messages, avis, revenus)
+  - **Gestion utilisateurs**: Table avec filtres par rôle (expéditeur/transporteur), statut de vérification, tri par date/note/transactions, recherche globale
+  - **Surveillance colis**: Suivi de tous les colis avec filtres par statut (en attente/actif/livré), taille, tri par prix/poids/date
+  - **Gestion itinéraires**: Monitoring des routes avec filtres par vérification, tri par départ/prix/note transporteur
+  - **Moniteur messages**: Vue complète des conversations avec compteurs de messages, filtres par activité, contexte lié (colis/route)
+  - **Système d'avis**: Surveillance des évaluations avec filtres par note (1-5 étoiles), identification des utilisateurs problématiques
+  - **Recherche globale**: Barre de recherche permettant de trouver rapidement n'importe quel élément (utilisateur, colis, route, message)
+  - **Cartes récentes**: Widgets affichant les dernières activités (nouveaux utilisateurs, colis récents, routes ajoutées)
+  - **KPIs visuels**: Cartes statistiques avec icônes et sous-métriques pour une compréhension rapide
 
 ### Tableau de Bord Expéditeur
 - **Functionality**: Interface complète pour les expéditeurs permettant de créer, gérer et suivre leurs envois de colis avec visualisation géographique des itinéraires
