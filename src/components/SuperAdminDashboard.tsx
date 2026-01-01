@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useKV } from '@github/spark/hooks'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -8,11 +9,11 @@ import { SuperAdminUsersManager } from '@/components/SuperAdminUsersManager'
 import { SuperAdminAdminsManager } from '@/components/SuperAdminAdminsManager'
 import { SuperAdminTransportersManager } from '@/components/SuperAdminTransportersManager'
 import { SuperAdminDataManager } from '@/components/SuperAdminDataManager'
-import logoImg from '@/assets/images/logo.png'
 
 export function SuperAdminDashboard() {
   const { logout } = useAuth()
   const [activeTab, setActiveTab] = useState('admins')
+  const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -20,7 +21,7 @@ export function SuperAdminDashboard() {
         <div className="container mx-auto px-4">
           <div className="h-24 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img src={logoImg} alt="MBS Transport" className="h-16 w-auto" />
+              <img src={logoUrl} alt="MBS Transport" className="h-16 w-auto" />
               <div>
                 <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
                   <ShieldCheck className="text-destructive" weight="fill" size={28} />
