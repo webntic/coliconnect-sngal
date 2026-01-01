@@ -690,19 +690,7 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                       </AnimatePresence>
                     </Button>
 
-                    <div className="text-center space-y-2 pt-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setShowAdminLogin(true)
-                          setSelectedRole('admin')
-                        }}
-                        className="text-xs text-muted-foreground hover:text-foreground underline flex items-center justify-center gap-1 mx-auto"
-                      >
-                        <Shield size={14} weight="fill" />
-                        Accès administrateur
-                      </button>
-                      
+                    <div className="text-center pt-2">
                       <p className="text-xs text-muted-foreground">
                         En continuant, vous acceptez nos Conditions d'Utilisation
                       </p>
