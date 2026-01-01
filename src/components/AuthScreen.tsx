@@ -218,6 +218,29 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
                 {loading ? 'Connexion...' : 'Se connecter'}
               </Button>
 
+              <div className="pt-3 border-t">
+                <p className="text-xs text-center text-muted-foreground mb-2">Ou connexion rapide:</p>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setAdminUsername('admin@mbstransport.com')
+                    setAdminPassword('MBS2024Admin!')
+                    setTimeout(() => {
+                      const form = document.querySelector('form')
+                      if (form) {
+                        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+                      }
+                    }, 100)
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                >
+                  <Shield size={16} weight="fill" className="mr-2" />
+                  Connexion Admin Automatique
+                </Button>
+              </div>
+
               <button
                 type="button"
                 onClick={() => {
@@ -373,6 +396,96 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
               </p>
             </div>
           </form>
+
+          <div className="mt-6 pt-6 border-t">
+            <div className="text-center mb-3">
+              <p className="text-sm font-semibold text-foreground mb-1">Accès Rapide Démo</p>
+              <p className="text-xs text-muted-foreground">Testez avec un compte démo</p>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-2">
+              <Button
+                type="button"
+                onClick={() => {
+                  const adminUser: User = {
+                    id: 'admin-demo',
+                    name: 'Administrateur MBS',
+                    email: 'admin@mbstransport.com',
+                    phone: '+221 77 306 15 15',
+                    role: 'admin',
+                    rating: 5.0,
+                    totalTransactions: 0,
+                    verified: true,
+                    createdAt: new Date().toISOString()
+                  }
+                  toast.success('Connexion Admin')
+                  onAuth(adminUser)
+                }}
+                variant="outline"
+                size="sm"
+                className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+              >
+                <Shield size={20} weight="fill" className="text-primary" />
+                <span className="text-xs font-semibold">Admin</span>
+              </Button>
+
+              <Button
+                type="button"
+                onClick={() => {
+                  const senderUser: User = {
+                    id: 'sender-demo',
+                    name: 'Amadou Diallo',
+                    email: 'client@mbstransport.com',
+                    phone: '+221 77 123 45 67',
+                    role: 'sender',
+                    rating: 4.8,
+                    totalTransactions: 12,
+                    verified: true,
+                    createdAt: new Date().toISOString()
+                  }
+                  toast.success('Connexion Client')
+                  onAuth(senderUser)
+                }}
+                variant="outline"
+                size="sm"
+                className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+              >
+                <Package size={20} weight="fill" className="text-primary" />
+                <span className="text-xs font-semibold">Client</span>
+              </Button>
+
+              <Button
+                type="button"
+                onClick={() => {
+                  const transporterUser: User = {
+                    id: 'transporter-demo',
+                    name: 'Moussa Sarr',
+                    email: 'transporteur@mbstransport.com',
+                    phone: '+221 77 987 65 43',
+                    role: 'transporter',
+                    rating: 4.9,
+                    totalTransactions: 45,
+                    verified: true,
+                    createdAt: new Date().toISOString()
+                  }
+                  toast.success('Connexion Transporteur')
+                  onAuth(transporterUser)
+                }}
+                variant="outline"
+                size="sm"
+                className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+              >
+                <Truck size={20} weight="fill" className="text-primary" />
+                <span className="text-xs font-semibold">Transp.</span>
+              </Button>
+            </div>
+
+            <div className="mt-3 p-2 bg-muted/50 rounded-lg">
+              <p className="text-xs text-muted-foreground text-center font-mono">
+                admin@mbstransport.com • client@mbstransport.com • transporteur@mbstransport.com
+              </p>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

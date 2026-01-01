@@ -49,7 +49,10 @@ function App() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation onNavigateToDashboard={() => setShowLanding(false)} />
-      <Hero onGetStarted={() => setShowLanding(false)} />
+      <Hero 
+        onGetStarted={() => setShowLanding(false)} 
+        onQuickLogin={(user) => login(user)}
+      />
       <Services />
       <QuoteCalculator />
       <PricingInfo />

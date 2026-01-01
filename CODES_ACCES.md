@@ -1,8 +1,41 @@
 # Codes d'Accès MBS Transport
 
-## 🔐 Accès Administrateur
+## 🚀 Connexion Rapide (Démo)
 
-**Identifiant:** `admin@mbstransport`  
+La plateforme dispose maintenant de **boutons de connexion rapide** sur la page d'accueil et l'écran de connexion pour faciliter l'accès aux comptes de démonstration.
+
+### 📍 Où trouver les liens de connexion rapide ?
+
+1. **Page d'accueil (Hero)** : Section "Accès Rapide Démo" avec 3 boutons visuels
+2. **Écran de connexion** : Section en bas avec boutons Admin, Client, Transporteur
+3. **Écran Admin** : Bouton "Connexion Admin Automatique"
+
+---
+
+## 🔐 Comptes de Démonstration
+
+### Administrateur
+- **Email:** `admin@mbstransport.com`
+- **Mot de passe:** `MBS2024Admin!`
+- **Accès direct:** Cliquez sur le bouton "Administrateur" dans la section démo
+
+### Client (Expéditeur)
+- **Email:** `client@mbstransport.com`
+- **Nom:** Amadou Diallo
+- **Téléphone:** +221 77 123 45 67
+- **Accès direct:** Cliquez sur le bouton "Client" dans la section démo
+
+### Transporteur
+- **Email:** `transporteur@mbstransport.com`
+- **Nom:** Moussa Sarr
+- **Téléphone:** +221 77 987 65 43
+- **Accès direct:** Cliquez sur le bouton "Transporteur" dans la section démo
+
+---
+
+## 🔐 Accès Administrateur (Détails)
+
+**Identifiant:** `admin@mbstransport.com`  
 **Mot de passe:** `MBS2024Admin!`
 
 L'administrateur a accès à :
@@ -14,19 +47,14 @@ L'administrateur a accès à :
 
 ---
 
-## 👤 Accès Utilisateurs (Expéditeurs et Transporteurs)
+## 👤 Création de Nouveaux Comptes
 
-Les utilisateurs doivent créer un compte avec :
+Les utilisateurs peuvent créer un compte avec :
 - **Email** : Adresse email valide
 - **Mot de passe** : Minimum 6 caractères
 - **Nom complet**
 - **Numéro de téléphone**
 - **Type de compte** : Expéditeur ou Transporteur
-
-### Exemple de compte test :
-
-**Email:** `test@example.com`  
-**Mot de passe:** `test123`
 
 ---
 

@@ -1,12 +1,15 @@
 import { Button } from '@/components/ui/button'
-import { ArrowRight } from '@phosphor-icons/react'
+import { ArrowRight, Shield, Package, Truck } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
+import { User } from '@/lib/types'
+import { toast } from 'sonner'
 
 interface HeroProps {
   onGetStarted?: () => void
+  onQuickLogin?: (user: User) => void
 }
 
-export function Hero({ onGetStarted }: HeroProps) {
+export function Hero({ onGetStarted, onQuickLogin }: HeroProps) {
   const scrollToContact = () => {
     const element = document.getElementById('contact')
     if (element) {
@@ -19,6 +22,55 @@ export function Hero({ onGetStarted }: HeroProps) {
       onGetStarted()
     } else {
       scrollToContact()
+    }
+  }
+
+  const handleQuickLogin = (role: 'admin' | 'sender' | 'transporter') => {
+    let user: User
+
+    if (role === 'admin') {
+      user = {
+        id: 'admin-demo',
+        name: 'Administrateur MBS',
+        email: 'admin@mbstransport.com',
+        phone: '+221 77 306 15 15',
+        role: 'admin',
+        rating: 5.0,
+        totalTransactions: 0,
+        verified: true,
+        createdAt: new Date().toISOString()
+      }
+      toast.success('Connexion en tant qu\'Administrateur')
+    } else if (role === 'sender') {
+      user = {
+        id: 'sender-demo',
+        name: 'Amadou Diallo',
+        email: 'client@mbstransport.com',
+        phone: '+221 77 123 45 67',
+        role: 'sender',
+        rating: 4.8,
+        totalTransactions: 12,
+        verified: true,
+        createdAt: new Date().toISOString()
+      }
+      toast.success('Connexion en tant que Client')
+    } else {
+      user = {
+        id: 'transporter-demo',
+        name: 'Moussa Sarr',
+        email: 'transporteur@mbstransport.com',
+        phone: '+221 77 987 65 43',
+        role: 'transporter',
+        rating: 4.9,
+        totalTransactions: 45,
+        verified: true,
+        createdAt: new Date().toISOString()
+      }
+      toast.success('Connexion en tant que Transporteur')
+    }
+
+    if (onQuickLogin) {
+      onQuickLogin(user)
     }
   }
 
@@ -81,6 +133,78 @@ export function Hero({ onGetStarted }: HeroProps) {
               Découvrir nos Services
             </Button>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="pt-12"
+          >
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 max-w-3xl mx-auto">
+              <div className="text-center mb-4">
+                <h3 className="text-white font-semibold text-lg mb-1">Accès Rapide Démo</h3>
+                <p className="text-white/70 text-sm">Testez la plateforme avec un compte démo</p>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <Button
+                  onClick={() => handleQuickLogin('admin')}
+                  variant="outline"
+                  className="bg-white/90 hover:bg-white border-0 text-primary hover:text-primary h-auto py-4 flex flex-col items-center gap-2 transition-all hover:scale-105"
+                >
+                  <Shield size={28} weight="fill" />
+                  <div className="text-center">
+                    <div className="font-bold">Administrateur</div>
+                    <div className="text-xs text-muted-foreground">Gestion complète</div>
+                  </div>
+                </Button>
+
+                <Button
+                  onClick={() => handleQuickLogin('sender')}
+                  variant="outline"
+                  className="bg-white/90 hover:bg-white border-0 text-primary hover:text-primary h-auto py-4 flex flex-col items-center gap-2 transition-all hover:scale-105"
+                >
+                  <Package size={28} weight="fill" />
+                  <div className="text-center">
+                    <div className="font-bold">Client</div>
+                    <div className="text-xs text-muted-foreground">Envoyer des colis</div>
+                  </div>
+                </Button>
+
+                <Button
+                  onClick={() => handleQuickLogin('transporter')}
+                  variant="outline"
+                  className="bg-white/90 hover:bg-white border-0 text-primary hover:text-primary h-auto py-4 flex flex-col items-center gap-2 transition-all hover:scale-105"
+                >
+                  <Truck size={28} weight="fill" />
+                  <div className="text-center">
+                    <div className="font-bold">Transporteur</div>
+                    <div className="text-xs text-muted-foreground">Gérer les routes</div>
+                  </div>
+                </Button>
+              </div>
+
+              <div className="mt-4 p-3 bg-white/5 rounded-lg border border-white/10">
+                <p className="text-xs text-white/60 text-center">
+                  <strong className="text-white/90">Identifiants des comptes test:</strong>
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2 text-xs font-mono text-white/70">
+                  <div className="text-center">
+                    <div className="text-white/90 font-semibold mb-1">Admin</div>
+                    <div>admin@mbstransport.com</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-white/90 font-semibold mb-1">Client</div>
+                    <div>client@mbstransport.com</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-white/90 font-semibold mb-1">Transporteur</div>
+                    <div>transporteur@mbstransport.com</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto pt-16">
             <motion.div
