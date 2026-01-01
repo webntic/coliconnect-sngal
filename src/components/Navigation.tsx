@@ -20,11 +20,11 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-card via-card to-muted/30 backdrop-blur-xl border-b border-border/50 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 h-[100px] flex items-center">
         <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-3">
-            <div className="h-20 w-auto flex items-center">
+          <div className="flex items-center gap-4">
+            <div className="h-20 w-auto flex items-center p-2 rounded-xl bg-gradient-to-br from-primary/5 to-secondary/5">
               <img 
                 src={logoUrl} 
                 alt="MBS Transport Logo" 
@@ -35,47 +35,52 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               />
             </div>
             <div className="hidden sm:block">
-              <div className="text-lg font-bold text-foreground">MBS Transport</div>
+              <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">MBS Transport</div>
               <div className="text-xs text-muted-foreground">Mondial Bagage Services</div>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
             <button
               onClick={() => scrollToSection('accueil')}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
             >
               Accueil
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
             <button
               onClick={() => scrollToSection('services')}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
             >
               Services
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
             <button
               onClick={() => scrollToSection('devis')}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
             >
               Devis en Ligne
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
             <button
               onClick={() => scrollToSection('a-propos')}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
             >
               À Propos
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
             >
               Contact
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
-            <Button onClick={() => scrollToSection('devis')} size="sm" className="bg-accent hover:bg-accent/90">
+            <Button onClick={() => scrollToSection('devis')} size="sm" className="bg-gradient-to-r from-accent to-secondary hover:shadow-lg hover:scale-105 transition-all">
               Calculer un Devis
             </Button>
             {onNavigateToDashboard && (
-              <Button onClick={onNavigateToDashboard} size="sm" variant="outline">
+              <Button onClick={onNavigateToDashboard} size="sm" variant="outline" className="hover:bg-primary/10 hover:border-primary transition-all">
                 Espace Client
               </Button>
             )}
@@ -83,7 +88,7 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-foreground"
+            className="md:hidden text-foreground hover:text-primary transition-colors"
           >
             {isOpen ? <X size={28} /> : <List size={28} />}
           </button>
@@ -91,42 +96,42 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
       </div>
 
       {isOpen && (
-        <div className="md:hidden px-6 pb-4 flex flex-col gap-4">
+        <div className="md:hidden px-6 pb-4 flex flex-col gap-4 bg-gradient-to-b from-transparent to-muted/30 backdrop-blur-xl border-t border-border/30">
             <button
               onClick={() => scrollToSection('accueil')}
-              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
             >
               Accueil
             </button>
             <button
               onClick={() => scrollToSection('services')}
-              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
             >
               Services
             </button>
             <button
               onClick={() => scrollToSection('devis')}
-              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
             >
               Devis en Ligne
             </button>
             <button
               onClick={() => scrollToSection('a-propos')}
-              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
             >
               À Propos
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
             >
               Contact
             </button>
-            <Button onClick={() => scrollToSection('devis')} className="w-full bg-accent hover:bg-accent/90">
+            <Button onClick={() => scrollToSection('devis')} className="w-full bg-gradient-to-r from-accent to-secondary hover:shadow-lg">
               Calculer un Devis
             </Button>
             {onNavigateToDashboard && (
-              <Button onClick={onNavigateToDashboard} variant="outline" className="w-full">
+              <Button onClick={onNavigateToDashboard} variant="outline" className="w-full hover:bg-primary/10">
                 Espace Client
               </Button>
             )}

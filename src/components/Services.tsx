@@ -63,33 +63,33 @@ export function Services() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="overflow-hidden h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/20">
-                  <div className="relative h-48 overflow-hidden">
+                <Card className="group overflow-hidden h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-card via-card to-muted/30">
+                  <div className="relative h-56 overflow-hidden">
                     <img 
                       src={service.image} 
                       alt={service.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-4 left-4 w-12 h-12 rounded-xl bg-white/90 flex items-center justify-center">
-                      <Icon size={24} className="text-primary" weight="duotone" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                    <div className="absolute top-4 right-4 w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-secondary shadow-lg flex items-center justify-center backdrop-blur-sm">
+                      <Icon size={28} className="text-white" weight="duotone" />
                     </div>
                   </div>
                   
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold text-foreground mb-3">
+                  <div className="p-6 space-y-4">
+                    <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
                       {service.title}
                     </h3>
                     
-                    <p className="text-muted-foreground leading-relaxed mb-6">
+                    <p className="text-muted-foreground leading-relaxed text-[15px]">
                       {service.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 pt-2">
                       {service.features.map((feature) => (
                         <span
                           key={feature}
-                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent/10 text-accent border border-accent/20"
+                          className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-accent/15 to-secondary/15 text-accent border border-accent/30 hover:border-accent/50 transition-colors"
                         >
                           {feature}
                         </span>
