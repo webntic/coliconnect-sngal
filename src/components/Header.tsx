@@ -2,7 +2,7 @@ import { User } from '@/lib/types'
 import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Package, Truck, ChatCircle, Bell, SignOut } from '@phosphor-icons/react'
+import { Package, Truck, ChatCircle, Bell, SignOut, WhatsappLogo, Phone } from '@phosphor-icons/react'
 
 interface HeaderProps {
   user: User
@@ -33,9 +33,20 @@ export function Header({ user, onLogout }: HeaderProps) {
               }}
             />
           </div>
-          <div>
-            <h1 className="text-lg font-bold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">MBS Transport</h1>
-            <p className="text-xs text-muted-foreground capitalize">{user.role} Dashboard</p>
+          <div className="flex items-center gap-3 border-l border-border pl-4">
+            <div className="flex items-center gap-2 bg-green-500/10 px-4 py-2 rounded-xl border border-green-500/20">
+              <WhatsappLogo size={24} weight="fill" className="text-green-500" />
+              <div>
+                <p className="text-xs text-muted-foreground font-medium">Service Client</p>
+                <a 
+                  href="tel:+221730615115" 
+                  className="text-sm font-bold text-foreground hover:text-primary transition-colors flex items-center gap-1"
+                >
+                  <Phone size={14} weight="bold" />
+                  +221 73 061 51 15
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
