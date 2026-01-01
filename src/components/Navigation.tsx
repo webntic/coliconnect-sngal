@@ -81,7 +81,7 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
             {onNavigateToDashboard && (
-              <Button onClick={onNavigateToDashboard} size="sm" variant="outline" className="hover:bg-primary/10 hover:border-primary transition-all">
+              <Button onClick={onNavigateToDashboard} size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md hover:shadow-lg">
                 Espace Client
               </Button>
             )}
@@ -138,7 +138,7 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               Contact
             </button>
             {onNavigateToDashboard && (
-              <Button onClick={onNavigateToDashboard} variant="outline" className="w-full hover:bg-primary/10">
+              <Button onClick={onNavigateToDashboard} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-md">
                 Espace Client
               </Button>
             )}
