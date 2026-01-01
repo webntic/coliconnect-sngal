@@ -23,7 +23,10 @@ function App() {
   if (!showLanding && !isAuthenticated) {
     return (
       <>
-        <AuthScreen onAuth={(user) => login(user)} />
+        <AuthScreen 
+          onAuth={(user) => login(user)} 
+          onBackToHome={() => setShowLanding(true)}
+        />
         <WhatsAppButton />
         <Toaster />
       </>

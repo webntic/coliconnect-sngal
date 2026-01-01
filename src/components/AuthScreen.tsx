@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Package, Truck, Shield, Eye, EyeSlash } from '@phosphor-icons/react'
+import { Package, Truck, Shield, Eye, EyeSlash, House } from '@phosphor-icons/react'
 import { User, UserRole } from '@/lib/types'
 import { toast } from 'sonner'
 import { verifyAdminCredentials, verifyUserCredentials, registerUser, initializeAdminCredentials, validatePassword } from '@/lib/auth'
@@ -12,9 +12,10 @@ import { useKV } from '@github/spark/hooks'
 
 interface AuthScreenProps {
   onAuth: (user: User) => void
+  onBackToHome?: () => void
 }
 
-export function AuthScreen({ onAuth }: AuthScreenProps) {
+export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
   const [mode, setMode] = useState<'login' | 'register'>('login')
   const [selectedRole, setSelectedRole] = useState<UserRole>('sender')
   const [name, setName] = useState('')
@@ -27,6 +28,7 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
   const [adminPassword, setAdminPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [users] = useKV<User[]>('registered-users', [])
+  const [logoUrl] = useKV<string>('company-logo', 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png')
 
   useEffect(() => {
     initializeAdminCredentials()
@@ -149,7 +151,7 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
 
   if (showAdminLogin) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 relative">
+      <div className="min-h-screen flex flex-col relative">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1920&h=1080&fit=crop&q=80" 
@@ -158,45 +160,270 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
           />
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
         </div>
-        <Card className="w-full max-w-md shadow-lg relative z-10">
+
+        <div className="relative z-10 w-full py-6">
+          <div className="container max-w-md mx-auto px-6">
+            <button
+              onClick={onBackToHome}
+              className="group flex items-center gap-3 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-lg w-full"
+            >
+              <div className="h-12 w-auto flex items-center">
+                <img 
+                  src={logoUrl} 
+                  alt="MBS Transport Logo" 
+                  className="h-full w-auto object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png'
+                  }}
+                />
+              </div>
+              <div className="flex-1 text-left">
+                <h2 className="text-base font-bold text-foreground">MBS Transport</h2>
+                <p className="text-xs text-muted-foreground">Mondial Bagage Services</p>
+              </div>
+              <House size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center p-6 relative z-10">
+          <Card className="w-full max-w-md shadow-lg">
+            <CardHeader className="space-y-2 text-center">
+              <div className="flex justify-center mb-2">
+                <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
+                  <Shield size={32} weight="bold" className="text-primary-foreground" />
+                </div>
+              </div>
+              <CardTitle className="text-3xl font-bold">Accès Administrateur</CardTitle>
+              <CardDescription className="text-base">
+                Connexion réservée aux administrateurs MBS Transport
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleAdminLogin} className="space-y-6">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="adminUsername">Identifiant</Label>
+                    <Input
+                      id="adminUsername"
+                      type="text"
+                      placeholder="admin@mbstransport"
+                      value={adminUsername}
+                      onChange={(e) => setAdminUsername(e.target.value)}
+                      required
+                      autoComplete="username"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="adminPassword">Mot de passe</Label>
+                    <div className="relative">
+                      <Input
+                        id="adminPassword"
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="••••••••"
+                        value={adminPassword}
+                        onChange={(e) => setAdminPassword(e.target.value)}
+                        required
+                        autoComplete="current-password"
+                        className="pr-10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      >
+                        {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-muted/50 rounded-lg border">
+                    <p className="text-xs font-mono text-muted-foreground">
+                      <strong className="text-foreground">Identifiant:</strong> admin@mbstransport<br />
+                      <strong className="text-foreground">Mot de passe:</strong> MBS2024Admin!
+                    </p>
+                  </div>
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full h-11 text-base font-semibold" 
+                  size="lg"
+                  disabled={loading}
+                >
+                  {loading ? 'Connexion...' : 'Se connecter'}
+                </Button>
+
+                <div className="pt-3 border-t">
+                  <p className="text-xs text-center text-muted-foreground mb-2">Ou connexion rapide:</p>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setAdminUsername('admin@mbstransport.com')
+                      setAdminPassword('MBS2024Admin!')
+                      setTimeout(() => {
+                        const form = document.querySelector('form')
+                        if (form) {
+                          form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
+                        }
+                      }, 100)
+                    }}
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                  >
+                    <Shield size={16} weight="fill" className="mr-2" />
+                    Connexion Admin Automatique
+                  </Button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAdminLogin(false)
+                    setAdminUsername('')
+                    setAdminPassword('')
+                    setShowPassword(false)
+                  }}
+                  className="text-sm text-muted-foreground hover:text-foreground underline w-full text-center"
+                >
+                  ← Retour à la connexion normale
+                </button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col relative">
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&h=1080&fit=crop&q=80" 
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/60" />
+      </div>
+
+      <div className="relative z-10 w-full py-6">
+        <div className="container max-w-md mx-auto px-6">
+          <button
+            onClick={onBackToHome}
+            className="group flex items-center gap-3 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-lg w-full"
+          >
+            <div className="h-12 w-auto flex items-center">
+              <img 
+                src={logoUrl} 
+                alt="MBS Transport Logo" 
+                className="h-full w-auto object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://i.postimg.cc/15Sf1d1n/mbs-logo.png'
+                }}
+              />
+            </div>
+            <div className="flex-1 text-left">
+              <h2 className="text-base font-bold text-foreground">MBS Transport</h2>
+              <p className="text-xs text-muted-foreground">Mondial Bagage Services</p>
+            </div>
+            <House size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center p-6 relative z-10">
+        <Card className="w-full max-w-md shadow-lg">
           <CardHeader className="space-y-2 text-center">
             <div className="flex justify-center mb-2">
               <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
-                <Shield size={32} weight="bold" className="text-primary-foreground" />
+                <Package size={32} weight="bold" className="text-primary-foreground" />
               </div>
             </div>
-            <CardTitle className="text-3xl font-bold">Accès Administrateur</CardTitle>
+            <CardTitle className="text-3xl font-bold">MBS Transport</CardTitle>
             <CardDescription className="text-base">
-              Connexion réservée aux administrateurs MBS Transport
+              Connectez, expédiez et livrez des colis dans le monde entier
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleAdminLogin} className="space-y-6">
+            <Tabs value={mode} onValueChange={(v) => setMode(v as 'login' | 'register')} className="mb-6">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="login">Connexion</TabsTrigger>
+                <TabsTrigger value="register">Inscription</TabsTrigger>
+              </TabsList>
+            </Tabs>
+
+            <form onSubmit={mode === 'login' ? handleUserLogin : handleUserRegister} className="space-y-6">
               <div className="space-y-4">
+                {mode === 'register' && (
+                  <>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Je souhaite</Label>
+                      <Tabs value={selectedRole} onValueChange={(v) => setSelectedRole(v as UserRole)} className="w-full">
+                        <TabsList className="grid w-full grid-cols-2">
+                          <TabsTrigger value="sender" className="flex items-center gap-2">
+                            <Package size={18} />
+                            <span>Envoyer</span>
+                          </TabsTrigger>
+                          <TabsTrigger value="transporter" className="flex items-center gap-2">
+                            <Truck size={18} />
+                            <span>Transporter</span>
+                          </TabsTrigger>
+                        </TabsList>
+                      </Tabs>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Nom Complet</Label>
+                      <Input
+                        id="name"
+                        placeholder="Amadou Diallo"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Numéro de Téléphone</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+221 77 123 45 67"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+
                 <div className="space-y-2">
-                  <Label htmlFor="adminUsername">Identifiant</Label>
+                  <Label htmlFor="email">Email</Label>
                   <Input
-                    id="adminUsername"
-                    type="text"
-                    placeholder="admin@mbstransport"
-                    value={adminUsername}
-                    onChange={(e) => setAdminUsername(e.target.value)}
+                    id="email"
+                    type="email"
+                    placeholder="amadou@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
-                    autoComplete="username"
+                    autoComplete="email"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="adminPassword">Mot de passe</Label>
+                  <Label htmlFor="password">Mot de passe</Label>
                   <div className="relative">
                     <Input
-                      id="adminPassword"
+                      id="password"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="••••••••"
-                      value={adminPassword}
-                      onChange={(e) => setAdminPassword(e.target.value)}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       required
-                      autoComplete="current-password"
+                      autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
                       className="pr-10"
                     />
                     <button
@@ -207,303 +434,134 @@ export function AuthScreen({ onAuth }: AuthScreenProps) {
                       {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
                     </button>
                   </div>
-                </div>
-
-                <div className="p-3 bg-muted/50 rounded-lg border">
-                  <p className="text-xs font-mono text-muted-foreground">
-                    <strong className="text-foreground">Identifiant:</strong> admin@mbstransport<br />
-                    <strong className="text-foreground">Mot de passe:</strong> MBS2024Admin!
-                  </p>
+                  {mode === 'register' && (
+                    <p className="text-xs text-muted-foreground">
+                      Minimum 6 caractères
+                    </p>
+                  )}
                 </div>
               </div>
 
               <Button 
                 type="submit" 
-                className="w-full h-11 text-base font-semibold" 
+                className="w-full h-11 text-base font-semibold bg-accent hover:bg-accent/90" 
                 size="lg"
                 disabled={loading}
               >
-                {loading ? 'Connexion...' : 'Se connecter'}
+                {loading ? (mode === 'login' ? 'Connexion...' : 'Création...') : (mode === 'login' ? 'Se connecter' : 'Créer un compte')}
               </Button>
 
-              <div className="pt-3 border-t">
-                <p className="text-xs text-center text-muted-foreground mb-2">Ou connexion rapide:</p>
+              <div className="text-center space-y-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAdminLogin(true)
+                    setSelectedRole('admin')
+                  }}
+                  className="text-xs text-muted-foreground hover:text-foreground underline flex items-center justify-center gap-1 mx-auto"
+                >
+                  <Shield size={14} weight="fill" />
+                  Accès administrateur
+                </button>
+                
+                <p className="text-xs text-muted-foreground">
+                  En continuant, vous acceptez nos Conditions d'Utilisation
+                </p>
+              </div>
+            </form>
+
+            <div className="mt-6 pt-6 border-t">
+              <div className="text-center mb-3">
+                <p className="text-sm font-semibold text-foreground mb-1">Accès Rapide Démo</p>
+                <p className="text-xs text-muted-foreground">Testez avec un compte démo</p>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-2">
                 <Button
                   type="button"
                   onClick={() => {
-                    setAdminUsername('admin@mbstransport.com')
-                    setAdminPassword('MBS2024Admin!')
-                    setTimeout(() => {
-                      const form = document.querySelector('form')
-                      if (form) {
-                        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
-                      }
-                    }, 100)
+                    const adminUser: User = {
+                      id: 'admin-demo',
+                      name: 'Administrateur MBS',
+                      email: 'admin@mbstransport.com',
+                      phone: '+221 77 306 15 15',
+                      role: 'admin',
+                      rating: 5.0,
+                      totalTransactions: 0,
+                      verified: true,
+                      createdAt: new Date().toISOString()
+                    }
+                    toast.success('Connexion Admin')
+                    onAuth(adminUser)
                   }}
                   variant="outline"
                   size="sm"
-                  className="w-full"
+                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
                 >
-                  <Shield size={16} weight="fill" className="mr-2" />
-                  Connexion Admin Automatique
+                  <Shield size={20} weight="fill" className="text-primary" />
+                  <span className="text-xs font-semibold">Admin</span>
+                </Button>
+
+                <Button
+                  type="button"
+                  onClick={() => {
+                    const senderUser: User = {
+                      id: 'sender-demo',
+                      name: 'Amadou Diallo',
+                      email: 'client@mbstransport.com',
+                      phone: '+221 77 123 45 67',
+                      role: 'sender',
+                      rating: 4.8,
+                      totalTransactions: 12,
+                      verified: true,
+                      createdAt: new Date().toISOString()
+                    }
+                    toast.success('Connexion Client')
+                    onAuth(senderUser)
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+                >
+                  <Package size={20} weight="fill" className="text-primary" />
+                  <span className="text-xs font-semibold">Client</span>
+                </Button>
+
+                <Button
+                  type="button"
+                  onClick={() => {
+                    const transporterUser: User = {
+                      id: 'transporter-demo',
+                      name: 'Moussa Sarr',
+                      email: 'transporteur@mbstransport.com',
+                      phone: '+221 77 987 65 43',
+                      role: 'transporter',
+                      rating: 4.9,
+                      totalTransactions: 45,
+                      verified: true,
+                      createdAt: new Date().toISOString()
+                    }
+                    toast.success('Connexion Transporteur')
+                    onAuth(transporterUser)
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
+                >
+                  <Truck size={20} weight="fill" className="text-primary" />
+                  <span className="text-xs font-semibold">Transp.</span>
                 </Button>
               </div>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setShowAdminLogin(false)
-                  setAdminUsername('')
-                  setAdminPassword('')
-                  setShowPassword(false)
-                }}
-                className="text-sm text-muted-foreground hover:text-foreground underline w-full text-center"
-              >
-                ← Retour à la connexion normale
-              </button>
-            </form>
+              <div className="mt-3 p-2 bg-muted/50 rounded-lg">
+                <p className="text-xs text-muted-foreground text-center font-mono">
+                  admin@mbstransport.com • client@mbstransport.com • transporteur@mbstransport.com
+                </p>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
-    )
-  }
-
-  return (
-    <div className="min-h-screen flex items-center justify-center p-6 relative">
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&h=1080&fit=crop&q=80" 
-          alt="Background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/60" />
-      </div>
-      <Card className="w-full max-w-md shadow-lg relative z-10">
-        <CardHeader className="space-y-2 text-center">
-          <div className="flex justify-center mb-2">
-            <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
-              <Package size={32} weight="bold" className="text-primary-foreground" />
-            </div>
-          </div>
-          <CardTitle className="text-3xl font-bold">MBS Transport</CardTitle>
-          <CardDescription className="text-base">
-            Connectez, expédiez et livrez des colis dans le monde entier
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs value={mode} onValueChange={(v) => setMode(v as 'login' | 'register')} className="mb-6">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Connexion</TabsTrigger>
-              <TabsTrigger value="register">Inscription</TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          <form onSubmit={mode === 'login' ? handleUserLogin : handleUserRegister} className="space-y-6">
-            <div className="space-y-4">
-              {mode === 'register' && (
-                <>
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Je souhaite</Label>
-                    <Tabs value={selectedRole} onValueChange={(v) => setSelectedRole(v as UserRole)} className="w-full">
-                      <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="sender" className="flex items-center gap-2">
-                          <Package size={18} />
-                          <span>Envoyer</span>
-                        </TabsTrigger>
-                        <TabsTrigger value="transporter" className="flex items-center gap-2">
-                          <Truck size={18} />
-                          <span>Transporter</span>
-                        </TabsTrigger>
-                      </TabsList>
-                    </Tabs>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nom Complet</Label>
-                    <Input
-                      id="name"
-                      placeholder="Amadou Diallo"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Numéro de Téléphone</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+221 77 123 45 67"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                    />
-                  </div>
-                </>
-              )}
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="amadou@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  autoComplete="email"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Mot de passe</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                    className="pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                  >
-                    {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
-                {mode === 'register' && (
-                  <p className="text-xs text-muted-foreground">
-                    Minimum 6 caractères
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <Button 
-              type="submit" 
-              className="w-full h-11 text-base font-semibold bg-accent hover:bg-accent/90" 
-              size="lg"
-              disabled={loading}
-            >
-              {loading ? (mode === 'login' ? 'Connexion...' : 'Création...') : (mode === 'login' ? 'Se connecter' : 'Créer un compte')}
-            </Button>
-
-            <div className="text-center space-y-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowAdminLogin(true)
-                  setSelectedRole('admin')
-                }}
-                className="text-xs text-muted-foreground hover:text-foreground underline flex items-center justify-center gap-1 mx-auto"
-              >
-                <Shield size={14} weight="fill" />
-                Accès administrateur
-              </button>
-              
-              <p className="text-xs text-muted-foreground">
-                En continuant, vous acceptez nos Conditions d'Utilisation
-              </p>
-            </div>
-          </form>
-
-          <div className="mt-6 pt-6 border-t">
-            <div className="text-center mb-3">
-              <p className="text-sm font-semibold text-foreground mb-1">Accès Rapide Démo</p>
-              <p className="text-xs text-muted-foreground">Testez avec un compte démo</p>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-2">
-              <Button
-                type="button"
-                onClick={() => {
-                  const adminUser: User = {
-                    id: 'admin-demo',
-                    name: 'Administrateur MBS',
-                    email: 'admin@mbstransport.com',
-                    phone: '+221 77 306 15 15',
-                    role: 'admin',
-                    rating: 5.0,
-                    totalTransactions: 0,
-                    verified: true,
-                    createdAt: new Date().toISOString()
-                  }
-                  toast.success('Connexion Admin')
-                  onAuth(adminUser)
-                }}
-                variant="outline"
-                size="sm"
-                className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
-              >
-                <Shield size={20} weight="fill" className="text-primary" />
-                <span className="text-xs font-semibold">Admin</span>
-              </Button>
-
-              <Button
-                type="button"
-                onClick={() => {
-                  const senderUser: User = {
-                    id: 'sender-demo',
-                    name: 'Amadou Diallo',
-                    email: 'client@mbstransport.com',
-                    phone: '+221 77 123 45 67',
-                    role: 'sender',
-                    rating: 4.8,
-                    totalTransactions: 12,
-                    verified: true,
-                    createdAt: new Date().toISOString()
-                  }
-                  toast.success('Connexion Client')
-                  onAuth(senderUser)
-                }}
-                variant="outline"
-                size="sm"
-                className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
-              >
-                <Package size={20} weight="fill" className="text-primary" />
-                <span className="text-xs font-semibold">Client</span>
-              </Button>
-
-              <Button
-                type="button"
-                onClick={() => {
-                  const transporterUser: User = {
-                    id: 'transporter-demo',
-                    name: 'Moussa Sarr',
-                    email: 'transporteur@mbstransport.com',
-                    phone: '+221 77 987 65 43',
-                    role: 'transporter',
-                    rating: 4.9,
-                    totalTransactions: 45,
-                    verified: true,
-                    createdAt: new Date().toISOString()
-                  }
-                  toast.success('Connexion Transporteur')
-                  onAuth(transporterUser)
-                }}
-                variant="outline"
-                size="sm"
-                className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5"
-              >
-                <Truck size={20} weight="fill" className="text-primary" />
-                <span className="text-xs font-semibold">Transp.</span>
-              </Button>
-            </div>
-
-            <div className="mt-3 p-2 bg-muted/50 rounded-lg">
-              <p className="text-xs text-muted-foreground text-center font-mono">
-                admin@mbstransport.com • client@mbstransport.com • transporteur@mbstransport.com
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }
