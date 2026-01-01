@@ -461,17 +461,17 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden">
+    <div className="min-h-screen flex relative overflow-hidden">
       <div className="absolute inset-0 z-0">
         <motion.img 
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&h=1080&fit=crop&q=80" 
-          alt="Background"
+          src="https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=1920&h=1080&fit=crop&q=80" 
+          alt="Monument de la Renaissance - Dakar"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-accent/60" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-primary/75 to-accent/70" />
         
         <FloatingParticles />
         
@@ -479,9 +479,9 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
           className="absolute inset-0"
           animate={{
             background: [
-              'radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
-              'radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
-              'radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)',
+              'radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)',
+              'radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)',
             ],
           }}
           transition={{
@@ -496,14 +496,14 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative z-10 w-full py-6"
+        className="absolute top-6 left-6 right-6 z-10"
       >
-        <div className="container max-w-md mx-auto px-6">
+        <div className="container max-w-7xl mx-auto">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onBackToHome}
-            className="group flex items-center gap-3 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-lg w-full"
+            className="group flex items-center gap-3 bg-card/95 backdrop-blur-md hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-xl w-fit"
           >
             <div className="h-12 w-auto flex items-center">
               <img 
@@ -524,372 +524,516 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
         </div>
       </motion.div>
 
-      <div className="flex-1 flex items-center justify-center p-6 relative z-10">
+      <div className="flex-1 flex items-center justify-center p-6 pt-32 pb-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="w-full max-w-md"
+          className="w-full max-w-6xl"
         >
-        <Card className="w-full shadow-2xl border-2 relative overflow-hidden">
-          <motion.div
-            className="absolute inset-0 opacity-20 pointer-events-none"
-            animate={{
-              background: [
-                'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
-                'linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
-                'linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
-              ],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-          <CardHeader className="space-y-2 text-center relative z-10">
-            <motion.div 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-                delay: 0.4
-              }}
-              className="flex justify-center mb-2"
+          <div className="grid lg:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center relative shadow-lg">
-                <Package size={32} weight="bold" className="text-primary-foreground" />
+              <Card className="h-full shadow-2xl border-2 relative overflow-hidden bg-card/95 backdrop-blur-md">
                 <motion.div
-                  className="absolute inset-0 rounded-2xl"
+                  className="absolute inset-0 opacity-20 pointer-events-none"
                   animate={{
-                    boxShadow: [
-                      '0 0 20px rgba(72, 121, 221, 0.5)',
-                      '0 0 40px rgba(231, 150, 92, 0.5)',
-                      '0 0 20px rgba(72, 121, 221, 0.5)',
+                    background: [
+                      'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+                      'linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+                      'linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
                     ],
                   }}
                   transition={{
-                    duration: 3,
+                    duration: 5,
                     repeat: Infinity,
+                    ease: "linear",
                   }}
                 />
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <CardTitle className="text-3xl font-bold">MBS Transport</CardTitle>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <CardDescription className="text-base">
-                Connectez, expédiez et livrez des colis dans le monde entier
-              </CardDescription>
-            </motion.div>
-          </CardHeader>
-          <CardContent className="relative z-10">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-            >
-            <Tabs value={mode} onValueChange={(v) => setMode(v as 'login' | 'register')} className="mb-6">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login" className="relative">
-                  <span className="relative z-10">Connexion</span>
-                </TabsTrigger>
-                <TabsTrigger value="register" className="relative">
-                  <span className="relative z-10">Inscription</span>
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-            </motion.div>
-
-            <AnimatePresence mode="wait">
-              <motion.form 
-                key={mode}
-                initial={{ opacity: 0, x: mode === 'login' ? -20 : 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: mode === 'login' ? 20 : -20 }}
-                transition={{ duration: 0.3 }}
-                onSubmit={mode === 'login' ? handleUserLogin : handleUserRegister} 
-                className="space-y-6"
-              >
-              <div className="space-y-4">
-                {mode === 'register' && (
-                  <>
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Je souhaite</Label>
-                      <Tabs value={selectedRole} onValueChange={(v) => setSelectedRole(v as UserRole)} className="w-full">
-                        <TabsList className="grid w-full grid-cols-2">
-                          <TabsTrigger value="sender" className="flex items-center gap-2">
-                            <Package size={18} />
-                            <span>Envoyer</span>
-                          </TabsTrigger>
-                          <TabsTrigger value="transporter" className="flex items-center gap-2">
-                            <Truck size={18} />
-                            <span>Transporter</span>
-                          </TabsTrigger>
-                        </TabsList>
-                      </Tabs>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Nom Complet</Label>
-                      <Input
-                        id="name"
-                        placeholder="Amadou Diallo"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
+                <CardHeader className="space-y-2 text-center relative z-10 pb-4">
+                  <motion.div 
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 20,
+                      delay: 0.5
+                    }}
+                    className="flex justify-center mb-2"
+                  >
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center relative shadow-lg">
+                      <Package size={32} weight="bold" className="text-primary-foreground" />
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl"
+                        animate={{
+                          boxShadow: [
+                            '0 0 20px rgba(72, 121, 221, 0.5)',
+                            '0 0 40px rgba(72, 121, 221, 0.8)',
+                            '0 0 20px rgba(72, 121, 221, 0.5)',
+                          ],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                        }}
                       />
                     </div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <CardTitle className="text-2xl font-bold">Connexion Client</CardTitle>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    <CardDescription>
+                      Accédez à votre espace personnel
+                    </CardDescription>
+                  </motion.div>
+                </CardHeader>
+                <CardContent className="relative z-10">
+                  <motion.form
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                    onSubmit={handleUserLogin} 
+                    className="space-y-5"
+                  >
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="login-email">Email</Label>
+                        <Input
+                          id="login-email"
+                          type="email"
+                          placeholder="amadou@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                          autoComplete="email"
+                        />
+                      </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Numéro de Téléphone</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+221 77 123 45 67"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        required
-                      />
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <Label htmlFor="login-password">Mot de passe</Label>
+                          <button
+                            type="button"
+                            onClick={() => setShowForgotPassword(true)}
+                            className="text-xs text-primary hover:text-primary/80 font-medium transition-colors"
+                          >
+                            Mot de passe oublié?
+                          </button>
+                        </div>
+                        <div className="relative">
+                          <Input
+                            id="login-password"
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            autoComplete="current-password"
+                            className="pr-10"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                          >
+                            {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </>
-                )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="amadou@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    autoComplete="email"
-                  />
-                </div>
+                    <Button 
+                      type="submit" 
+                      className="w-full h-11 text-base font-semibold bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300" 
+                      size="lg"
+                      disabled={loading}
+                    >
+                      <AnimatePresence mode="wait">
+                        {loading ? (
+                          <motion.span
+                            key="loading"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="flex items-center gap-2"
+                          >
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                              className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                            />
+                            Connexion...
+                          </motion.span>
+                        ) : (
+                          <motion.span
+                            key="ready"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            Se connecter
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </Button>
 
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Mot de passe</Label>
-                    {mode === 'login' && (
+                    <div className="text-center space-y-2 pt-2">
                       <button
                         type="button"
-                        onClick={() => setShowForgotPassword(true)}
-                        className="text-xs text-primary hover:text-primary/80 font-medium transition-colors"
+                        onClick={() => {
+                          setShowAdminLogin(true)
+                          setSelectedRole('admin')
+                        }}
+                        className="text-xs text-muted-foreground hover:text-foreground underline flex items-center justify-center gap-1 mx-auto"
                       >
-                        Mot de passe oublié?
+                        <Shield size={14} weight="fill" />
+                        Accès administrateur
                       </button>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                      className="pr-10"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
-                    </button>
-                  </div>
-                  {mode === 'register' && (
-                    <p className="text-xs text-muted-foreground">
-                      Minimum 6 caractères
-                    </p>
-                  )}
-                </div>
-              </div>
+                      
+                      <p className="text-xs text-muted-foreground">
+                        En continuant, vous acceptez nos Conditions d'Utilisation
+                      </p>
+                    </div>
+                  </motion.form>
 
-              <Button 
-                type="submit" 
-                className="w-full h-11 text-base font-semibold bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 shadow-lg hover:shadow-xl transition-all duration-300" 
-                size="lg"
-                disabled={loading}
-              >
-                <AnimatePresence mode="wait">
-                  {loading ? (
-                    <motion.span
-                      key="loading"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="flex items-center gap-2"
+                  <div className="mt-6 pt-6 border-t">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.9 }}
+                      className="text-center mb-3"
                     >
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <Sparkle size={16} weight="fill" className="text-accent" />
+                        <p className="text-sm font-semibold text-foreground">Accès Rapide Démo</p>
+                      </div>
+                      <p className="text-xs text-muted-foreground">Testez avec un compte démo</p>
+                    </motion.div>
+                    
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1 }}
+                      className="grid grid-cols-3 gap-2"
+                    >
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          const adminUser: User = {
+                            id: 'admin-demo',
+                            name: 'Administrateur MBS',
+                            email: 'admin@mbstransport.com',
+                            phone: '+221 77 306 15 15',
+                            role: 'admin',
+                            rating: 5.0,
+                            totalTransactions: 0,
+                            verified: true,
+                            createdAt: new Date().toISOString()
+                          }
+                          toast.success('Connexion Admin')
+                          onAuth(adminUser)
+                        }}
+                        variant="outline"
+                        size="sm"
+                        className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
+                      >
+                        <Shield size={20} weight="fill" className="text-primary" />
+                        <span className="text-xs font-semibold">Admin</span>
+                      </Button>
+                      </motion.div>
+
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          const senderUser: User = {
+                            id: 'sender-demo',
+                            name: 'Amadou Diallo',
+                            email: 'client@mbstransport.com',
+                            phone: '+221 77 123 45 67',
+                            role: 'sender',
+                            rating: 4.8,
+                            totalTransactions: 12,
+                            verified: true,
+                            createdAt: new Date().toISOString()
+                          }
+                          toast.success('Connexion Client')
+                          onAuth(senderUser)
+                        }}
+                        variant="outline"
+                        size="sm"
+                        className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
+                      >
+                        <Package size={20} weight="fill" className="text-primary" />
+                        <span className="text-xs font-semibold">Client</span>
+                      </Button>
+                      </motion.div>
+
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          const transporterUser: User = {
+                            id: 'transporter-demo',
+                            name: 'Moussa Sarr',
+                            email: 'transporteur@mbstransport.com',
+                            phone: '+221 77 987 65 43',
+                            role: 'transporter',
+                            rating: 4.9,
+                            totalTransactions: 45,
+                            verified: true,
+                            createdAt: new Date().toISOString()
+                          }
+                          toast.success('Connexion Transporteur')
+                          onAuth(transporterUser)
+                        }}
+                        variant="outline"
+                        size="sm"
+                        className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
+                      >
+                        <Truck size={20} weight="fill" className="text-primary" />
+                        <span className="text-xs font-semibold">Transp.</span>
+                      </Button>
+                      </motion.div>
+                    </motion.div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <Card className="h-full shadow-2xl border-2 relative overflow-hidden bg-card/95 backdrop-blur-md">
+                <motion.div
+                  className="absolute inset-0 opacity-20 pointer-events-none"
+                  animate={{
+                    background: [
+                      'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+                      'linear-gradient(90deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+                      'linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
+                    ],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+                <CardHeader className="space-y-2 text-center relative z-10 pb-4">
+                  <motion.div 
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 20,
+                      delay: 0.6
+                    }}
+                    className="flex justify-center mb-2"
+                  >
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-secondary flex items-center justify-center relative shadow-lg">
+                      <Truck size={32} weight="bold" className="text-accent-foreground" />
                       <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                        className="absolute inset-0 rounded-2xl"
+                        animate={{
+                          boxShadow: [
+                            '0 0 20px rgba(231, 150, 92, 0.5)',
+                            '0 0 40px rgba(231, 150, 92, 0.8)',
+                            '0 0 20px rgba(231, 150, 92, 0.5)',
+                          ],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                        }}
                       />
-                      {mode === 'login' ? 'Connexion...' : 'Création...'}
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="ready"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
+                    </div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    <CardTitle className="text-2xl font-bold">Espace Inscription</CardTitle>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    <CardDescription>
+                      Créez votre compte en quelques clics
+                    </CardDescription>
+                  </motion.div>
+                </CardHeader>
+                <CardContent className="relative z-10">
+                  <motion.form
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.9 }}
+                    onSubmit={handleUserRegister} 
+                    className="space-y-5"
+                  >
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">Je souhaite m'inscrire en tant que</Label>
+                        <div className="grid grid-cols-2 gap-3">
+                          <motion.button
+                            type="button"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setSelectedRole('sender')}
+                            className={`flex flex-col items-center gap-2 p-4 rounded-lg border-2 transition-all ${
+                              selectedRole === 'sender' 
+                                ? 'border-primary bg-primary/10 shadow-md' 
+                                : 'border-border bg-card hover:border-primary/50'
+                            }`}
+                          >
+                            <Package size={28} weight={selectedRole === 'sender' ? 'fill' : 'regular'} className={selectedRole === 'sender' ? 'text-primary' : 'text-muted-foreground'} />
+                            <span className={`text-sm font-semibold ${selectedRole === 'sender' ? 'text-primary' : 'text-foreground'}`}>Client</span>
+                            <span className="text-xs text-muted-foreground text-center">Envoyer des colis</span>
+                          </motion.button>
+                          <motion.button
+                            type="button"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setSelectedRole('transporter')}
+                            className={`flex flex-col items-center gap-2 p-4 rounded-lg border-2 transition-all ${
+                              selectedRole === 'transporter' 
+                                ? 'border-accent bg-accent/10 shadow-md' 
+                                : 'border-border bg-card hover:border-accent/50'
+                            }`}
+                          >
+                            <Truck size={28} weight={selectedRole === 'transporter' ? 'fill' : 'regular'} className={selectedRole === 'transporter' ? 'text-accent' : 'text-muted-foreground'} />
+                            <span className={`text-sm font-semibold ${selectedRole === 'transporter' ? 'text-accent' : 'text-foreground'}`}>Transporteur</span>
+                            <span className="text-xs text-muted-foreground text-center">Transporter des colis</span>
+                          </motion.button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="register-name">Nom Complet</Label>
+                        <Input
+                          id="register-name"
+                          placeholder="Amadou Diallo"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="register-phone">Numéro de Téléphone</Label>
+                        <Input
+                          id="register-phone"
+                          type="tel"
+                          placeholder="+221 77 123 45 67"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="register-email">Email</Label>
+                        <Input
+                          id="register-email"
+                          type="email"
+                          placeholder="amadou@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                          autoComplete="email"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="register-password">Mot de passe</Label>
+                        <div className="relative">
+                          <Input
+                            id="register-password"
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            autoComplete="new-password"
+                            className="pr-10"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                          >
+                            {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+                          </button>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Minimum 6 caractères
+                        </p>
+                      </div>
+                    </div>
+
+                    <Button 
+                      type="submit" 
+                      className="w-full h-11 text-base font-semibold bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 shadow-lg hover:shadow-xl transition-all duration-300" 
+                      size="lg"
+                      disabled={loading}
                     >
-                      {mode === 'login' ? 'Se connecter' : 'Créer un compte'}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </Button>
+                      <AnimatePresence mode="wait">
+                        {loading ? (
+                          <motion.span
+                            key="loading"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="flex items-center gap-2"
+                          >
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                              className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                            />
+                            Création...
+                          </motion.span>
+                        ) : (
+                          <motion.span
+                            key="ready"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            Créer un compte
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </Button>
 
-              <div className="text-center space-y-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowAdminLogin(true)
-                    setSelectedRole('admin')
-                  }}
-                  className="text-xs text-muted-foreground hover:text-foreground underline flex items-center justify-center gap-1 mx-auto"
-                >
-                  <Shield size={14} weight="fill" />
-                  Accès administrateur
-                </button>
-                
-                <p className="text-xs text-muted-foreground">
-                  En continuant, vous acceptez nos Conditions d'Utilisation
-                </p>
-              </div>
-            </motion.form>
-            </AnimatePresence>
-
-            <div className="mt-6 pt-6 border-t">
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="text-center mb-3"
-              >
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <Sparkle size={18} weight="fill" className="text-accent" />
-                  <p className="text-sm font-semibold text-foreground">Accès Rapide Démo</p>
-                  <Sparkle size={18} weight="fill" className="text-accent" />
-                </div>
-                <p className="text-xs text-muted-foreground">Testez avec un compte démo</p>
-              </motion.div>
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
-                className="grid grid-cols-3 gap-2"
-              >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    const adminUser: User = {
-                      id: 'admin-demo',
-                      name: 'Administrateur MBS',
-                      email: 'admin@mbstransport.com',
-                      phone: '+221 77 306 15 15',
-                      role: 'admin',
-                      rating: 5.0,
-                      totalTransactions: 0,
-                      verified: true,
-                      createdAt: new Date().toISOString()
-                    }
-                    toast.success('Connexion Admin')
-                    onAuth(adminUser)
-                  }}
-                  variant="outline"
-                  size="sm"
-                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
-                >
-                  <Shield size={20} weight="fill" className="text-primary" />
-                  <span className="text-xs font-semibold">Admin</span>
-                </Button>
-                </motion.div>
-
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    const senderUser: User = {
-                      id: 'sender-demo',
-                      name: 'Amadou Diallo',
-                      email: 'client@mbstransport.com',
-                      phone: '+221 77 123 45 67',
-                      role: 'sender',
-                      rating: 4.8,
-                      totalTransactions: 12,
-                      verified: true,
-                      createdAt: new Date().toISOString()
-                    }
-                    toast.success('Connexion Client')
-                    onAuth(senderUser)
-                  }}
-                  variant="outline"
-                  size="sm"
-                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
-                >
-                  <Package size={20} weight="fill" className="text-primary" />
-                  <span className="text-xs font-semibold">Client</span>
-                </Button>
-                </motion.div>
-
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    const transporterUser: User = {
-                      id: 'transporter-demo',
-                      name: 'Moussa Sarr',
-                      email: 'transporteur@mbstransport.com',
-                      phone: '+221 77 987 65 43',
-                      role: 'transporter',
-                      rating: 4.9,
-                      totalTransactions: 45,
-                      verified: true,
-                      createdAt: new Date().toISOString()
-                    }
-                    toast.success('Connexion Transporteur')
-                    onAuth(transporterUser)
-                  }}
-                  variant="outline"
-                  size="sm"
-                  className="flex flex-col items-center gap-1 h-auto py-3 hover:bg-primary/5 hover:border-primary/50 transition-all w-full"
-                >
-                  <Truck size={20} weight="fill" className="text-primary" />
-                  <span className="text-xs font-semibold">Transp.</span>
-                </Button>
-                </motion.div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="mt-3 p-2 bg-muted/50 rounded-lg"
-              >
-                <p className="text-xs text-muted-foreground text-center font-mono">
-                  admin@mbstransport.com • client@mbstransport.com • transporteur@mbstransport.com
-                </p>
-              </motion.div>
-            </div>
-          </CardContent>
-        </Card>
+                    <p className="text-xs text-muted-foreground text-center pt-2">
+                      En créant un compte, vous acceptez nos Conditions d'Utilisation
+                    </p>
+                  </motion.form>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
 
