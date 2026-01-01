@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
-import { List, X } from '@phosphor-icons/react'
+import { List, X, WhatsappLogo, Phone } from '@phosphor-icons/react'
 
 interface NavigationProps {
   onNavigateToDashboard?: () => void
@@ -37,6 +37,21 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
           </div>
 
           <div className="hidden md:flex items-center gap-8">
+            <div className="flex items-center gap-2 bg-green-500/10 px-3 py-2 rounded-lg border border-green-500/20 mr-4">
+              <WhatsappLogo size={20} weight="fill" className="text-green-500" />
+              <div>
+                <p className="text-[10px] text-muted-foreground font-medium leading-tight">Service Client</p>
+                <a 
+                  href="https://wa.me/221773068652" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-bold text-foreground hover:text-primary transition-colors flex items-center gap-1"
+                >
+                  <Phone size={12} weight="bold" />
+                  +221 77 306 86 52
+                </a>
+              </div>
+            </div>
             <button
               onClick={() => scrollToSection('accueil')}
               className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
@@ -93,6 +108,21 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
 
       {isOpen && (
         <div className="md:hidden px-6 pb-4 flex flex-col gap-4 bg-gradient-to-b from-transparent to-muted/30 backdrop-blur-xl border-t border-border/30">
+            <div className="flex items-center gap-2 bg-green-500/10 px-4 py-3 rounded-xl border border-green-500/20 mb-2">
+              <WhatsappLogo size={28} weight="fill" className="text-green-500" />
+              <div>
+                <p className="text-xs text-muted-foreground font-medium">Service Client</p>
+                <a 
+                  href="https://wa.me/221773068652" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-bold text-foreground hover:text-primary transition-colors flex items-center gap-1"
+                >
+                  <Phone size={14} weight="bold" />
+                  +221 77 306 86 52
+                </a>
+              </div>
+            </div>
             <button
               onClick={() => scrollToSection('accueil')}
               className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
