@@ -53,24 +53,10 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               </div>
             </div>
             <button
-              onClick={() => scrollToSection('accueil')}
-              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
-            >
-              Accueil
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
-            </button>
-            <button
               onClick={() => scrollToSection('services')}
               className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
             >
               Services
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
-            </button>
-            <button
-              onClick={() => scrollToSection('devis')}
-              className="text-sm font-semibold text-foreground hover:text-primary transition-all hover:scale-105 relative group"
-            >
-              Devis en Ligne
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
             <button
@@ -87,9 +73,6 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               Contact
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all group-hover:w-full"></span>
             </button>
-            <Button onClick={() => scrollToSection('devis')} size="sm" className="bg-gradient-to-r from-accent to-secondary hover:shadow-lg hover:scale-105 transition-all">
-              Calculer un Devis
-            </Button>
             {onNavigateToDashboard && (
               <Button onClick={onNavigateToDashboard} size="sm" variant="outline" className="hover:bg-primary/10 hover:border-primary transition-all">
                 Espace Client
@@ -124,22 +107,10 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
               </div>
             </div>
             <button
-              onClick={() => scrollToSection('accueil')}
-              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-            >
-              Accueil
-            </button>
-            <button
               onClick={() => scrollToSection('services')}
               className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
             >
               Services
-            </button>
-            <button
-              onClick={() => scrollToSection('devis')}
-              className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-            >
-              Devis en Ligne
             </button>
             <button
               onClick={() => scrollToSection('a-propos')}
@@ -153,9 +124,6 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
             >
               Contact
             </button>
-            <Button onClick={() => scrollToSection('devis')} className="w-full bg-gradient-to-r from-accent to-secondary hover:shadow-lg">
-              Calculer un Devis
-            </Button>
             {onNavigateToDashboard && (
               <Button onClick={onNavigateToDashboard} variant="outline" className="w-full hover:bg-primary/10">
                 Espace Client
