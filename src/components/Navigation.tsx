@@ -34,10 +34,6 @@ export function Navigation({ onNavigateToDashboard }: NavigationProps) {
                 }}
               />
             </div>
-            <div className="hidden sm:block">
-              <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">MBS Transport</div>
-              <div className="text-xs text-muted-foreground">Mondial Bagage Services</div>
-            </div>
           </div>
 
           <div className="hidden md:flex items-center gap-8">
