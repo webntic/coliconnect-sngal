@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Anchor, Airplane, Lightning, TruckTrailer, CaretLeft, CaretRight } from '@phosphor-icons/react'
+import { ArrowRight, CaretLeft, CaretRight } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User } from '@/lib/types'
 import { useState, useEffect } from 'react'
@@ -13,25 +13,21 @@ const services = [
   {
     title: 'Fret Maritime',
     description: 'Transport de marchandises par voie maritime entre le Sénégal et le monde entier',
-    icon: Anchor,
     image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&h=1080&fit=crop&q=80'
   },
   {
     title: 'Fret Aérien',
     description: 'Expédition rapide et sécurisée par avion pour vos colis urgents',
-    icon: Airplane,
     image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&h=1080&fit=crop&q=80'
   },
   {
     title: 'Envoi Express DHL',
     description: 'Service express international avec DHL pour une livraison ultra-rapide',
-    icon: Lightning,
     image: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1920&h=1080&fit=crop&q=80'
   },
   {
     title: 'Transport Sous-Région',
     description: 'Livraison dans toute la sous-région du Sénégal et pays limitrophes',
-    icon: TruckTrailer,
     image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&h=1080&fit=crop&q=80'
   }
 ]
@@ -104,13 +100,6 @@ export function Hero({ onGetStarted }: HeroProps) {
               transition={{ duration: 0.6 }}
               className="text-center space-y-8"
             >
-              <div className="flex justify-center mb-8">
-                {(() => {
-                  const Icon = services[currentSlide].icon
-                  return <Icon size={120} weight="thin" className="text-white/90" />
-                })()}
-              </div>
-
               <div className="inline-block px-6 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-4">
                 Service {currentSlide + 1} / {services.length}
               </div>
