@@ -128,8 +128,19 @@ export function Footer() {
         <Separator className="bg-white/20 my-10" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-sm opacity-90 text-center md:text-left">
-            © {currentYear} MBS Transport. Tous droits réservés.
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="text-sm opacity-90 text-center md:text-left">
+              © {currentYear} MBS Transport. Tous droits réservés.
+            </div>
+            <a 
+              href="https://webntic.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs opacity-75 hover:opacity-100 transition-opacity text-center md:text-left group"
+            >
+              Powered by{' '}
+              <span className="font-semibold group-hover:underline">webntic.com</span>
+            </a>
           </div>
           
           <div className="flex items-center gap-3">
