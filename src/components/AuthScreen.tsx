@@ -250,7 +250,7 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
           transition={{ duration: 0.6 }}
           className="relative z-10 w-full py-6"
         >
-          <div className="container max-w-md mx-auto px-6">
+          <div className="container max-w-4xl mx-auto px-6">
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -271,23 +271,43 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
                 <House size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
               </motion.button>
               
-              <motion.a
-                href="tel:+221773068652"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-2 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl px-4 py-3 transition-all hover:shadow-lg group justify-center"
-              >
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <Phone size={20} weight="bold" className="text-primary" />
-                </div>
-                <div className="text-left">
-                  <p className="text-xs font-medium text-muted-foreground">Service Client</p>
-                  <p className="text-sm font-bold text-foreground">+221 77 306 86 52</p>
-                </div>
-              </motion.a>
+              <div className="flex flex-col sm:flex-row gap-3 flex-1">
+                <motion.a
+                  href="tel:+221773068652"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center gap-2 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl px-4 py-3 transition-all hover:shadow-lg group justify-center flex-1"
+                >
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Phone size={20} weight="bold" className="text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs font-medium text-muted-foreground">Service Client</p>
+                    <p className="text-sm font-bold text-foreground">+221 77 306 86 52</p>
+                  </div>
+                </motion.a>
+
+                <motion.a
+                  href="mailto:contact@mbstransport.com"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center gap-2 bg-card/90 backdrop-blur-sm hover:bg-card border border-border rounded-xl px-4 py-3 transition-all hover:shadow-lg group justify-center flex-1"
+                >
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                    <EnvelopeSimple size={20} weight="bold" className="text-accent" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs font-medium text-muted-foreground">Email</p>
+                    <p className="text-sm font-bold text-foreground">contact@mbstransport.com</p>
+                  </div>
+                </motion.a>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -536,12 +556,12 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
         className="absolute top-6 left-6 right-6 z-10"
       >
         <div className="container max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onBackToHome}
-              className="group flex items-center gap-3 bg-card/95 backdrop-blur-md hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-xl justify-center sm:justify-start"
+              className="group flex items-center gap-3 bg-card/95 backdrop-blur-md hover:bg-card border border-border rounded-xl p-3 transition-all hover:shadow-xl justify-center lg:justify-start"
             >
               <div className="h-12 w-auto flex items-center">
                 <img 
@@ -556,23 +576,43 @@ export function AuthScreen({ onAuth, onBackToHome }: AuthScreenProps) {
               <House size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
             </motion.button>
 
-            <motion.a
-              href="tel:+221773068652"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-3 bg-card/95 backdrop-blur-md hover:bg-card border border-border rounded-xl px-4 py-3 transition-all hover:shadow-xl group justify-center"
-            >
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Phone size={22} weight="bold" className="text-primary" />
-              </div>
-              <div className="text-left">
-                <p className="text-xs font-medium text-muted-foreground">Service Client</p>
-                <p className="text-sm font-bold text-foreground whitespace-nowrap">+221 77 306 86 52</p>
-              </div>
-            </motion.a>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <motion.a
+                href="tel:+221773068652"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 bg-card/95 backdrop-blur-md hover:bg-card border border-border rounded-xl px-4 py-3 transition-all hover:shadow-xl group justify-center"
+              >
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <Phone size={22} weight="bold" className="text-primary" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs font-medium text-muted-foreground">Service Client</p>
+                  <p className="text-sm font-bold text-foreground whitespace-nowrap">+221 77 306 86 52</p>
+                </div>
+              </motion.a>
+
+              <motion.a
+                href="mailto:contact@mbstransport.com"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 bg-card/95 backdrop-blur-md hover:bg-card border border-border rounded-xl px-4 py-3 transition-all hover:shadow-xl group justify-center"
+              >
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                  <EnvelopeSimple size={22} weight="bold" className="text-accent" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs font-medium text-muted-foreground">Email</p>
+                  <p className="text-sm font-bold text-foreground whitespace-nowrap">contact@mbstransport.com</p>
+                </div>
+              </motion.a>
+            </div>
           </div>
         </div>
       </motion.div>
